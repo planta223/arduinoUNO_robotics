@@ -1,6 +1,12 @@
 #include "config.h"
 #include "door_sensor.h"
 #include "dc_motor.h"
+#include "gripper_servo.h"
+
+void temp_DoorSensor_Update(void);
+void temp_SerialCommand_Update(void);
+void HandleSensorCommand(const String &cmd);
+void StopAll(void);
 
 void setup()
 {
@@ -9,17 +15,17 @@ void setup()
 
   DoorSensor_Init();
   DcMotor_Init();
+  GripperServo_Init();
+
   pinMode(PIN_STATUS_LED, OUTPUT);
 
-  Serial.println("Arduino control start");
-  Serial.println("Input PWM value: -255 ~ 255");
-  Serial.println("Example: 120, -120, 0");
+  Serial.println("READY");
 }
 
 void loop()
 {
   temp_DoorSensor_Update();
-  temp_DcMotor_Update();
+  temp_SerialCommand_Update();
 }
 
 void temp_DoorSensor_Update(void)
@@ -34,25 +40,66 @@ void temp_DoorSensor_Update(void)
   }
 }
 
-void temp_DcMotor_Update(void)
+void temp_SerialCommand_Update(void)
 {
   if (Serial.available() <= 0)
   {
     return;
   }
 
-  int pwm = Serial.parseInt();
+  String cmd = Serial.readStringUntil('\n');
+  cmd.trim();
 
-  DcMotor_SetPwm(pwm);
+  if (cmd.length() == 0)
+  {
+    return;
+  }
 
-  Serial.print("DC motor PWM command = ");
-  Serial.println(pwm);
+  if (cmd.startsWith("D ") || cmd.startsWith("d "))
+  {
+    DcMotor_CommandUpdate(cmd);
+  }
+  else if (cmd.startsWith("G ") || cmd.startsWith("g "))
+  {
+    GripperServo_CommandUpdate(cmd);
+  }
+  else if (cmd.startsWith("S ") || cmd.startsWith("s "))
+  {
+    HandleSensorCommand(cmd);
+  }
+  else if (cmd.equalsIgnoreCase("STOP"))
+  {
+    StopAll();
+    Serial.println("OK STOP");
+  }
+  else
+  {
+    Serial.println("ERR UNKNOWN");
+  }
+}
+
+void HandleSensorCommand(const String &cmd)
+{
+  String arg = cmd.substring(2);
+  arg.trim();
+
+  if (arg.equalsIgnoreCase("DOOR"))
+  {
+    Serial.print("DOOR ");
+    Serial.println(DoorSensor_IsDetected() ? 1 : 0);
+  }
+  else
+  {
+    Serial.println("ERR SENSOR");
+  }
+}
+
+void StopAll(void)
+{
+  DcMotor_Stop();
 
   /*
-   * Serial.parseInt()는 숫자 뒤에 남은 개행 문자를 남길 수 있으므로 제거
+   * RC servo는 별도 stop 개념이 불명확하므로
+   * 마지막 command angle을 유지한다.
    */
-  while (Serial.available() > 0)
-  {
-    Serial.read();
-  }
 }

@@ -67,3 +67,16 @@ void DcMotor_Brake(void)
   digitalWrite(PIN_DC_MOTOR_IN1, HIGH);
   digitalWrite(PIN_DC_MOTOR_IN2, HIGH);
 }
+
+void DcMotor_CommandUpdate(const String &cmd)
+{
+  String arg = cmd.substring(2);
+  arg.trim();
+
+  int pwm = ClampSignedPwm(arg.toInt());
+
+  DcMotor_SetPwm(pwm);
+
+  Serial.print("OK D ");
+  Serial.println(pwm);
+}

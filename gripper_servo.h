@@ -1,0 +1,17 @@
+#ifndef GRIPPER_SERVO_H
+#define GRIPPER_SERVO_H
+
+#include <Arduino.h>
+
+void GripperServo_Init(void);
+
+void GripperServo_Open(void);
+void GripperServo_Close(void);
+void GripperServo_SetAngle(int angle);
+
+bool GripperServo_IsBusy(void);
+int GripperServo_GetCommandAngle(void);
+
+void GripperServo_CommandUpdate(const String &cmd);
+
+#endif
