@@ -3,10 +3,10 @@
 
 void DoorSensor_Init(void)
 {
-  pinMode(PIN_DOOR_SENSOR, INPUT_PULLUP);
+  pinMode(PIN_DOOR_SENSOR_NO, INPUT_PULLUP);
 }
 
 bool DoorSensor_IsDetected(void)
 {
-  return digitalRead(PIN_DOOR_SENSOR) == DOOR_SENSOR_ACTIVE_LEVEL;
+  return digitalRead(PIN_DOOR_SENSOR_NO) == DOOR_SENSOR_ACTIVE_LEVEL;
 }
