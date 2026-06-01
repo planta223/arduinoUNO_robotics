@@ -1,0 +1,1 @@
+socket_send_string("D STOP")

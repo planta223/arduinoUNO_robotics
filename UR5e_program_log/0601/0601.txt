@@ -1,0 +1,18 @@
+ 프로그램
+   로봇 프로그램
+     init
+       스크립트: Init_Variables.script
+       스크립트: Socket_Open.script
+       호출 read_door_sensor
+   dc_motor_run
+     스크립트: DC_Motor_Run.script
+   dc_motor_stop
+     스크립트: DC_Motor_Stop.script
+   gripper_close
+     스크립트: Gripper_Close.script
+   gripper_open
+     스크립트: Gripper_Open.script
+   read_camera_result
+     스크립트: Read_camera_Result.script
+   read_door_sensor
+     스크립트: Read_Door_Sensor.script
