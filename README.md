@@ -12,14 +12,12 @@ arduinoUNO_robotics/
 ├── .gitignore
 ├── README.md
 ├── python/
-│   ├── PC_to_arduino.py
-│   ├── PC_server/
-│   │   ├── main_server.py
-│   │   └── config.py
-│   └── UR5e_scripts/
-│       └── URScript 스크립트 보관
-├── URprogram_log/
-│   └── 날짜별 UR5e 프로그램 기록 보관
+│   ├── PC_to_arduino.py : 아두이노 동작 테스트용
+│   └── PC_server/
+│       ├── main_server.py : Arduino-UR5e 중계용
+│       └── config.py
+├── UR5e_scripts/  : URScript 스크립트 보관
+├── URprogram_log/ : 날짜별 UR5e 프로그램 기록 보관
 ├── robotics_arduino.ino
 ├── config.h
 ├── door_sensor.h
@@ -33,8 +31,11 @@ arduinoUNO_robotics/
 ## Hardware Configuration
 
 ```text
-Door NO  -- D2
-Door COM -- GND
+Door NO      -- SIGNAL
+Door COM     -- GND
+Servo Red    -- 12V
+Servo Brown  -- GND
+Servo Orange -- SIGNAL
 ```
 
 ## Arduino Software
