@@ -1,3 +1,0 @@
-socket_send_string("S DOOR")
-door_response = socket_read_line()
-textmsg("Door: ", door_response)

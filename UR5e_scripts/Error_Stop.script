@@ -1,0 +1,39 @@
+# 현재 task 번호에 따라 오류 메시지 출력
+if current_task == 1:
+  popup("Task 1 Failed: Open Printer", title="Task Error", warning=True, error=False)
+
+elif current_task == 2:
+  popup("Task 2 Failed: Pick A4 From Paper Box", title="Task Error", warning=True, error=False)
+
+elif current_task == 3:
+  popup("Task 3 Failed: Place A4 To Printer Head", title="Task Error", warning=True, error=False)
+
+elif current_task == 4:
+  popup("Task 4 Failed: Close Printer", title="Task Error", warning=True, error=False)
+
+elif current_task == 5:
+  popup("Task 5 Failed: Open Printer Again", title="Task Error", warning=True, error=False)
+
+elif current_task == 6:
+  popup("Task 6 Failed: Pick A4 From Printer Head", title="Task Error", warning=True, error=False)
+
+elif current_task == 7:
+  popup("Task 7 Failed: Place A4 To Paper Box", title="Task Error", warning=True, error=False)
+
+elif current_task == 8:
+  popup("Task 8 Failed: Close Printer Again", title="Task Error", warning=True, error=False)
+
+else:
+  popup("Unknown Task Failed", title="Task Error", warning=True, error=False)
+end
+
+# Arduino/PC 측 정지 요청
+socket_send_string(CMD_ESTOP)
+socket_send_string("\n")
+pc_response = socket_read_line()
+
+# 로그 출력
+textmsg("ESTOP response: ", pc_response)
+
+# UR Program 정지
+halt

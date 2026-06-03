@@ -4,6 +4,9 @@
 #include <Arduino.h>
 
 void DoorSensor_Init(void);
-bool DoorSensor_IsDetected(void);
+void DoorSensor_Update(void);
+
+bool DoorSensor_IsClosed(void);
+bool DoorSensor_IsOpen(void);
 
 #endif

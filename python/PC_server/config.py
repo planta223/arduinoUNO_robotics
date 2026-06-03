@@ -18,47 +18,37 @@ ARDUINO_RESET_WAIT_S = 2.0
 # ============================================================
 # Camera 설정
 # ============================================================
-# 추가 예정
+# TODO: 실제 비전 판정 로직 추가 예정
 
 
 # ============================================================
-# UR5e → PC 명령 문자열
+# 공통 명령 문자열
+# URScript → PC Server → Arduino 기준
+# Arduino config.h / protocol.cpp와 동일하게 유지
 # ============================================================
 CMD_PING = "PING"
 
 CMD_GRIPPER_OPEN = "G OPEN"
 CMD_GRIPPER_CLOSE = "G CLOSE"
 
-CMD_DC_MOTOR_STOP = "D STOP"
 CMD_DC_MOTOR_RUN = "D RUN"
 
-CMD_SENSOR_DOOR = "S DOOR"
+CMD_ESTOP = "ESTOP"
 
+CMD_MOTOR_STATUS = "MOTOR STATUS"
+CMD_DOOR_STATUS = "DOOR STATUS"
+
+# PC에서만 처리하는 명령
 CMD_CAMERA_RESULT = "V CAMERA"
 
 
 # ============================================================
-# PC → Arduino 명령 문자열
+# PC 자체 응답 문자열
+# Arduino 응답은 main_server.py에서 그대로 UR5e로 전달
 # ============================================================
-ARDUINO_GRIPPER_OPEN_CMD = "G OPEN"
-ARDUINO_GRIPPER_CLOSE_CMD = "G CLOSE"
-
-ARDUINO_DC_MOTOR_STOP_CMD = "D 0"
-ARDUINO_DC_MOTOR_RUN_CMD = "D 120"
-
-ARDUINO_SENSOR_DOOR_CMD = "S DOOR"
-
-
-# ============================================================
-# PC → UR5e 응답 문자열
-# ============================================================
-RESP_OK = "OK"
-
-RESP_DOOR_OPEN = "DOOR 1"
-RESP_DOOR_CLOSED = "DOOR 0"
-
-RESP_PAPER_DETECTED = "PAPER 1"
-RESP_PAPER_NOT_DETECTED = "PAPER 0"
+RESP_PAPER_DETECTED = "PAPER DETECTED"
+RESP_PAPER_NOT_DETECTED = "PAPER NOT DETECTED"
 
 RESP_ERR_UNKNOWN_CMD = "ERR UNKNOWN_CMD"
 RESP_ERR_ARDUINO_TIMEOUT = "ERR ARDUINO_TIMEOUT"
+RESP_ERR_ARDUINO_SERIAL = "ERR ARDUINO_SERIAL"

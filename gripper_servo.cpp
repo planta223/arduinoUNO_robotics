@@ -4,17 +4,9 @@
 
 static Servo gripperServo;
 
-/*
- * commandAngle is the last commanded angle.
- * It is not a measured servo angle.
- */
 static int commandAngle = GRIPPER_INIT_ANGLE;
-
-/*
- * Servo busy state is estimated by elapsed time.
- * It is not based on actual position feedback.
- */
-static unsigned long busyUntilMs = 0UL;
+static bool isRunning = false;
+static unsigned long runUntilMs = 0UL;
 
 static int ClampAngle(int angle)
 {
@@ -31,34 +23,22 @@ static int ClampAngle(int angle)
   return angle;
 }
 
-static bool IsIntegerString(const String &str)
+static void SetAngle(int angle)
 {
-  if (str.length() == 0)
+  int clampedAngle = ClampAngle(angle);
+
+  if (clampedAngle == commandAngle)
   {
-    return false;
+    runUntilMs = 0UL;
+    isRunning = false;
+    return;
   }
 
-  int startIndex = 0;
+  commandAngle = clampedAngle;
+  gripperServo.write(commandAngle);
 
-  if (str.charAt(0) == '-' || str.charAt(0) == '+')
-  {
-    if (str.length() == 1)
-    {
-      return false;
-    }
-
-    startIndex = 1;
-  }
-
-  for (int i = startIndex; i < str.length(); i++)
-  {
-    if (!isDigit(str.charAt(i)))
-    {
-      return false;
-    }
-  }
-
-  return true;
+  runUntilMs = millis() + GRIPPER_MOVE_TIME_MS;
+  isRunning = true;
 }
 
 void GripperServo_Init(void)
@@ -68,82 +48,45 @@ void GripperServo_Init(void)
   commandAngle = ClampAngle(GRIPPER_INIT_ANGLE);
   gripperServo.write(commandAngle);
 
-  busyUntilMs = millis() + GRIPPER_MOVE_TIME_MS;
+  runUntilMs = millis() + GRIPPER_MOVE_TIME_MS;
+  isRunning = true;
 }
 
-void GripperServo_Open(void)
+void GripperServo_Update(void)
 {
-  GripperServo_SetAngle(GRIPPER_OPEN_ANGLE);
-}
-
-void GripperServo_Close(void)
-{
-  GripperServo_SetAngle(GRIPPER_CLOSE_ANGLE);
-}
-
-void GripperServo_SetAngle(int angle)
-{
-  int clampedAngle = ClampAngle(angle);
-
-  if (clampedAngle == commandAngle)
+  if (!isRunning)
   {
     return;
   }
 
-  commandAngle = clampedAngle;
-  gripperServo.write(commandAngle);
-
-  busyUntilMs = millis() + GRIPPER_MOVE_TIME_MS;
+  if ((long)(millis() - runUntilMs) >= 0)
+  {
+    runUntilMs = 0UL;
+    isRunning = false;
+  }
 }
 
-bool GripperServo_IsBusy(void)
+void GripperServo_Open(void)
 {
-  return (long)(busyUntilMs - millis()) > 0;
+  SetAngle(GRIPPER_OPEN_ANGLE);
 }
 
-int GripperServo_GetCommandAngle(void)
+void GripperServo_Close(void)
 {
-  return commandAngle;
+  SetAngle(GRIPPER_CLOSE_ANGLE);
 }
 
-void GripperServo_CommandUpdate(const String &cmd)
+void GripperServo_Stop(void)
 {
-  String arg = cmd.substring(2);
-  arg.trim();
+  /*
+   * RC servo는 별도의 stop 명령이 명확하지 않으므로
+   * 마지막 command angle을 유지하고 running 상태만 해제한다.
+   */
+  runUntilMs = 0UL;
+  isRunning = false;
+}
 
-  if (arg.equalsIgnoreCase("OPEN"))
-  {
-    GripperServo_Open();
-    Serial.println("OK G OPEN");
-  }
-  else if (arg.equalsIgnoreCase("CLOSE"))
-  {
-    GripperServo_Close();
-    Serial.println("OK G CLOSE");
-  }
-  else if (arg.equalsIgnoreCase("BUSY"))
-  {
-    Serial.print("BUSY ");
-    Serial.println(GripperServo_IsBusy() ? 1 : 0);
-  }
-  else if (arg.equalsIgnoreCase("ANGLE"))
-  {
-    Serial.print("ANGLE ");
-    Serial.println(GripperServo_GetCommandAngle());
-  }
-  else
-  {
-    if (!IsIntegerString(arg))
-    {
-      Serial.println("ERR G");
-      return;
-    }
-
-    int angle = arg.toInt();
-
-    GripperServo_SetAngle(angle);
-
-    Serial.print("OK G ");
-    Serial.println(GripperServo_GetCommandAngle());
-  }
+bool GripperServo_IsRunning(void)
+{
+  return isRunning;
 }

@@ -3,146 +3,191 @@ import serial
 from serial.tools import list_ports
 
 
+# ============================================================
+# Serial 설정
+# ============================================================
 BAUDRATE = 9600
 TIMEOUT_S = 1.0
+ARDUINO_RESET_WAIT_S = 2.0
+
+
+# ============================================================
+# Arduino 명령 문자열
+# Arduino config.h / protocol.cpp 기준
+# ============================================================
+CMD_PING = "PING"
+
+CMD_GRIPPER_OPEN = "G OPEN"
+CMD_GRIPPER_CLOSE = "G CLOSE"
+
+CMD_DC_MOTOR_RUN = "D RUN"
+
+CMD_ESTOP = "ESTOP"
+
+CMD_MOTOR_STATUS = "MOTOR STATUS"
+CMD_DOOR_STATUS = "DOOR STATUS"
 
 
 def list_serial_ports() -> None:
     ports = list(list_ports.comports())
 
     if not ports:
-        print("No serial ports found.")
+        print("[PC] No serial ports found.")
         return
 
-    print("Available serial ports:")
+    print("[PC] Available serial ports:")
     for port in ports:
         print(f"  {port.device} - {port.description}")
 
 
 def open_serial(port: str) -> serial.Serial:
+    """
+    Arduino Uno는 Serial 포트가 열릴 때 리셋될 수 있다.
+    따라서 연결 후 일정 시간 대기하고, READY 같은 부팅 메시지를 제거한다.
+    """
+
     ser = serial.Serial(
         port=port,
         baudrate=BAUDRATE,
         timeout=TIMEOUT_S,
     )
 
-    # Arduino Uno는 Serial 연결 시 리셋될 수 있음
-    time.sleep(2.0)
-
+    time.sleep(ARDUINO_RESET_WAIT_S)
     clear_startup_messages(ser)
+
     return ser
 
 
 def clear_startup_messages(ser: serial.Serial) -> None:
+    """
+    Arduino 부팅 직후 출력되는 READY 등의 메시지를 읽어서 제거한다.
+    """
+
     while ser.in_waiting > 0:
         line = ser.readline().decode("utf-8", errors="ignore").strip()
+
         if line:
-            print(f"[Arduino] {line}")
+            print(f"[Arduino startup] {line}")
 
 
-def send_command(ser: serial.Serial, cmd: str) -> list[str]:
-    ser.write((cmd + "\n").encode("utf-8"))
-    ser.flush()
+def send_command(ser: serial.Serial, cmd: str) -> str:
+    """
+    Arduino에 한 줄 명령을 보내고, 한 줄 응답을 받는다.
+    모든 명령은 \\n으로 종료한다.
+    """
 
-    time.sleep(0.05)
+    cmd = cmd.strip()
 
-    responses = []
-    while ser.in_waiting > 0:
-        line = ser.readline().decode("utf-8", errors="ignore").strip()
-        if line:
-            responses.append(line)
+    if not cmd:
+        return ""
 
-    for line in responses:
-        print(f"[Arduino] {line}")
+    print(f"[PC -> Arduino] {cmd}")
 
-    return responses
+    try:
+        # 이전 명령의 잔여 응답 제거
+        ser.reset_input_buffer()
+
+        ser.write((cmd + "\n").encode("utf-8"))
+        ser.flush()
+
+        response = ser.readline().decode("utf-8", errors="ignore").strip()
+
+    except serial.SerialException as exc:
+        print(f"[PC] Serial error: {exc}")
+        return "ERR SERIAL"
+
+    except OSError as exc:
+        print(f"[PC] OS error: {exc}")
+        return "ERR SERIAL"
+
+    if not response:
+        print("[Arduino -> PC] ERR TIMEOUT")
+        return "ERR TIMEOUT"
+
+    print(f"[Arduino -> PC] {response}")
+    return response
 
 
-def dc_motor_mode(ser: serial.Serial) -> None:
-    print("\n[DC Motor Mode]")
-    print("Input PWM: -255 ~ 255")
-    print("Examples: 120, -120, 0")
-    print("q: back")
-
+def gripper_menu(ser: serial.Serial) -> None:
     while True:
-        user_input = input("DC PWM> ").strip()
+        print("\n[Gripper Menu]")
+        print("1. Open gripper")
+        print("2. Close gripper")
+        print("3. Motor status")
+        print("q. Back")
 
-        if user_input.lower() == "q":
-            send_command(ser, "D 0")
+        sel = input("Select> ").strip().lower()
+
+        if sel == "1":
+            send_command(ser, CMD_GRIPPER_OPEN)
+
+        elif sel == "2":
+            send_command(ser, CMD_GRIPPER_CLOSE)
+
+        elif sel == "3":
+            send_command(ser, CMD_MOTOR_STATUS)
+
+        elif sel == "q":
             break
 
-        try:
-            pwm = int(user_input)
-        except ValueError:
-            print("Invalid PWM.")
-            continue
-
-        send_command(ser, f"D {pwm}")
-
-
-def gripper_mode(ser: serial.Serial) -> None:
-    print("\n[Gripper Servo Mode]")
-    print("Commands:")
-    print("  open")
-    print("  close")
-    print("  busy")
-    print("  angle")
-    print("  <0~180>")
-    print("  q")
-
-    while True:
-        user_input = input("GRIPPER> ").strip()
-
-        if user_input.lower() == "q":
-            break
-
-        if user_input.lower() == "open":
-            send_command(ser, "G OPEN")
-        elif user_input.lower() == "close":
-            send_command(ser, "G CLOSE")
-        elif user_input.lower() == "busy":
-            send_command(ser, "G BUSY")
-        elif user_input.lower() == "angle":
-            send_command(ser, "G ANGLE")
         else:
-            try:
-                angle = int(user_input)
-            except ValueError:
-                print("Invalid gripper command.")
-                continue
-
-            send_command(ser, f"G {angle}")
+            print("[PC] Invalid selection.")
 
 
-def sensor_mode(ser: serial.Serial) -> None:
-    print("\n[Sensor Mode]")
-    print("Commands:")
-    print("  door")
-    print("  q")
-
+def dc_motor_menu(ser: serial.Serial) -> None:
     while True:
-        user_input = input("SENSOR> ").strip()
+        print("\n[DC Motor Menu]")
+        print("1. Run DC motor")
+        print("2. Motor status")
+        print("3. Emergency stop")
+        print("q. Back")
 
-        if user_input.lower() == "q":
+        sel = input("Select> ").strip().lower()
+
+        if sel == "1":
+            send_command(ser, CMD_DC_MOTOR_RUN)
+
+        elif sel == "2":
+            send_command(ser, CMD_MOTOR_STATUS)
+
+        elif sel == "3":
+            send_command(ser, CMD_ESTOP)
+
+        elif sel == "q":
             break
 
-        if user_input.lower() == "door":
-            send_command(ser, "S DOOR")
         else:
-            print("Invalid sensor command.")
+            print("[PC] Invalid selection.")
 
 
-def raw_command_mode(ser: serial.Serial) -> None:
-    print("\n[Raw Command Mode]")
-    print("Examples:")
-    print("  D 120")
-    print("  G OPEN")
-    print("  G CLOSE")
-    print("  G 90")
-    print("  G BUSY")
-    print("  G ANGLE")
-    print("  S DOOR")
-    print("  STOP")
+def sensor_menu(ser: serial.Serial) -> None:
+    while True:
+        print("\n[Sensor Menu]")
+        print("1. Door status")
+        print("q. Back")
+
+        sel = input("Select> ").strip().lower()
+
+        if sel == "1":
+            send_command(ser, CMD_DOOR_STATUS)
+
+        elif sel == "q":
+            break
+
+        else:
+            print("[PC] Invalid selection.")
+
+
+def raw_command_menu(ser: serial.Serial) -> None:
+    print("\n[Raw Command Menu]")
+    print("Available examples:")
+    print(f"  {CMD_PING}")
+    print(f"  {CMD_GRIPPER_OPEN}")
+    print(f"  {CMD_GRIPPER_CLOSE}")
+    print(f"  {CMD_DC_MOTOR_RUN}")
+    print(f"  {CMD_MOTOR_STATUS}")
+    print(f"  {CMD_DOOR_STATUS}")
+    print(f"  {CMD_ESTOP}")
     print("q: back")
 
     while True:
@@ -159,50 +204,66 @@ def raw_command_mode(ser: serial.Serial) -> None:
 
 def main_menu(ser: serial.Serial) -> None:
     while True:
-        print("\n=== Robot Control ===")
-        print("1. DC motor mode")
-        print("2. Gripper servo mode")
-        print("3. Sensor mode")
-        print("4. Raw command mode")
-        print("5. Stop all")
+        print("\n=== PC to Arduino Test ===")
+        print("1. Ping")
+        print("2. Gripper")
+        print("3. DC motor")
+        print("4. Door sensor")
+        print("5. Motor status")
+        print("6. Emergency stop")
+        print("7. Raw command")
         print("q. Quit")
 
-        mode = input("Select> ").strip()
+        sel = input("Select> ").strip().lower()
 
-        if mode == "1":
-            dc_motor_mode(ser)
-        elif mode == "2":
-            gripper_mode(ser)
-        elif mode == "3":
-            sensor_mode(ser)
-        elif mode == "4":
-            raw_command_mode(ser)
-        elif mode == "5":
-            send_command(ser, "STOP")
-        elif mode.lower() == "q":
-            send_command(ser, "STOP")
+        if sel == "1":
+            send_command(ser, CMD_PING)
+
+        elif sel == "2":
+            gripper_menu(ser)
+
+        elif sel == "3":
+            dc_motor_menu(ser)
+
+        elif sel == "4":
+            sensor_menu(ser)
+
+        elif sel == "5":
+            send_command(ser, CMD_MOTOR_STATUS)
+
+        elif sel == "6":
+            send_command(ser, CMD_ESTOP)
+
+        elif sel == "7":
+            raw_command_menu(ser)
+
+        elif sel == "q":
+            send_command(ser, CMD_ESTOP)
             break
+
         else:
-            print("Invalid menu selection.")
+            print("[PC] Invalid selection.")
 
 
 def main() -> None:
     list_serial_ports()
 
-    port = input("\nSerial port ex) COM12: ").strip()
+    port = input("\nSerial port ex) COM14: ").strip()
 
     if not port:
-        print("Serial port is required.")
+        print("[PC] Serial port is required.")
         return
 
     try:
         with open_serial(port) as ser:
-            print(f"Connected to {port}")
+            print(f"[PC] Connected to {port}")
             main_menu(ser)
+
     except serial.SerialException as exc:
-        print(f"Serial error: {exc}")
+        print(f"[PC] Serial open error: {exc}")
+
     except KeyboardInterrupt:
-        print("\nInterrupted by user.")
+        print("\n[PC] Interrupted by user.")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,0 @@
-socket_send_string("V CAMERA")
-camera_response = socket_read_line()
-textmsg("Camera: ", camera_response)

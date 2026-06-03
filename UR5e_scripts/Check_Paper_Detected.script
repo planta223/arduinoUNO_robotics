@@ -1,0 +1,15 @@
+socket_send_string(CMD_CAMERA)
+socket_send_string("\n")
+pc_response = socket_read_line()
+
+if pc_response == RESP_PAPER_DETECTED:
+  paper_state = 1
+  fail_flag = 0
+
+elif pc_response == RESP_PAPER_NOT_DETECTED:
+  paper_state = 0
+  fail_flag = 1
+
+else:
+  fail_flag = 1
+end

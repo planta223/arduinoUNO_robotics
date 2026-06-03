@@ -1,0 +1,4 @@
+current_task = current_task + 1
+retry_count = 0
+task_done = 0
+fail_flag = 0

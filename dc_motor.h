@@ -3,11 +3,12 @@
 
 #include <Arduino.h>
 
-void DcMotor_Init(void);
-void DcMotor_SetPwm(int pwm);
-void DcMotor_Stop(void);
-void DcMotor_Brake(void);
+void DcMotor_Init(void); // coast stop
+void DcMotor_Update(void);
 
-void DcMotor_CommandUpdate(const String &cmd);
+void DcMotor_Run(void);
+void DcMotor_Stop(void);
+
+bool DcMotor_IsRunning(void);
 
 #endif

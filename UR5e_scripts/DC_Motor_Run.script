@@ -1,9 +1,0 @@
-socket_send_string("D RUN")
-res = socket_read_line()
-textmsg("D RUN: ", res)
-
-sleep(2.0)
-
-socket_send_string("D STOP")
-res = socket_read_line()
-textmsg("D STOP: ", res)
