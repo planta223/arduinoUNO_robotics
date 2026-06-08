@@ -12,7 +12,7 @@ constexpr uint8_t PIN_DC_MOTOR_IN2   = 8;
 constexpr uint8_t PIN_GRIPPER_SERVO = 10;
 
 /* door_sensor.cpp */
-constexpr uint8_t DOOR_SENSOR_CLOSED_LEVEL = LOW; // NO 접점 + 내부 풀업 기준, 자석 감지 시 LOW
+constexpr uint8_t DOOR_SENSOR_CLOSED_LEVEL = HIGH; // NO 접점 + 내부 풀업 기준, 자석 감지 시 LOW
 constexpr uint8_t DOOR_STATUS_LED_OPEN_LEVEL = LOW;
 constexpr uint8_t DOOR_STATUS_LED_CLOSED_LEVEL = HIGH;
 

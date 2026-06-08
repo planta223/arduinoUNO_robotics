@@ -1,49 +1,49 @@
 # Retry / fail control
-retry_count = 0
-max_retry = 2
-fail_flag = 0
-task_done = 0
-current_task = 0
+global retry_count = 0
+global max_retry = 2
+global fail_flag = 0
+global task_done = 0
+global current_task = 0
 
 # State variables
-door_state = 0      # 0: closed, 1: open
-motor_state = 0     # 0: idle, 1: busy
-paper_state = 0     # 0: not detected, 1: detected
+global door_state = 0      # 0: closed, 1: open
+global motor_state = 0     # 0: idle, 1: busy
+global paper_state = 0     # 0: not detected, 1: detected
 
 # Socket / response
-socket_state = 0
-pc_response = ""
+global socket_state = False
+global pc_response = ""
 
 # ============================================================
 # Command strings
 # URScript → PC Server → Arduino
 # ============================================================
 
-CMD_PING = "PING"
-CMD_DC_RUN = "D RUN"
-CMD_GRIPPER_OPEN = "G OPEN"
-CMD_GRIPPER_CLOSE = "G CLOSE"
-CMD_MOTOR_STATUS = "MOTOR STATUS"
-CMD_DOOR_STATUS = "DOOR STATUS"
-CMD_ESTOP = "ESTOP"
-CMD_CAMERA = "V CAMERA"
+global CMD_PING = "PING\n"
+global CMD_GRIPPER_OPEN = "G OPEN\n"
+global CMD_GRIPPER_CLOSE = "G CLOSE\n"
+global CMD_DC_RUN = "D RUN\n"
+global CMD_ESTOP = "ESTOP\n"
+global CMD_MOTOR_STATUS = "MOTOR STATUS\n"
+global CMD_DOOR_STATUS = "DOOR STATUS\n"
+global CMD_CAMERA = "V CAMERA\n"
 
 # ============================================================
 # Expected response strings
 # Arduino / PC Server → URScript
 # ============================================================
 
-RESP_OK_PING = "OK PING"
-RESP_OK_DC_RUN = "OK D RUN"
-RESP_OK_GRIPPER_OPEN = "OK G OPEN"
-RESP_OK_GRIPPER_CLOSE = "OK G CLOSE"
-RESP_OK_ESTOP = "OK ESTOP"
+global RESP_OK_PING = "OK PING"
+global RESP_OK_GRIPPER_OPEN = "OK G OPEN"
+global RESP_OK_GRIPPER_CLOSE = "OK G CLOSE"
+global RESP_OK_DC_RUN = "OK D RUN"
+global RESP_OK_ESTOP = "OK ESTOP"
 
-RESP_MOTOR_BUSY = "MOTOR STATUS BUSY"
-RESP_MOTOR_IDLE = "MOTOR STATUS IDLE"
+global RESP_MOTOR_BUSY = "MOTOR STATUS BUSY"
+global RESP_MOTOR_IDLE = "MOTOR STATUS IDLE"
 
-RESP_DOOR_OPEN = "DOOR STATUS OPEN"
-RESP_DOOR_CLOSED = "DOOR STATUS CLOSED"
+global RESP_DOOR_OPEN = "DOOR STATUS OPEN"
+global RESP_DOOR_CLOSED = "DOOR STATUS CLOSED"
 
-RESP_PAPER_DETECTED = "PAPER DETECTED"
-RESP_PAPER_NOT_DETECTED = "PAPER NOT DETECTED"
+global RESP_PAPER_DETECTED = "PAPER DETECTED"
+global RESP_PAPER_NOT_DETECTED = "PAPER NOT DETECTED"

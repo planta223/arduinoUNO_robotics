@@ -1,4 +1,4 @@
-current_task = current_task + 1
-retry_count = 0
-task_done = 0
-fail_flag = 0
+global current_task = current_task + 1
+global retry_count = 0
+global task_done = 0
+global fail_flag = 0

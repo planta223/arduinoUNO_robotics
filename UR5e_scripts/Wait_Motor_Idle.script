@@ -1,3 +1,7 @@
+global pc_response
+global motor_state
+global fail_flag
+
 # MOTOR STATUS를 반복 조회하여 IDLE이 될 때까지 대기
 # break문 사용 불가하므로 wait_done 임시 변수 사용
 
@@ -5,7 +9,6 @@ wait_done = 0
 
 while wait_done == 0:
   socket_send_string(CMD_MOTOR_STATUS)
-  socket_send_string("\n")
   pc_response = socket_read_line()
 
   if pc_response == RESP_MOTOR_BUSY:
