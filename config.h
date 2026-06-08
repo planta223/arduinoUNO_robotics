@@ -25,8 +25,8 @@ constexpr unsigned long DC_MOTOR_RUN_TIME_MS = 1500UL; // 튜닝 대상. 대략 
 /* gripper_servo.cpp */
 constexpr int GRIPPER_ANGLE_MIN = 0;
 constexpr int GRIPPER_ANGLE_MAX = 180;
-constexpr int GRIPPER_OPEN_ANGLE = 70; // 그리퍼 열림 각도 (임시값)
-constexpr int GRIPPER_CLOSE_ANGLE = 110; // 그리퍼 닫힘 각도 (임시값)
+constexpr int GRIPPER_OPEN_ANGLE = 60; // 그리퍼 열림 각도 (임시값)
+constexpr int GRIPPER_CLOSE_ANGLE = 125; // 그리퍼 닫힘 각도 (임시값)
 constexpr int GRIPPER_INIT_ANGLE = GRIPPER_OPEN_ANGLE; // 초기 각도 (열림 상태)
 constexpr unsigned long GRIPPER_MOVE_TIME_MS = 1000UL; // 그리퍼가 목표 각도로 이동하는 데 걸리는 시간 (임시값, 실제로는 서보의 속도에 따라 달라질 수 있음)
 
