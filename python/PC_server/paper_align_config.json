@@ -1,0 +1,132 @@
+{
+  "camera_index": 1,
+  "frame_width": 1280,
+  "frame_height": 720,
+  "backend": "dshow",
+  "pixel_difference_threshold": 18,
+  "min_presence_change_ratio": 0.1,
+  "min_align_in_change_ratio": 0.75,
+  "max_out_top_change_ratio": 0.08,
+  "max_out_left_change_ratio": 0.08,
+  "max_out_right_change_ratio": 0.08,
+  "max_out_bottom_change_ratio": 0.08,
+  "out_difference_mode": "bright_only",
+  "alignment_enabled": true,
+  "alignment_max_shift_px": 12.0,
+  "alignment_min_response": 0.1,
+  "alignment_downscale": 0.5,
+  "vote_window": 10,
+  "vote_required": 7,
+  "magnifier_size": 9,
+  "magnifier_zoom": 12,
+  "calibration": {
+    "presence_roi": [
+      {
+        "x": 582.0,
+        "y": 175.0
+      },
+      {
+        "x": 1018.0,
+        "y": 173.0
+      },
+      {
+        "x": 1056.0,
+        "y": 432.0
+      },
+      {
+        "x": 585.0,
+        "y": 419.0
+      }
+    ],
+    "align_in_roi": [
+      {
+        "x": 560.0,
+        "y": 159.0
+      },
+      {
+        "x": 1033.0,
+        "y": 153.0
+      },
+      {
+        "x": 1082.0,
+        "y": 457.0
+      },
+      {
+        "x": 552.0,
+        "y": 457.0
+      }
+    ],
+    "out_top_roi": [
+      {
+        "x": 658.0,
+        "y": 141.0
+      },
+      {
+        "x": 1026.0,
+        "y": 135.0
+      },
+      {
+        "x": 1027.0,
+        "y": 146.0
+      },
+      {
+        "x": 655.0,
+        "y": 152.0
+      }
+    ],
+    "out_left_roi": [
+      {
+        "x": 540.0,
+        "y": 171.0
+      },
+      {
+        "x": 551.0,
+        "y": 173.0
+      },
+      {
+        "x": 540.0,
+        "y": 459.0
+      },
+      {
+        "x": 522.0,
+        "y": 459.0
+      }
+    ],
+    "out_right_roi": [
+      {
+        "x": 1038.0,
+        "y": 155.0
+      },
+      {
+        "x": 1052.0,
+        "y": 155.0
+      },
+      {
+        "x": 1102.0,
+        "y": 454.0
+      },
+      {
+        "x": 1086.0,
+        "y": 456.0
+      }
+    ],
+    "out_bottom_roi": [
+      {
+        "x": 551.0,
+        "y": 467.0
+      },
+      {
+        "x": 1088.0,
+        "y": 460.0
+      },
+      {
+        "x": 1091.0,
+        "y": 478.0
+      },
+      {
+        "x": 552.0,
+        "y": 481.0
+      }
+    ]
+  }
+}

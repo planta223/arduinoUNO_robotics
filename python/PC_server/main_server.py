@@ -21,13 +21,17 @@ D RUN
 ESTOP
 MOTOR STATUS
 DOOR STATUS
-V CAMERA
+V LID
+V PAPER
 
 원칙:
 1. PC는 명령을 임의 변환하지 않습니다.
 2. Arduino로 전달 가능한 명령은 그대로 전달합니다.
 3. Arduino 응답은 단순화하지 않고 그대로 UR5e로 반환합니다.
-4. V CAMERA는 Arduino가 아니라 PC에서 처리합니다.
+4. V LID, V PAPER는 Arduino가 아니라 PC Vision에서 처리합니다.
+5. Vision 내부 실패는 별도 ERR 없이 fail-safe 상태로 반환합니다.
+   - V LID 실패 시 LID_CLOSED
+   - V PAPER 실패 시 PAPER_NG
 '''
 
 import socket
@@ -37,6 +41,7 @@ import serial
 from serial.tools import list_ports
 
 import config
+from vision_checker import VisionChecker
 
 
 def list_serial_ports() -> None:
@@ -132,19 +137,36 @@ def send_to_arduino(ser: serial.Serial, cmd: str) -> str:
 
     print(f"[Arduino -> PC] {response}")
     return response
+    
+    
+def is_vision_command(cmd: str) -> bool:
+    """
+    PC Vision에서 처리할 명령인지 확인합니다.
+    """
 
+    vision_commands = {
+        config.CMD_VISION_LID_STATUS,
+        config.CMD_VISION_PAPER_ALIGN,
+    }
 
-def handle_camera_command() -> str:
-    '''
-    비전 판정 명령 처리부입니다.
-    현재는 임시로 PAPER 1을 반환합니다.
-    추후 OpenCV, 카메라 캡처, 모델 추론 등으로 교체하면 됩니다.
-    '''
+    return cmd in vision_commands
+    
+    
+def handle_vision_command(cmd: str, vision_checker: VisionChecker) -> str:
+    """
+    PC Vision 명령을 처리합니다.
+    Vision 내부 실패는 vision_checker 내부에서 fail-safe 응답으로 변환합니다.
+    """
 
-    # TODO: 실제 카메라 판정 로직으로 교체
-    return config.RESP_PAPER_DETECTED
+    if cmd == config.CMD_VISION_LID_STATUS:
+        return vision_checker.check_vision_lid()
 
+    if cmd == config.CMD_VISION_PAPER_ALIGN:
+        return vision_checker.check_vision_align()
 
+    return config.RESP_ERR_UNKNOWN_CMD
+    
+    
 def is_arduino_command(cmd: str) -> bool:
     '''
     Arduino로 그대로 전달할 수 있는 명령인지 확인합니다.
@@ -163,10 +185,10 @@ def is_arduino_command(cmd: str) -> bool:
     return cmd in arduino_commands
 
 
-def handle_command(cmd: str, ser: serial.Serial) -> str:
-    '''
+def handle_command(cmd: str, ser: serial.Serial, vision_checker: VisionChecker) -> str:
+    """
     UR5e에서 받은 명령을 처리합니다.
-    '''
+    """
 
     cmd = clean_ur_command(cmd)
 
@@ -175,9 +197,9 @@ def handle_command(cmd: str, ser: serial.Serial) -> str:
     if not cmd:
         return config.RESP_ERR_UNKNOWN_CMD
 
-    # PC 자체 처리 명령
-    if cmd == config.CMD_CAMERA_RESULT:
-        return handle_camera_command()
+    # PC Vision 처리 명령
+    if is_vision_command(cmd):
+        return handle_vision_command(cmd, vision_checker)
 
     # Arduino 전달 명령
     if is_arduino_command(cmd):
@@ -186,7 +208,7 @@ def handle_command(cmd: str, ser: serial.Serial) -> str:
     return config.RESP_ERR_UNKNOWN_CMD
 
 
-def run_server(ser: serial.Serial) -> None:
+def run_server(ser: serial.Serial, vision_checker: VisionChecker) -> None:
     '''
     TCP Socket 서버를 실행합니다.
     UR5e가 클라이언트로 접속합니다.
@@ -221,7 +243,7 @@ def run_server(ser: serial.Serial) -> None:
                             break
 
                         cmd = data.decode("utf-8", errors="ignore")
-                        response = handle_command(cmd, ser)
+                        response = handle_command(cmd, ser, vision_checker)
 
                         conn.sendall((response + "\n").encode("utf-8"))
                         print(f"[SERVER RESP] {response}")
@@ -246,10 +268,12 @@ def run_server(ser: serial.Serial) -> None:
 def main() -> None:
     list_serial_ports()
 
+    vision_checker = VisionChecker()
+
     try:
         with open_arduino() as ser:
             print(f"[Arduino] Connected on {config.ARDUINO_PORT}")
-            run_server(ser)
+            run_server(ser, vision_checker)
 
     except serial.SerialException as exc:
         print(f"[Arduino] Serial open error: {exc}")
@@ -257,6 +281,8 @@ def main() -> None:
     except KeyboardInterrupt:
         print("\n[SERVER] Interrupted by user.")
 
+    finally:
+        vision_checker.release()
 
 if __name__ == "__main__":
     main()
