@@ -18,7 +18,7 @@ ARDUINO_RESET_WAIT_S = 2.0
 # ============================================================
 # Camera 설정
 # ============================================================
-CAMERA_INDEX = 0
+CAMERA_INDEX = 1
 CAMERA_BACKEND = "dshow"   # Windows + Logitech C270 기준
 CAMERA_FRAME_WIDTH = 1280
 CAMERA_FRAME_HEIGHT = 720
@@ -29,6 +29,11 @@ ARUCO_MARKER_ID = 0
 PAPER_CONFIG_PATH = "paper_align_config.json"
 PAPER_BACKGROUND_PATH = "paper_align_config_background.png"
 
+CAMERA_AUTO_EXPOSURE = 0
+CAMERA_EXPOSURE = -5
+CAMERA_GAIN = 0
+CAMERA_WARMUP_FRAMES = 30
+CAMERA_FLUSH_FRAMES = 3
 
 # ============================================================
 # 공통 명령 문자열
