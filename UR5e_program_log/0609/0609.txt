@@ -1,0 +1,144 @@
+ 프로그램
+   로봇 프로그램
+     Init
+       호출 Init_Variables
+       호출 Socket_Open
+       MoveJ
+         Home
+     Main Sequence
+       Task1:OpenPrinter
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Home
+             AccessToPrinter
+             MoveL
+               Open1
+               Open2
+               Open3
+               Open4
+               Open5
+               Open6
+           호출 Check_Door_Open
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+       Task2:PickA4FromTray
+         호출 Enter_Next_Task
+         MoveJ
+           Home
+           AccessToTray
+         호출 Gripper_Open
+         호출 Wait_Motor_Idle
+         호출 DC_Run
+         호출 Wait_Motor_Idle
+         호출 Gripper_Close
+         호출 Wait_Motor_Idle
+         MoveJ
+           RetreatFromTray
+         If fail_flag == 1
+           호출 Error_Stop
+       Task3:PlaceA4OnScanner
+         호출 Enter_Next_Task
+         MoveJ
+           AccessToScanne
+         호출 Gripper_Open
+         호출 Wait_Motor_Idle
+         MoveJ
+           RetreatFromScan
+         호출 Check_Paper_Detected
+         If fail_flag == 1
+           호출 Error_Stop
+       Task4:ClosePrinter
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             AccessToPrinter
+             ClosePrinterr
+             RetreatFromPrin
+           호출 Check_Door_Closed
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+       Task5:OpenPrinter
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             AccessToPrinter
+             OpenPrinterr
+             RetreatFromPrin
+           호출 Check_Door_Open
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+       Task6:PickA4FromScanner
+         호출 Enter_Next_Task
+         호출 Gripper_Open
+         호출 Wait_Motor_Idle
+         MoveJ
+           AccessToScanner
+         호출 Gripper_Close
+         호출 Wait_Motor_Idle
+         MoveJ
+           RetreatFromSca
+         If fail_flag == 1
+           호출 Error_Stop
+       Task7:PlaceA4InBasket
+         호출 Enter_Next_Task
+         MoveJ
+           AccessToBasket
+         호출 Gripper_Open
+         호출 Wait_Motor_Idle
+         MoveJ
+           RetreatFromBask
+         If fail_flag == 1
+           호출 Error_Stop
+       Task8:ClosePrinter
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             AccessToPrinter
+             ClosePrinter
+             RetreatFromPrin
+           호출 Check_Door_Closed
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+   Socket_Open
+     스크립트: Socket_Open.script
+   Init_Variables
+     스크립트: Init_Variables.script
+   DC_Run
+     스크립트: DC_Run.script
+   Gripper_Close
+     스크립트: Gripper_Close.script
+   Gripper_Open
+     스크립트: Gripper_Open.script
+   Wait_Motor_Idle
+     스크립트: Wait_Motor_Idle.script
+   Check_Door_Closed
+     스크립트: Check_Door_Closed.script
+   Check_Door_Open
+     스크립트: Check_Door_Open.script
+   Check_Paper_Detected
+     스크립트: Check_Paper_Detected.script
+   Error_Stop
+     스크립트: Error_Stop.script
+   Enter_Next_Task
+     스크립트: Enter_Next_Task.script

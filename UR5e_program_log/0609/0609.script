@@ -1,0 +1,1375 @@
+def P0609():
+  set_safety_mode_transition_hardness(1)
+  set_target_payload(0.100000, [0.000000, 0.000000, 0.000000], [0.000033, 0.000033, 0.000033, 0.000000, 0.000000, 0.000000])
+  step_count_9b4c10a2_fa2b_40b2_8cb1_96ed3c6d816b = 0.0
+  thread Step_Counter_Thread_db159355_ad92_45ed_99e3_1dacc425a0ab():
+    while (True):
+      step_count_9b4c10a2_fa2b_40b2_8cb1_96ed3c6d816b = step_count_9b4c10a2_fa2b_40b2_8cb1_96ed3c6d816b + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_db159355_ad92_45ed_99e3_1dacc425a0ab()
+  set_gravity([0.0, 0.0, 9.82])
+  set_tool_communication(True, 1000000, 2, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(24)
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  global u54252u51064u53944_1=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  # begin: URCap Installation Node
+  #   Source: OnRobot, 5.11.0, OnRobot A/S
+  #   Type: OnRobot 설정
+  if (False):
+  end
+  ON_CONN_SHIFT_BOOL = 64
+  ON_CONN_SHIFT_INT = 24
+  ON_CONN_SHIFT_FLOAT = 24
+  ON_CONN_REG_SUM_BOOL = 0
+  ON_CONN_REG_SUM_INT = 1
+  ON_CONN_REG_SUM_FLOAT = 0
+  ON_TOOL_SHIFT_BOOL = 64
+  ON_TOOL_SHIFT_INT = 25
+  ON_TOOL_SHIFT_FLOAT = 24
+  ON_TOOL_SHIFT_BOOL_ARR = [64, 64, 64]
+  ON_TOOL_SHIFT_INT_ARR = [25, 25, 25]
+  ON_TOOL_SHIFT_FLOAT_ARR = [24, 24, 24]
+  ON_TOOL_REG_SUM_BOOL = 0
+  ON_TOOL_REG_SUM_INT = 0
+  ON_TOOL_REG_SUM_FLOAT = 0
+  ON_REGISTERS_SPEEDL_FLOAT = 0
+  ON_REG_USE_TOOL = False
+  ON_DI_SINGLE = 0
+  ON_DI_PRIMARY = 1
+  ON_DI_SECONDARY = 2
+  ON_DI_DUAL = 3
+  on_robot_type = 5
+  on_robot_cycle = 2.0
+  on_conn_ip = "localhost"
+  on_tool_ip = "localhost"
+  on_device_socket_port = 51234
+  on_conn_xmlrpc = rpc_factory("xmlrpc", "http://localhost:41414")
+  on_tool_xmlrpc = rpc_factory("xmlrpc", "http://localhost:41414")
+  on_RPC = rpc_factory("xmlrpc", "http://127.0.0.1:31416")
+  ON_DEBUG_LOG = False
+  on_isMetric = True
+  on_toolConnector = True
+  on_ioqc = False
+  on_dual = False
+  on_computebox = False
+  on_devices = 0
+  on_gripper = [False, False, False]
+  on_ft = False
+  #======    OnRobot Globals    ======#
+  
+  ON_MATH_PI=3.141593
+  ON_ZEROPOSE=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_ZEROFRAME=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_ZERO3D=[0.0,0.0,0.0]
+  ON_ZERO6D=[0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_ZERO8D=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_FALSE3D=[False,False,False]
+  ON_FALSE6D=[False,False,False,False,False,False]
+  ON_FALSE8D=[False,False,False,False,False,False,False,False]
+  global on_return=0
+  on_speedL=ON_ZERO6D
+  on_speedBase=ON_ZERO6D
+  on_speedVect=ON_ZERO6D
+  on_speedExtra=ON_ZERO6D
+  on_speedCB=ON_ZERO6D
+  on_speedGecko=ON_ZERO6D
+  on_RTDE_error=0
+  on_RTDE_tool_error=0
+  on_dataProcess_thrd=0
+  ON_DEVICE_ID_MISSING=0
+  ON_INIT_WATCHDOG_HZ=5
+  ON_INIT_TIMEOUT=500
+  on_robot_TCP_offset=ON_ZEROFRAME
+  on_tcp_offset_actual=ON_ZEROFRAME
+  on_cog_actual=ON_ZEROFRAME
+  on_mass_actual=0.0
+  on_robot_mount=[0.0,0.0]
+  
+  #======    End of OnRobot Globals    ======#
+  #======    OnRobot Interface Messages    ======#
+  
+  on_devices_primary_log="OnRobot 장치"
+  on_devices_secondary_log="OnRobot 보조 장치"
+  on_program_halted="<br>프로그램이 중지되었습니다."
+  on_device_error_title="OnRobot - 장치 오류"
+  on_install_error="OnRobot 설정이 올바르지 않습니다.<br>설치 탭의 OnRobot 설정 페이지에서 상태를 확인하십시오.<br>프로그램이 중지되었습니다."
+  on_device_missing="연결된 장치가 없습니다.<br>프로그램이 중지되었습니다."
+  ft_device_missing="감지된 OnRobot FT 서버 또는 사이센스가 없습니다. <br>프로그램이 중지되었습니다."
+  cb_device_missing="연결된 OnRobot Compute Box가 없습니다.<br>프로그램이 중지되었습니다."
+  hex_device_missing="연결된 HEX 센서가 없습니다.<br>프로그램이 중지되었습니다."
+  rg2ft_device_missing="연결된 RG2-FT Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  rg_device_missing="연결된 RG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  vg_device_missing="연결된 VG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  gg_device_missing="연결된 Gecko Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  sg_device_missing="연결된 Soft Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  tfg_device_missing="연결된 3FG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  sdr_device_missing="연결된 OnRobot Sander가 없습니다.<br>프로그램이 중지되었습니다."
+  twofg_device_missing="연결된 2FG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  vgp_device_missing="연결된 VGP Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  mg_device_missing="연결된 Magnetic Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  on_xmlrpc_start_ip="OnRobot XML-RPC 서버에 연결 중:"
+  on_java_comm_error_textmsg_title="OnRobot - 통신 오류:"
+  on_java_comm_controlsocket_open_error="’javaSocket’ 소켓 열기에 실패했습니다."
+  on_java_comm_error_title="OnRobot - 통신 오류"
+  on_java_comm_socket_open_error="URCap과의 연결 시간을 초과했습니다.<br>설치 탭의 OnRobot 설정 페이지에서 상태를 확인하십시오.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_error_textmsg_title="OnRobot - RTDE 오류:"
+  on_rtde_feed_error="RTDE 피드 오류입니다. OnRobot 장치 수가 일치하지 않습니다.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_tool_error="도구 RTDE 피드 오류입니다. OnRobot 장치 수가 일치하지 않습니다.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_open_error_textmsg="’rtdeFeed’ 소켓 열기에 실패했습니다."
+  on_rtde_feed_error_title="OnRobot - RTDE 오류"
+  on_rtde_feed_count_error="유효하지 않은 RTDE 오프셋 설정이 감지되었습니다. 설정 탭의 OnRobot 설정 페이지에서 RTDE 오프셋을 확인하십시오.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_open_error="장치와의 연결 시간을 초과했습니다.<br>OnRobot 장치가 작동 중인지 점검하고 설치 탭의 OnRobot 설정 페이지에서 상태를 확인하십시오."
+  
+  #======    End of OnRobot Interface Messages    ======#
+  #======    OnRobot Interface    ======#
+  
+  on_portopened_javaSocket=False
+  on_rtde_feed_opened=False
+  on_dataProcess_running=False
+  def on_missing():
+  popup(on_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def ft_missing():
+  popup(ft_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def cb_missing():
+  popup(ft_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def hex_missing():
+  popup(hex_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def rg2ft_missing():
+  popup(rg2ft_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def rg_missing():
+  popup(rg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def vg_missing():
+  popup(vg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def gg_missing():
+  popup(gg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def sg_missing():
+  popup(sg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def tfg_missing():
+  popup(tfg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def sdr_missing():
+  popup(sdr_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def twofg_missing():
+  popup(twofg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def vgp_missing():
+  popup(vgp_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def mg_missing():
+  popup(mg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def on_portclose_javaSocket():
+  socket_close("javaSocket")
+  on_portopened_javaSocket=False
+  end 
+  def on_portopen_javaSocket():
+  on_portclose_javaSocket()
+  on_portopened_javaSocket=socket_open("127.0.0.1",44005,"javaSocket")
+  if not on_portopened_javaSocket:
+  textmsg(on_java_comm_error_textmsg_title,on_java_comm_controlsocket_open_error)
+  popup(on_java_comm_socket_open_error,title=on_java_comm_error_title,error=True,blocking=False)
+  halt
+  end 
+  end 
+  on_conn_rtde_feed_name="rtdeFeedConn"
+  on_tool_rtde_feed_name="rtdeFeedTool"
+  def on_rtde_feed_close(rtdeFeedName):
+  socket_close(rtdeFeedName)
+  on_rtde_feed_opened=False
+  end 
+  def on_rtde_feed_open(deviceIP,rtdeFeedName,regStart,regSum,regSpeedl):
+  on_rtde_feed_close(rtdeFeedName)
+  if((regStart[0]+regSum[0])>128)or((regStart[1]+regSum[1])>48)or((regStart[2]+regSum[2])>48):
+  popup(on_rtde_feed_count_error,title=on_rtde_feed_error_title,error=True,blocking=False)
+  textmsg(str_cat("RegStart: ",regStart),str_cat("  -  RegSum: ",regSum))
+  halt
+  end 
+  on_rtde_feed_opened=socket_open(deviceIP,on_device_socket_port,rtdeFeedName)
+  if not on_rtde_feed_opened:
+  on_rtde_feed_opened=socket_open(deviceIP,on_device_socket_port,rtdeFeedName)
+  end 
+  if not on_rtde_feed_opened:
+  textmsg(on_rtde_feed_error_textmsg_title,on_rtde_feed_open_error_textmsg)
+  popup(on_rtde_feed_open_error,title=on_rtde_feed_error_title,error=True,blocking=False)
+  halt
+  end 
+  socket_send_int(regStart[0],rtdeFeedName)
+  socket_send_int(regSum[0],rtdeFeedName)
+  socket_send_int(regStart[1],rtdeFeedName)
+  socket_send_int(regSum[1],rtdeFeedName)
+  socket_send_int(regStart[2],rtdeFeedName)
+  socket_send_int(regSum[2],rtdeFeedName)
+  socket_send_int(regSpeedl,rtdeFeedName)
+  socket_send_int(on_devices,rtdeFeedName)
+  end 
+  def on_dataRead():
+  enter_critical
+  on_RTDE_error=read_input_integer_register(ON_CONN_SHIFT_INT)
+  if(ON_REG_USE_TOOL):
+  on_RTDE_tool_error=read_input_integer_register(ON_TOOL_SHIFT_INT_ARR[0])
+  end
+  exit_critical
+  end 
+  def on_set_rtde_watchdog(updateHz=ON_INIT_WATCHDOG_HZ):
+  local effect="stop"
+  if(updateHz<1):
+  effect="ignore"
+  end 
+  watchdog_conn_reg_str=str_cat("input_int_register_",ON_CONN_SHIFT_INT)
+  rtde_set_watchdog(watchdog_conn_reg_str,updateHz,effect)
+  if(ON_REG_USE_TOOL):
+  watchdog_tool_reg_str=str_cat("input_int_register_",ON_TOOL_SHIFT_INT_ARR[0])
+  rtde_set_watchdog(watchdog_tool_reg_str,updateHz,effect)
+  end 
+  if ON_DEBUG_LOG:
+  local update_str=str_cat(" "+effect+" watchdog set to [Hz]: ",updateHz)
+  textmsg(watchdog_conn_reg_str,update_str)
+  if(ON_REG_USE_TOOL):
+  local update_str=str_cat(" "+effect+" watchdog set to [Hz]: ",updateHz)
+  textmsg(watchdog_tool_reg_str,update_str)
+  end 
+  end 
+  end 
+  def on_speedCB_get():
+  return[on_speedCB[0],on_speedCB[1],on_speedCB[2],on_speedCB[3],on_speedCB[4],on_speedCB[5]]
+  end 
+  def on_speedGecko_get():
+  local speedExtra=ON_ZERO6D
+  if on_speedl_for_gecko:
+  speedExtra=[on_speedGecko[0],on_speedGecko[1],on_speedGecko[2],on_speedGecko[3],on_speedGecko[4],on_speedGecko[5]]
+  end 
+  return speedExtra
+  end 
+  def on_speedGecko_set(speedGecko):
+  on_speedGecko=[speedGecko[0],speedGecko[1],speedGecko[2],speedGecko[3],speedGecko[4],speedGecko[5]]
+  end 
+  thread on_dataProcess_thread():
+  if ON_DEBUG_LOG:
+  textmsg("Starting on_dataRead thread")
+  end 
+  local error=False
+  on_dataProcess_running=True
+  sync()
+  while on_dataProcess_running:
+  sync()
+  on_dataRead()
+  error=on_error((on_RTDE_error<0),on_rtde_feed_error,on_rtde_feed_error_title,error)
+  error=on_error((ON_REG_USE_TOOL and(on_RTDE_tool_error<0)),on_rtde_feed_tool_error,on_rtde_feed_error_title,error)
+  on_dataProcess_running=not error
+  end 
+  if error:
+  halt
+  end 
+  if ON_DEBUG_LOG:
+  textmsg("Stopping on_dataRead thread")
+  end 
+  end 
+  thread on_set_watchdog_thread():
+  sleep(2)
+  on_set_rtde_watchdog(updateHz=ON_INIT_WATCHDOG_HZ)
+  sleep(1/ON_INIT_WATCHDOG_HZ)
+  on_dataProcess_running=False
+  kill on_dataProcess_thrd
+  end 
+  
+  #======    End of OnRobot Interface    ======#
+  #======    OnRobot QC Setup Tool Connector    ======#
+  
+  def tc_setup_tool():
+  if ON_DEBUG_LOG:
+  textmsg("QC Setup Tool Connector start...")
+  end 
+  set_tool_voltage(24)
+  
+  set_tool_communication(True,1000000,2,1,1.5,3.5)
+  
+  if ON_DEBUG_LOG:
+  textmsg("QC Setup Tool Connector end.")
+  end 
+  end 
+  
+  #======    End of OnRobot QC Setup Tool Connector    ======#
+  #======    OnRobot TCP Messages    ======#
+  
+  on_tcp_log_msg_default="OnRobot: 로봇 TCP 오프셋 설정:"
+  on_tcp_log_msg_primary="OnRobot: 로봇 TCP 오프셋 주 설정:"
+  on_tcp_log_msg_secondary="OnRobot: 로봇 TCP 오프셋 보조 설정:"
+  
+  #======    End of OnRobot TCP Messages    ======#
+  #======    OnRobot TCP    ======#
+  
+  on_tcp_offset_actual=ON_ZEROFRAME
+  on_tcp_offset_primary=ON_ZEROFRAME
+  on_tcp_static_primary=ON_ZEROFRAME
+  on_tcp_dynamic_primary=ON_ZEROFRAME
+  on_tcp_vision_primary=ON_ZEROFRAME
+  on_tcp_qc_primary=ON_ZEROFRAME
+  on_tcp_base_primary=ON_ZEROFRAME
+  on_tcp_gripper_static_primary=ON_ZEROFRAME
+  on_tcp_tool_primary=ON_ZEROFRAME
+  on_tcp_gripper_dynamic_primary=ON_ZEROFRAME
+  on_tcp_gripper_primary=ON_ZEROFRAME
+  on_tcp_offset_secondary=ON_ZEROFRAME
+  on_tcp_static_secondary=ON_ZEROFRAME
+  on_tcp_dynamic_secondary=ON_ZEROFRAME
+  on_tcp_vision_secondary=ON_ZEROFRAME
+  on_tcp_qc_secondary=ON_ZEROFRAME
+  on_tcp_base_secondary=ON_ZEROFRAME
+  on_tcp_gripper_static_secondary=ON_ZEROFRAME
+  on_tcp_tool_secondary=ON_ZEROFRAME
+  on_tcp_gripper_dynamic_secondary=ON_ZEROFRAME
+  on_tcp_gripper_secondary=ON_ZEROFRAME
+  def on_tcp_update_primary():
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Primary start..")
+  end 
+  on_tcp_gripper_dynamic_primary=p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  enter_critical
+  on_tcp_dynamic_primary=pose_trans(on_tcp_static_primary,on_tcp_gripper_dynamic_primary)
+  on_tcp_offset_primary=pose_trans(on_tcp_dynamic_primary,on_tcp_tool_primary)
+  exit_critical
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Primary end.")
+  end 
+  end 
+  def on_tcp_init_primary():
+  if ON_DEBUG_LOG:
+  textmsg("TCP Init Primary start..")
+  end 
+  enter_critical
+  on_tcp_base_primary=pose_trans(on_tcp_vision_primary,on_tcp_qc_primary)
+  on_tcp_static_primary=pose_trans(on_tcp_base_primary,on_tcp_gripper_static_primary)
+  exit_critical
+  on_tcp_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("TCP Init Primary end.")
+  end 
+  end 
+  def on_tcp_offset_set(TCP_offset):
+  if ON_DEBUG_LOG:
+  textmsg("TCP Offset set started!")
+  end 
+  on_tcp_offset_send(TCP_offset)
+  if(on_follow_tcp):
+  set_tcp(TCP_offset)
+  end 
+  on_robot_TCP_offset=TCP_offset
+  if ON_DEBUG_LOG:
+  textmsg("TCP Offset set to: ",on_robot_TCP_offset)
+  end 
+  end 
+  def on_tcp_offset_forced_set_actual(isPrimary=True):
+  if(not on_follow_tcp):
+  
+  local tcp_log_msg=on_tcp_log_msg_default
+  
+  textmsg(tcp_log_msg,on_tcp_offset_actual)
+  set_tcp(on_tcp_offset_actual)
+  end 
+  end 
+  def on_tcp_update(isPrimary=True):
+  on_tcp_update_primary()
+  
+  on_tcp_set_actual_to(isPrimary)
+  end 
+  def on_tcp_set_actual_to(isPrimary=True):
+  
+  on_tcp_offset_actual=on_tcp_offset_primary
+  if(on_follow_tcp):
+  textmsg(on_tcp_log_msg_default,on_tcp_offset_actual)
+  end 
+  
+  on_tcp_active_is_primary=isPrimary
+  on_tcp_offset_set(on_tcp_offset_actual)
+  end 
+  def on_tcp_update_tool_primary(tool_offset):
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool Primary start..")
+  end 
+  on_tcp_tool_primary=tool_offset
+  on_tcp_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool Primary end.")
+  end 
+  end 
+  def on_tcp_tool_rpy_get(xyz=[0.0,0.0,0.0],rpy=[0.0,0.0,0.0]):
+  local rotvec=rpy2rotvec(rpy)
+  local tool_offset=p[xyz[0],xyz[1],xyz[2],rotvec[0],rotvec[1],rotvec[2]]
+  return tool_offset
+  end 
+  
+  def on_tcp_update_tool(tool_offset,tool_index=0):
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool start..")
+  end 
+  if(tool_index!=ON_DI_SECONDARY):
+  on_tcp_update_tool_primary(tool_offset)
+  local isPrimary=True
+  
+  end 
+  on_tcp_set_actual_to(isPrimary)
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool end.")
+  end 
+  end 
+  def on_get_tcp_for(tool_index):
+  if tool_index==ON_DI_SECONDARY:
+  local actual_tcp=on_tcp_static_secondary
+  else:
+  local actual_tcp=on_tcp_static_primary
+  end 
+  return actual_tcp
+  end 
+  
+  #======    End of OnRobot TCP    ======#
+  #======    OnRobot Payload Messages    ======#
+  
+  on_mass_log_msg="OnRobot: 로봇 유효 하중 크기 설정:"
+  on_cog_log_msg="OnRobot: 로봇 유효 하중 무게 중심 설정:"
+  
+  #======    End of OnRobot Payload Messages    ======#
+  #======    OnRobot Payload    ======#
+  
+  on_cog_actual=ON_ZEROFRAME
+  on_mass_actual=0.0
+  on_cog_primary=ON_ZEROFRAME
+  on_cog_L1L2_primary=ON_ZEROFRAME
+  on_mass_primary=0.0
+  on_mass_L1L2_primary=0.0
+  on_cog_vision_primary=ON_ZEROFRAME
+  on_cog_qc_primary=ON_ZEROFRAME
+  on_cog_base_primary=ON_ZEROFRAME
+  on_cog_gripper_primary=ON_ZEROFRAME
+  on_cog_tool_primary=ON_ZEROFRAME
+  on_mass_vision_primary=0.0
+  on_mass_qc_primary=0.0
+  on_mass_base_primary=0.0
+  on_mass_gripper_primary=0.0
+  on_mass_tool_primary=0.0
+  on_cog_secondary=ON_ZEROFRAME
+  on_mass_secondary=0.0
+  on_cog_gripper_secondary=ON_ZEROFRAME
+  on_mass_gripper_secondary=0.0
+  on_cog_tool_secondary=ON_ZEROFRAME
+  on_mass_tool_secondary=0.0
+  ON_LB2KG001=0.45359237/100
+  def on_payload_update_primary():
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Primary start..")
+  end 
+  enter_critical
+  on_mass_primary=on_mass_L1L2_primary+on_mass_tool_primary
+  local massL1L2L3Ratio=on_mass_tool_primary/on_mass_primary
+  local toolAbsCOG=pose_trans(on_tcp_dynamic_primary,on_cog_tool_primary)
+  toolAbsCOG=p[toolAbsCOG[0],toolAbsCOG[1],toolAbsCOG[2],0.0,0.0,0.0]
+  on_cog_primary=interpolate_pose(on_cog_L1L2_primary,toolAbsCOG,massL1L2L3Ratio)
+  on_cog_primary=p[on_cog_primary[0],on_cog_primary[1],on_cog_primary[2],0.0,0.0,0.0]
+  exit_critical
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Primary end.")
+  end 
+  end 
+  def on_payload_init_primary():
+  if ON_DEBUG_LOG:
+  textmsg("Payload Init Primary start..")
+  end 
+  enter_critical
+  on_mass_base_primary=on_mass_vision_primary+on_mass_qc_primary
+  local massL0L1Ratio=on_mass_qc_primary/on_mass_base_primary
+  on_mass_L1L2_primary=on_mass_base_primary+on_mass_gripper_primary
+  local massL1L2Ratio=on_mass_gripper_primary/on_mass_L1L2_primary
+  local qcAbsCOG=pose_trans(on_tcp_vision_primary,on_cog_qc_primary)
+  qcAbsCOG=p[qcAbsCOG[0],qcAbsCOG[1],qcAbsCOG[2],0.0,0.0,0.0]
+  on_cog_base_primary=interpolate_pose(on_cog_vision_primary,qcAbsCOG,massL0L1Ratio)
+  on_cog_base_primary=p[on_cog_base_primary[0],on_cog_base_primary[1],on_cog_base_primary[2],0.0,0.0,0.0]
+  local gripperAbsCOG=pose_trans(on_tcp_base_primary,on_cog_gripper_primary)
+  gripperAbsCOG=p[gripperAbsCOG[0],gripperAbsCOG[1],gripperAbsCOG[2],0.0,0.0,0.0]
+  on_cog_L1L2_primary=interpolate_pose(on_cog_base_primary,gripperAbsCOG,massL1L2Ratio)
+  on_cog_L1L2_primary=p[on_cog_L1L2_primary[0],on_cog_L1L2_primary[1],on_cog_L1L2_primary[2],0.0,0.0,0.0]
+  exit_critical
+  on_payload_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("Payload Init Primary end.")
+  end 
+  end 
+  def on_payload_update():
+  on_payload_update_primary()
+  
+  on_mass_actual =on_mass_primary
+  on_cog_actual=on_cog_primary
+  
+  on_payload_set_actual()
+  end 
+  def on_payload_set_actual():
+  
+  on_mass_actual =on_mass_primary
+  on_cog_actual=on_cog_primary
+  
+  local CoG=[on_cog_actual[0],on_cog_actual[1],on_cog_actual[2]]
+  on_payload_set(on_mass_actual,CoG)
+  end 
+  def on_payload_update_tool_primary(tool_mass=0,tool_cog=[0.0,0.0,0.0]):
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool Primary start..")
+  end 
+  on_cog_tool_primary=p[tool_cog[0],tool_cog[1],tool_cog[2],0.0,0.0,0.0]
+  on_mass_tool_primary=tool_mass
+  on_payload_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool Primary end.")
+  end 
+  end 
+  def on_payload_set(mass,CoG):
+  if ON_DEBUG_LOG:
+  textmsg("Payload set started!")
+  end 
+  local center_of_gravity=[CoG[0],CoG[1],CoG[2]]
+  on_payload_send(center_of_gravity,mass)
+  if(on_isMetric):
+  local roundedMass=floor(mass*100+0.5)/100
+  else:
+  local roundedMass=floor(mass/ON_LB2KG001+0.5)*ON_LB2KG001
+  end 
+  set_payload(roundedMass,center_of_gravity)
+  on_mass_actual=roundedMass
+  on_cog_actual=p[CoG[0],CoG[1],CoG[2],0.0,0.0,0.0]
+  if ON_DEBUG_LOG:
+  textmsg("Payload mass, CoG set to: ",str_cat(str_cat(mass,", "),CoG))
+  end 
+  end 
+  
+  def on_payload_update_secondary():
+  end 
+  def on_payload_init_secondary():
+  end 
+  
+  def on_payload_update_tool(tool_mass,tool_cog=[0.0,0.0,0.0],tool_index=0):
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool start..")
+  end 
+  if(tool_index!=ON_DI_SECONDARY):
+  on_cog_tool_primary=p[tool_cog[0],tool_cog[1],tool_cog[2],0.0,0.0,0.0]
+  on_mass_tool_primary=tool_mass
+  else:
+  on_cog_tool_secondary=p[tool_cog[0],tool_cog[1],tool_cog[2],0.0,0.0,0.0]
+  on_mass_tool_secondary=tool_mass
+  end 
+  on_payload_update()
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool end.")
+  end 
+  end 
+  def on_payload_get_cog2tcp_tool(tool_index=0):
+  if(tool_index!=ON_DI_SECONDARY):
+  local cog_tool=[on_tcp_tool_primary[0],on_tcp_tool_primary[1],on_tcp_tool_primary[2]]
+  else:
+  local cog_tool=[on_tcp_tool_secondary[0],on_tcp_tool_secondary[1],on_tcp_tool_secondary[2]]
+  end 
+  return cog_tool
+  end 
+  
+  #======    End of OnRobot Payload    ======#
+  #======    OnRobot QC TCP    ======#
+  
+  onrobotmini=0
+  
+  def on_tcp_offset_send(TCP_offset):
+  on_robot_TCP_offset=TCP_offset
+  end 
+  def on_payload_send(CoG,mass):
+  on_robot_payload_cog=CoG
+  on_robot_payload_mass=mass
+  end 
+  
+  
+  #======    End of OnRobot QC TCP    ======#
+  #======    OnRobot  Speedl    ======#
+  
+  on_speedl_thread_handler=0
+  on_speedl_is_enabled=False
+  on_speedl_is_running=False
+  on_speedl_acc=0.0
+  ft_speedl_hg_caranteen_reached=False
+  ft_speedl_hg_caranteen_safemode=False
+  on_speedl_for_ftcontrol=False
+  on_speedl_for_move=False
+  on_speedl_for_handguide=False
+  on_speedl_for_insertpart=False
+  on_speedl_for_depthcompensation=False
+  on_speedl_for_center=False
+  on_speedl_for_gecko=False
+  on_speedl_acc=10000.0 
+  on_speedl_acc_to_zero=3.0 
+  ON_SPEEDL_FTCONTROL=1
+  ON_SPEEDL_HANDGUIDE=2
+  ON_SPEEDL_TRAJECTORY=3
+  ON_SPEEDL_MOVE=ON_SPEEDL_TRAJECTORY
+  ON_SPEEDL_INSERTPART=4
+  ON_SPEEDL_DEPTHCOMP=5
+  ON_SPEEDL_CENTER=6
+  ON_SPEEDL_GECKO=7
+  def on_wait_ms(time_ms):
+  local sync_time=ceil(norm(time_ms/2.0))
+  while(sync_time>0):
+  sync_time=sync_time-1
+  sync()
+  end
+  end 
+  def on_error(status_flag,message,title,stop_var=False):
+  if(status_flag):
+  popup(message,title=title,error=True,blocking=False)
+  stop_var=True
+  end 
+  return stop_var
+  end 
+  def on_warning(status_flag,message,title,isPopupNeeded=False,is_shown=False):
+  if(status_flag):
+  if(not is_shown):
+  if(isPopupNeeded):
+  popup(message,title=title,warning=True,blocking=False)
+  else:
+  textmsg(title+": ",message)
+  end 
+  is_shown=True
+  end 
+  else:
+  is_shown=False
+  end 
+  return is_shown
+  end 
+  def on_speedl_add_extra(speedBase,speedExtra):
+  speedSum=ON_ZERO6D
+  speedBaseP=p[speedBase[0],speedBase[1],speedBase[2],speedBase[3],speedBase[4],speedBase[5]]
+  speedExtraP=p[speedExtra[0],speedExtra[1],speedExtra[2],speedExtra[3],speedExtra[4],speedExtra[5]]
+  speedSumP=pose_add(speedExtraP,speedBaseP)
+  speedSum=[speedSumP[0],speedSumP[1],speedSumP[2],speedSumP[3],speedSumP[4],speedSumP[5]]
+  return speedSum
+  end 
+  
+  thread on_speedl_thread():
+  if ON_DEBUG_LOG:
+  textmsg("Speedl thread started..")
+  end 
+  enter_critical
+  on_speedl_is_running=True
+  on_speedl_is_enabled=True
+  exit_critical
+  on_speedL=ON_ZERO6D
+  on_speedL_last=ON_ZERO6D
+  
+  while on_speedl_is_running:
+  on_speedBase=on_speedCB_get()
+  on_speedL=on_speedBase
+  
+  
+  if on_speedl_is_enabled:
+  if(on_speedL==ON_ZERO6D):
+  on_speedL=[on_speedL_last[0]/100,on_speedL_last[1]/100,on_speedL_last[2]/100,on_speedL_last[3]/100,on_speedL_last[4]/100,on_speedL_last[5]/100]
+  end
+  speedl(on_speedL,a=on_speedl_acc,t=0.001)
+  else:
+  speedl(ON_ZERO6D,a=on_speedl_acc_to_zero,t=0.001)
+  end 
+  on_speedL_last=on_speedL
+  end 
+  
+  on_speedL=ON_ZERO6D
+  if ON_DEBUG_LOG:
+  textmsg("Speedl thread ended.")
+  end 
+  end 
+  def on_speedl_integer_get():
+  local speedl_integer=binary_list_to_integer([on_speedl_for_ftcontrol,on_speedl_for_handguide,on_speedl_for_move,on_speedl_for_insertpart,on_speedl_for_depthcompensation,on_speedl_for_center,on_speedl_for_gecko])
+  return speedl_integer
+  end 
+  def on_speedl_start_for(speedl_id):
+  if(speedl_id==ON_SPEEDL_FTCONTROL):
+  on_speedl_for_ftcontrol=True
+  elif(speedl_id==ON_SPEEDL_HANDGUIDE):
+  on_speedl_for_handguide=True
+  elif(speedl_id==ON_SPEEDL_TRAJECTORY):
+  on_speedl_for_move=True
+  elif(speedl_id==ON_SPEEDL_INSERTPART):
+  on_speedl_for_insertpart=True
+  elif(speedl_id==ON_SPEEDL_DEPTHCOMP):
+  on_speedl_for_depthcompensation=True
+  elif(speedl_id==ON_SPEEDL_CENTER):
+  on_speedl_for_center=True
+  elif(speedl_id==ON_SPEEDL_GECKO):
+  on_speedl_for_gecko=True
+  else:
+  textmsg("Unknown Start speedl ID received: ",speedl_id)
+  end 
+  local speedl_integer=on_speedl_integer_get()
+  if not(speedl_integer==0):
+  if not on_speedl_is_running:
+  on_speedl_thread_handler=run on_speedl_thread()
+  end 
+  end 
+  return on_speedl_is_running
+  end 
+  def on_speedl_stop_for(speedl_id,brake=10,brakeRot=10):
+  if(speedl_id==ON_SPEEDL_FTCONTROL):
+  on_speedl_for_ftcontrol=False
+  elif(speedl_id==ON_SPEEDL_HANDGUIDE):
+  on_speedl_for_handguide=False
+  elif(speedl_id==ON_SPEEDL_TRAJECTORY):
+  on_speedl_for_move=False
+  elif(speedl_id==ON_SPEEDL_INSERTPART):
+  on_speedl_for_insertpart=False
+  elif(speedl_id==ON_SPEEDL_DEPTHCOMP):
+  on_speedl_for_depthcompensation=False
+  elif(speedl_id==ON_SPEEDL_CENTER):
+  on_speedl_for_center=False
+  elif(speedl_id==ON_SPEEDL_GECKO):
+  on_speedl_for_gecko=False
+  on_speedGecko_set(ON_ZERO6D)
+  else:
+  textmsg("Unknown Stop speedl ID received: ",speedl_id)
+  end 
+  local speedl_integer=on_speedl_integer_get()
+  if(speedl_integer==0):
+  if(on_speedl_is_running):
+  kill on_speedl_thread_handler
+  enter_critical
+  on_speedl_is_running=False
+  exit_critical
+  
+  end 
+  if ON_DEBUG_LOG:
+  textmsg("Speedl thread stopped")
+  end 
+  stopl(brake,brakeRot)
+  end 
+  return on_speedl_is_running
+  end 
+  def on_speedl_pause():
+  on_speedl_is_enabled=False
+  return on_speedl_integer_get()
+  end 
+  def on_speedl_resume():
+  on_speedl_is_enabled=True
+  return on_speedl_integer_get()
+  end 
+  
+  #======    End of OnRobot  Speedl    ======#
+  textmsg(on_devices_primary_log, ": Quick Changer + QC Tool 면 + [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]")
+  on_install_tcp = False
+  on_follow_tcp = False
+  on_tcp_active_is_primary = True
+  on_tcp_vision_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_cog_vision_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_mass_vision_primary = 0.0
+  on_tcp_qc_primary = p[0.0, 0.0, 0.0136, 0.0, 0.0, 0.0]
+  on_cog_qc_primary = p[0.0, 0.0, 0.004, 0.0, 0.0, 0.0]
+  on_mass_qc_primary = 0.06
+  on_tcp_gripper_static_primary = p[0.0, 0.0, 0.017, 0.0, 0.0, 0.0]
+  on_cog_gripper_primary = p[0.0, 0.0, 0.002, 0.0, 0.0, 0.0]
+  on_mass_gripper_primary = 0.14
+  on_tcp_tool_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_cog_tool_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_mass_tool_primary = 0.0
+  #======    OnRobot Run    ======#
+  
+  on_portopen_javaSocket()
+  sync()
+  textmsg(on_xmlrpc_start_ip,on_conn_ip)
+  if(ON_REG_USE_TOOL):
+  on_regStart_conn=[ON_CONN_SHIFT_BOOL,ON_CONN_SHIFT_INT,ON_CONN_SHIFT_FLOAT]
+  on_regSum_conn=[ON_CONN_REG_SUM_BOOL,ON_CONN_REG_SUM_INT,ON_CONN_REG_SUM_FLOAT]
+  on_rtde_feed_open(on_conn_ip,on_conn_rtde_feed_name,on_regStart_conn,on_regSum_conn,ON_REGISTERS_SPEEDL_FLOAT)
+  sync()
+  textmsg(on_xmlrpc_start_ip,on_tool_ip)
+  on_regStart_tool=[ON_TOOL_SHIFT_BOOL,ON_TOOL_SHIFT_INT,ON_TOOL_SHIFT_FLOAT]
+  on_regSum_tool=[ON_TOOL_REG_SUM_BOOL,ON_TOOL_REG_SUM_INT,ON_TOOL_REG_SUM_FLOAT]
+  on_rtde_feed_open(on_tool_ip,on_tool_rtde_feed_name,on_regStart_tool,on_regSum_tool,0)
+  sync()
+  else:
+  on_regStart_conn=[ON_CONN_SHIFT_BOOL,ON_CONN_SHIFT_INT,ON_CONN_SHIFT_FLOAT]
+  on_regSum_conn=[ON_CONN_REG_SUM_BOOL,ON_CONN_REG_SUM_INT,ON_CONN_REG_SUM_FLOAT]
+  on_rtde_feed_open(on_conn_ip,on_conn_rtde_feed_name,on_regStart_conn,on_regSum_conn,ON_REGISTERS_SPEEDL_FLOAT)
+  sync()
+  end
+  on_set_rtde_watchdog(updateHz=0.2)
+  sync()
+  on_dataProcess_thrd=run on_dataProcess_thread()
+  sync()
+  on_tcp_init_primary()
+  on_payload_init_primary()
+  
+  on_tcp_set_actual_to(on_tcp_active_is_primary)
+  if(on_follow_tcp):
+  on_payload_set_actual()
+  end 
+  on_watchdog_thrd=run on_set_watchdog_thread()
+  sync()
+  
+  #======    End of OnRobot Run    ======#
+  #======    OnRobot QC Start    ======#
+  
+  if(on_toolConnector):
+  tc_setup_tool()
+  end 
+  sync()
+  
+  #======    End of OnRobot QC Start    ======#
+  # end: URCap Installation Node
+  global Home_p=p[.369650348632, -.494568883724, .421925027049, .049559519014, -3.077229323136, -.057365755775]
+  global Home_q=[-4.2819369474994105, -1.2830216449550171, 1.3901837507831019, 4.665958567256592, -1.6074746290790003, 0.40202757716178894]
+  global AccessToPrinter_p=p[.334462008957, -.597737442427, .240466918661, -.006876499177, 3.138774998353, -.044501428231]
+  global AccessToPrinter_q=[-4.39845580259432, -1.01422734678302, 1.506439510975973, 4.193393869990967, -1.5718382040606897, 0.31482529640197754]
+  global Open1_p=p[.318021372632, -.643966874462, .240480617175, -.006814670906, 3.138833696831, -.044490684977]
+  global Open1_q=[-4.440748039876119, -0.9426784080317994, 1.3863533178912562, 4.241703673, -1.5705316702472132, 0.27223339676856995]
+  global Open2_p=p[.322784421789, -.662887447273, .347649298160, .003321344199, -3.127246796367, -.038972137365]
+  global Open2_q=[-4.440767470990316, -0.9666958612254639, 1.1240084807025355, 4.583820505733154, -1.5714615027057093, 0.2723681926727295]
+  global Open3_p=p[.321328969331, -.697509279374, .437721676746, .021429197723, 3.119417971168, -.120412476203]
+  global Open3_q=[-4.455414716397421, -0.9179982107928772, 0.8418086210833948, 4.709873839015625, -1.5654452482806605, 0.27242475748062134]
+  global Open4_p=p[.322368885505, -.751555412112, .471140039076, -.055969163694, 3.049495330480, -.442336634515]
+  global Open4_q=[-4.470622722302572, -0.7963309449008484, 0.6111934820758265, 4.604402704829834, -1.569719139729635, 0.2065390646457672]
+  global Open5_p=p[.312239948806, -.772060159634, .475940319909, -.035431601034, 3.016106029904, -.664802309645]
+  global Open5_q=[-4.484493796025411, -0.7748850148967286, 0.6077593008624476, 4.4452430444904785, -1.6042526404010218, 0.1989295929670334]
+  global Open6_p=p[.295845348152, -.580618926769, .613456409749, -.040535895969, -3.057026449246, -.058578269262]
+  global Open6_q=[-4.436186019574301, -1.0872594577125092, 0.6085026899920862, 5.252679991513052, -1.6346023718463343, 0.30314934253692627]
+  global AccessToTray_p=p[.369603406319, -.494615710076, .422070547876, .049630542626, -3.077434099083, -.056934843158]
+  global AccessToTray_q=[-4.2820497194873255, -1.283117489223816, 1.3900178114520472, 4.665876074428223, -1.607415501271383, 0.4018619656562805]
+  global RetreatFromTray_p=p[.369611178206, -.494615013869, .422060573233, .049586997466, -3.077446434799, -.056981096817]
+  global RetreatFromTray_q=[-4.282041613255636, -1.2831009489348908, 1.3900159041034144, 4.66588465749707, -1.6073907057391565, 0.40189817547798157]
+  global AccessToScanne_p=p[.369630673605, -.494591185226, .421923793038, .049485486032, -3.077268218374, -.057421595720]
+  global AccessToScanne_q=[-4.281989876423971, -1.2830054026893158, 1.3901613394366663, 4.665980501765869, -1.6074264685260218, 0.4020218551158905]
+  global RetreatFromScan_p=p[.369638828387, -.494607452531, .421869399317, .049497536394, -3.077150000591, -.057451689905]
+  global RetreatFromScan_q=[-4.281972710286276, -1.282927469616272, 1.3901837507831019, 4.665947600001953, -1.6075246969806116, 0.4020346701145172]
+  global ClosePrinterr_p=p[.369641122266, -.494609201937, .421879252955, .049488120461, -3.077216926375, -.057470984011]
+  global ClosePrinterr_q=[-4.281981293355123, -1.2829304200461884, 1.3901656309710901, 4.665951891536377, -1.6074588934527796, 0.40203046798706055]
+  global RetreatFromPrin_p=p[.369644228086, -.494591993823, .421887300536, .049526471902, -3.077211191771, -.057398812559]
+  global RetreatFromPrin_q=[-4.281960789357321, -1.282969282274582, 1.3902056852923792, 4.665910883540771, -1.607483212147848, 0.4020261764526367]
+  global OpenPrinterr_p=p[.369667932995, -.494584818799, .421901850466, .049585549128, -3.077205220760, -.057425982508]
+  global OpenPrinterr_q=[-4.2819207350360315, -1.2829484802535553, 1.3901365439044397, 4.665978117580078, -1.6074789206134241, 0.40202757716178894]
+  global AccessToScanner_p=p[.369655072573, -.494587332523, .421911080560, .049525079485, -3.077182264138, -.057397269095]
+  global AccessToScanner_q=[-4.2819369474994105, -1.2829647225192566, 1.3901360670672815, 4.6659881311604, -1.6075084845172327, 0.4020511209964752]
+  global RetreatFromSca_p=p[.369664189328, -.494582868051, .421907999246, .049585196381, -3.077210068795, -.057411073738]
+  global RetreatFromSca_q=[-4.281925026570455, -1.2829618018916626, 1.3901408354388636, 4.665976210231445, -1.6074789206134241, 0.4020233452320099]
+  global AccessToBasket_p=p[.369638183396, -.494570180464, .421941521907, .049605779925, -3.077206482432, -.057284587423]
+  global AccessToBasket_q=[-4.2819488684283655, -1.2830478113940735, 1.3901856581317347, 4.665943308467529, -1.6075189749347132, 0.4019859731197357]
+  global RetreatFromBask_p=p[.369654428343, -.494572378355, .421913379902, .049624671838, -3.077197498059, -.057362874144]
+  global RetreatFromBask_q=[-4.281928364430563, -1.2830019754222413, 1.3901856581317347, 4.665947600001953, -1.6075041929828089, 0.4019947052001953]
+  global ClosePrinter_p=p[.369674383257, -.494570875000, .421894639608, .049631754062, -3.077189490310, -.057442860818]
+  global ClosePrinter_q=[-4.28189999261965, -1.282960222368576, 1.3901665846454065, 4.665976210231445, -1.6074875036822718, 0.40201878547668457]
+  def Socket_Open():
+    $ 122 "Socket_Open" "noBreak"
+    $ 123 "스크립트: Socket_Open.script"
+    global socket_state = socket_open("192.168.0.10", 5000)
+    
+    if socket_state:
+      socket_send_string(CMD_PING)
+      global pc_response = socket_read_line()
+    
+      if pc_response == RESP_OK_PING:
+        global fail_flag = 0
+        textmsg("Socket open OK")
+      else:
+        global fail_flag = 1
+        textmsg("PING failed: ", pc_response)
+      end
+    
+    else:
+      global fail_flag = 1
+      textmsg("Socket open FAILED")
+      halt
+    end
+  end
+  def Init_Variables():
+    $ 124 "Init_Variables" "noBreak"
+    $ 125 "스크립트: Init_Variables.script"
+    # Retry / fail control
+    global retry_count = 0
+    global max_retry = 2
+    global fail_flag = 0
+    global task_done = 0
+    global current_task = 0
+    
+    # State variables
+    global door_state = 0      # 0: closed, 1: open
+    global motor_state = 0     # 0: idle, 1: busy
+    global paper_state = 0     # 0: not detected, 1: detected
+    
+    # Socket / response
+    global socket_state = False
+    global pc_response = ""
+    
+    # ============================================================
+    # Command strings
+    # URScript → PC Server → Arduino
+    # ============================================================
+    
+    global CMD_PING = "PING\n"
+    global CMD_GRIPPER_OPEN = "G OPEN\n"
+    global CMD_GRIPPER_CLOSE = "G CLOSE\n"
+    global CMD_DC_RUN = "D RUN\n"
+    global CMD_ESTOP = "ESTOP\n"
+    global CMD_MOTOR_STATUS = "MOTOR STATUS\n"
+    global CMD_DOOR_STATUS = "DOOR STATUS\n"
+    global CMD_CAMERA = "V CAMERA\n"
+    
+    # ============================================================
+    # Expected response strings
+    # Arduino / PC Server → URScript
+    # ============================================================
+    
+    global RESP_OK_PING = "OK PING"
+    global RESP_OK_GRIPPER_OPEN = "OK G OPEN"
+    global RESP_OK_GRIPPER_CLOSE = "OK G CLOSE"
+    global RESP_OK_DC_RUN = "OK D RUN"
+    global RESP_OK_ESTOP = "OK ESTOP"
+    
+    global RESP_MOTOR_BUSY = "MOTOR STATUS BUSY"
+    global RESP_MOTOR_IDLE = "MOTOR STATUS IDLE"
+    
+    global RESP_DOOR_OPEN = "DOOR STATUS OPEN"
+    global RESP_DOOR_CLOSED = "DOOR STATUS CLOSED"
+    
+    global RESP_PAPER_DETECTED = "PAPER DETECTED"
+    global RESP_PAPER_NOT_DETECTED = "PAPER NOT DETECTED"
+  end
+  def DC_Run():
+    $ 126 "DC_Run" "noBreak"
+    $ 127 "스크립트: DC_Run.script"
+    socket_send_string(CMD_DC_RUN)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_OK_DC_RUN:
+      global motor_state = 1
+      global fail_flag = 0
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Gripper_Close():
+    $ 128 "Gripper_Close" "noBreak"
+    $ 129 "스크립트: Gripper_Close.script"
+    socket_send_string(CMD_GRIPPER_CLOSE)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_OK_GRIPPER_CLOSE:
+      global motor_state = 1
+      global fail_flag = 0
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Gripper_Open():
+    $ 130 "Gripper_Open" "noBreak"
+    $ 131 "스크립트: Gripper_Open.script"
+    socket_send_string(CMD_GRIPPER_OPEN)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_OK_GRIPPER_OPEN:
+      global motor_state = 1
+      global fail_flag = 0
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Wait_Motor_Idle():
+    $ 132 "Wait_Motor_Idle" "noBreak"
+    $ 133 "스크립트: Wait_Motor_Idle.script"
+    # MOTOR STATUS를 반복 조회하여 IDLE이 될 때까지 대기
+    # break문 사용 불가하므로 wait_done 임시 변수 사용
+    
+    wait_done = 0
+    
+    while wait_done == 0:
+      socket_send_string(CMD_MOTOR_STATUS)
+      global pc_response = socket_read_line()
+    
+      if pc_response == RESP_MOTOR_BUSY:
+        global motor_state = 1
+        sleep(0.1)
+    
+      elif pc_response == RESP_MOTOR_IDLE:
+        global motor_state = 0
+        global fail_flag = 0
+        global wait_done = 1
+    
+      else:
+        global fail_flag = 1
+        global wait_done = 1
+      end
+    end
+  end
+  def Check_Door_Closed():
+    $ 134 "Check_Door_Closed" "noBreak"
+    $ 135 "스크립트: Check_Door_Closed.script"
+    socket_send_string(CMD_DOOR_STATUS)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_DOOR_CLOSED:
+      global door_state = 0
+      global fail_flag = 0
+    
+    elif pc_response == RESP_DOOR_OPEN:
+      global door_state = 1
+      global fail_flag = 1
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Check_Door_Open():
+    $ 136 "Check_Door_Open" "noBreak"
+    $ 137 "스크립트: Check_Door_Open.script"
+    socket_send_string(CMD_DOOR_STATUS)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_DOOR_OPEN:
+      global door_state = 1
+      global fail_flag = 0
+    
+    elif pc_response == RESP_DOOR_CLOSED:
+      global door_state = 0
+      global fail_flag = 1
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Check_Paper_Detected():
+    $ 138 "Check_Paper_Detected" "noBreak"
+    $ 139 "스크립트: Check_Paper_Detected.script"
+    socket_send_string(CMD_CAMERA)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_PAPER_DETECTED:
+      global paper_state = 1
+      global fail_flag = 0
+    
+    elif pc_response == RESP_PAPER_NOT_DETECTED:
+      global paper_state = 0
+      global fail_flag = 1
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Error_Stop():
+    $ 140 "Error_Stop" "noBreak"
+    $ 141 "스크립트: Error_Stop.script"
+    
+    # 현재 task 번호에 따라 오류 메시지 출력
+    if current_task == 1:
+      popup("Task 1 Failed: Open Printer", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 2:
+      popup("Task 2 Failed: Pick A4 From Paper Box", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 3:
+      popup("Task 3 Failed: Place A4 To Printer Head", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 4:
+      popup("Task 4 Failed: Close Printer", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 5:
+      popup("Task 5 Failed: Open Printer Again", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 6:
+      popup("Task 6 Failed: Pick A4 From Printer Head", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 7:
+      popup("Task 7 Failed: Place A4 To Paper Box", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 8:
+      popup("Task 8 Failed: Close Printer Again", title="Task Error", warning=True, error=False)
+    
+    else:
+      popup("Unknown Task Failed", title="Task Error", warning=True, error=False)
+    end
+    
+    # Arduino/PC 측 정지 요청
+    socket_send_string(CMD_ESTOP)
+    global pc_response = socket_read_line()
+    
+    # 로그 출력
+    textmsg("ESTOP response: ", pc_response)
+    
+    # UR Program 정지
+    halt
+  end
+  def Enter_Next_Task():
+    $ 142 "Enter_Next_Task" "noBreak"
+    $ 143 "스크립트: Enter_Next_Task.script"
+    global current_task = current_task + 1
+    global retry_count = 0
+    global task_done = 0
+    global fail_flag = 0
+  end
+  while (True):
+    $ 1 "로봇 프로그램"
+    $ 2 "Init"
+    $ 3 "호출 Init_Variables"
+    Init_Variables()
+    $ 4 "호출 Socket_Open"
+    Socket_Open()
+    $ 5 "MoveJ"
+    $ 6 "Home" "breakAfter"
+    movej(get_inverse_kin(Home_p, qnear=Home_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 7 "Main Sequence"
+    $ 8 "Task1:OpenPrinter"
+    $ 9 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 10 "retry_count <= max_retry and task_done == 0 Loop"
+    while (retry_count <= max_retry and task_done == 0):
+      $ 11 "MoveJ"
+      $ 12 "Home" "breakAfter"
+      movej(get_inverse_kin(Home_p, qnear=Home_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 13 "AccessToPrinter" "breakAfter"
+      movej(get_inverse_kin(AccessToPrinter_p, qnear=AccessToPrinter_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 14 "MoveL"
+      $ 15 "Open1" "breakAfter"
+      movel(Open1_p, a=1.2, v=0.25)
+      $ 16 "Open2" "breakAfter"
+      movel(Open2_p, a=1.2, v=0.25)
+      $ 17 "Open3" "breakAfter"
+      movel(Open3_p, a=1.2, v=0.25)
+      $ 18 "Open4" "breakAfter"
+      movel(Open4_p, a=1.2, v=0.25)
+      $ 19 "Open5" "breakAfter"
+      movel(Open5_p, a=1.2, v=0.25)
+      $ 20 "Open6" "breakAfter"
+      movel(Open6_p, a=1.2, v=0.25)
+      $ 21 "호출 Check_Door_Open"
+      Check_Door_Open()
+      $ 22 "스위치 fail_flag"
+      switch_1 = fail_flag
+      $ 23 "케이스 0"
+      if (0 == switch_1):
+        $ 24 "task_done = 1"
+        task_done = 1
+      elif (1 == switch_1):
+        $ 25 "케이스 1"
+        $ 26 "retry_count = retry_count + 1"
+        retry_count = retry_count + 1
+      end
+    end
+    $ 27 "If task_done == 0"
+    if (task_done == 0):
+      $ 28 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 29 "Task2:PickA4FromTray"
+    $ 30 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 31 "MoveJ"
+    $ 32 "Home" "breakAfter"
+    movej(get_inverse_kin(Home_p, qnear=Home_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 33 "AccessToTray" "breakAfter"
+    movej(get_inverse_kin(AccessToTray_p, qnear=AccessToTray_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 34 "호출 Gripper_Open"
+    Gripper_Open()
+    $ 35 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 36 "호출 DC_Run"
+    DC_Run()
+    $ 37 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 38 "호출 Gripper_Close"
+    Gripper_Close()
+    $ 39 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 40 "MoveJ"
+    $ 41 "RetreatFromTray" "breakAfter"
+    movej(get_inverse_kin(RetreatFromTray_p, qnear=RetreatFromTray_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 42 "If fail_flag == 1"
+    if (fail_flag == 1):
+      $ 43 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 44 "Task3:PlaceA4OnScanner"
+    $ 45 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 46 "MoveJ"
+    $ 47 "AccessToScanne" "breakAfter"
+    movej(get_inverse_kin(AccessToScanne_p, qnear=AccessToScanne_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 48 "호출 Gripper_Open"
+    Gripper_Open()
+    $ 49 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 50 "MoveJ"
+    $ 51 "RetreatFromScan" "breakAfter"
+    movej(get_inverse_kin(RetreatFromScan_p, qnear=RetreatFromScan_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 52 "호출 Check_Paper_Detected"
+    Check_Paper_Detected()
+    $ 53 "If fail_flag == 1"
+    if (fail_flag == 1):
+      $ 54 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 55 "Task4:ClosePrinter"
+    $ 56 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 57 "retry_count <= max_retry and task_done == 0 Loop"
+    while (retry_count <= max_retry and task_done == 0):
+      $ 58 "MoveJ"
+      $ 59 "AccessToPrinter" "breakAfter"
+      movej(get_inverse_kin(AccessToPrinter_p, qnear=AccessToPrinter_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 60 "ClosePrinterr" "breakAfter"
+      movej(get_inverse_kin(ClosePrinterr_p, qnear=ClosePrinterr_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 61 "RetreatFromPrin" "breakAfter"
+      movej(get_inverse_kin(RetreatFromPrin_p, qnear=RetreatFromPrin_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 62 "호출 Check_Door_Closed"
+      Check_Door_Closed()
+      $ 63 "스위치 fail_flag"
+      switch_1 = fail_flag
+      $ 64 "케이스 0"
+      if (0 == switch_1):
+        $ 65 "task_done = 1"
+        task_done = 1
+      elif (1 == switch_1):
+        $ 66 "케이스 1"
+        $ 67 "retry_count = retry_count + 1"
+        retry_count = retry_count + 1
+      end
+    end
+    $ 68 "If task_done == 0"
+    if (task_done == 0):
+      $ 69 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 70 "Task5:OpenPrinter"
+    $ 71 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 72 "retry_count <= max_retry and task_done == 0 Loop"
+    while (retry_count <= max_retry and task_done == 0):
+      $ 73 "MoveJ"
+      $ 74 "AccessToPrinter" "breakAfter"
+      movej(get_inverse_kin(AccessToPrinter_p, qnear=AccessToPrinter_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 75 "OpenPrinterr" "breakAfter"
+      movej(get_inverse_kin(OpenPrinterr_p, qnear=OpenPrinterr_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 76 "RetreatFromPrin" "breakAfter"
+      movej(get_inverse_kin(RetreatFromPrin_p, qnear=RetreatFromPrin_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 77 "호출 Check_Door_Open"
+      Check_Door_Open()
+      $ 78 "스위치 fail_flag"
+      switch_1 = fail_flag
+      $ 79 "케이스 0"
+      if (0 == switch_1):
+        $ 80 "task_done = 1"
+        task_done = 1
+      elif (1 == switch_1):
+        $ 81 "케이스 1"
+        $ 82 "retry_count = retry_count + 1"
+        retry_count = retry_count + 1
+      end
+    end
+    $ 83 "If task_done == 0"
+    if (task_done == 0):
+      $ 84 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 85 "Task6:PickA4FromScanner"
+    $ 86 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 87 "호출 Gripper_Open"
+    Gripper_Open()
+    $ 88 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 89 "MoveJ"
+    $ 90 "AccessToScanner" "breakAfter"
+    movej(get_inverse_kin(AccessToScanner_p, qnear=AccessToScanner_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 91 "호출 Gripper_Close"
+    Gripper_Close()
+    $ 92 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 93 "MoveJ"
+    $ 94 "RetreatFromSca" "breakAfter"
+    movej(get_inverse_kin(RetreatFromSca_p, qnear=RetreatFromSca_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 95 "If fail_flag == 1"
+    if (fail_flag == 1):
+      $ 96 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 97 "Task7:PlaceA4InBasket"
+    $ 98 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 99 "MoveJ"
+    $ 100 "AccessToBasket" "breakAfter"
+    movej(get_inverse_kin(AccessToBasket_p, qnear=AccessToBasket_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 101 "호출 Gripper_Open"
+    Gripper_Open()
+    $ 102 "호출 Wait_Motor_Idle"
+    Wait_Motor_Idle()
+    $ 103 "MoveJ"
+    $ 104 "RetreatFromBask" "breakAfter"
+    movej(get_inverse_kin(RetreatFromBask_p, qnear=RetreatFromBask_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 105 "If fail_flag == 1"
+    if (fail_flag == 1):
+      $ 106 "호출 Error_Stop"
+      Error_Stop()
+    end
+    $ 107 "Task8:ClosePrinter"
+    $ 108 "호출 Enter_Next_Task"
+    Enter_Next_Task()
+    $ 109 "retry_count <= max_retry and task_done == 0 Loop"
+    while (retry_count <= max_retry and task_done == 0):
+      $ 110 "MoveJ"
+      $ 111 "AccessToPrinter" "breakAfter"
+      movej(get_inverse_kin(AccessToPrinter_p, qnear=AccessToPrinter_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 112 "ClosePrinter" "breakAfter"
+      movej(get_inverse_kin(ClosePrinter_p, qnear=ClosePrinter_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 113 "RetreatFromPrin" "breakAfter"
+      movej(get_inverse_kin(RetreatFromPrin_p, qnear=RetreatFromPrin_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 114 "호출 Check_Door_Closed"
+      Check_Door_Closed()
+      $ 115 "스위치 fail_flag"
+      switch_1 = fail_flag
+      $ 116 "케이스 0"
+      if (0 == switch_1):
+        $ 117 "task_done = 1"
+        task_done = 1
+      elif (1 == switch_1):
+        $ 118 "케이스 1"
+        $ 119 "retry_count = retry_count + 1"
+        retry_count = retry_count + 1
+      end
+    end
+    $ 120 "If task_done == 0"
+    if (task_done == 0):
+      $ 121 "호출 Error_Stop"
+      Error_Stop()
+    end
+  end
+end
