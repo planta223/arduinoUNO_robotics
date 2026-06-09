@@ -117,10 +117,6 @@ class VisionChecker:
         - contrast
         - white balance
         - backlight compensation
-
-        주의:
-        - CAP_PROP_EXPOSURE, CAP_PROP_GAIN의 실제 의미는 카메라/드라이버마다 다르다.
-        - Logitech C270 + Windows DirectShow 기준으로 실제 화면을 보며 튜닝해야 한다.
         """
 
         if self.cap is None:
@@ -193,6 +189,70 @@ class VisionChecker:
             print(f"[Vision] Paper align init failed: {type(exc).__name__}: {exc}")
             print("[Vision] V PAPER will return PAPER_NG.")
 
+    def reload_paper_background(self) -> None:
+        """
+        저장된 paper background 이미지를 다시 로드한다.
+        """
+
+        try:
+            background_path = Path(config.PAPER_BACKGROUND_PATH)
+            self.paper_background = load_background(background_path)
+
+            if self.paper_background is None:
+                print("[Vision] Paper background reload failed.")
+            else:
+                print("[Vision] Paper background reloaded.")
+
+            self.reset_paper_history()
+
+        except Exception as exc:
+            self.paper_background = None
+            print(f"[Vision] Paper background reload exception: {type(exc).__name__}: {exc}")
+
+    def save_paper_background(self, frame) -> bool:
+        """
+        현재 프레임을 paper background 이미지로 저장하고,
+        서버 내부 background도 즉시 갱신한다.
+        """
+
+        if frame is None:
+            print("[Vision] Background save failed: frame is None.")
+            return False
+
+        try:
+            background_path = Path(config.PAPER_BACKGROUND_PATH)
+            background_path.parent.mkdir(parents=True, exist_ok=True)
+
+            ok = cv2.imwrite(str(background_path), frame)
+
+            if not ok:
+                print(f"[Vision] Background save failed: {background_path}")
+                return False
+
+            self.paper_background = frame.copy()
+            self.reset_paper_history()
+
+            print(f"[Vision] Background saved: {background_path}")
+            return True
+
+        except Exception as exc:
+            print(f"[Vision] Background save exception: {type(exc).__name__}: {exc}")
+            return False
+
+    def reset_paper_history(self) -> None:
+        """
+        paper align voting/history 상태를 초기화한다.
+        """
+
+        if self.paper_cfg is not None:
+            self.paper_history = deque(maxlen=self.paper_cfg.vote_window)
+
+        self.paper_last_state = {
+            "background": None,
+            "calibration": None,
+            "paper": None,
+        }
+
     def _read_latest_frame(self, flush_count: int | None = None):
         """
         오래된 카메라 버퍼 프레임을 버리고 최신 프레임에 가까운 이미지를 읽는다.
@@ -211,6 +271,43 @@ class VisionChecker:
             ok, frame = self.cap.read()
 
         return ok, frame
+
+    def show_preview_frame(self, frame, label: str = "") -> None:
+        """
+        디버그용 카메라 프레임 표시.
+
+        config.py에 CAMERA_PREVIEW_ENABLED = True이면 표시한다.
+        main_server.py 실행 중에는 V LID / V PAPER 요청이 들어올 때만 갱신된다.
+        vision_checker.py 단독 실행 시에는 연속 preview로 동작한다.
+        """
+
+        if not getattr(config, "CAMERA_PREVIEW_ENABLED", False):
+            return
+
+        if frame is None:
+            return
+
+        preview = frame.copy()
+
+        if label:
+            cv2.putText(
+                preview,
+                label,
+                (10, 30),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.8,
+                (0, 255, 255),
+                2,
+            )
+
+        window_name = getattr(
+            config,
+            "CAMERA_PREVIEW_WINDOW_NAME",
+            "VisionChecker Preview",
+        )
+
+        cv2.imshow(window_name, preview)
+        cv2.waitKey(1)
 
     def check_vision_lid(self) -> str:
         """
@@ -231,6 +328,8 @@ class VisionChecker:
             if not ok or frame is None:
                 print("[Vision] Lid check failed: frame read failed. Return LID_CLOSED.")
                 return config.RESP_LID_CLOSED
+
+            self.show_preview_frame(frame, "V LID")
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -351,6 +450,8 @@ class VisionChecker:
                 print("[Vision] Paper check failed: frame read failed. Return PAPER_NG.")
                 return config.RESP_PAPER_NG
 
+            self.show_preview_frame(frame, "V PAPER")
+
             result = process_frame(
                 frame=frame,
                 background=self.paper_background,
@@ -375,6 +476,76 @@ class VisionChecker:
             print(f"[Vision] Paper check exception: {type(exc).__name__}: {exc}")
             return config.RESP_PAPER_NG
 
+    def get_lid_status_from_frame(self, frame) -> str:
+        """
+        단독 preview 모드에서 현재 프레임으로 lid 상태를 판정한다.
+        """
+
+        if frame is None or self.aruco_setup is None:
+            return config.RESP_LID_CLOSED
+
+        try:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            marker_found, _, ids = detect_marker(
+                gray,
+                self.aruco_setup,
+                config.ARUCO_MARKER_ID,
+            )
+
+            if ids is None:
+                print("[Vision] ArUco ids: None")
+            else:
+                print(f"[Vision] ArUco ids: {ids.flatten().tolist()}")
+
+            return config.RESP_LID_OPEN if marker_found else config.RESP_LID_CLOSED
+
+        except Exception as exc:
+            print(f"[Vision] Lid frame check exception: {type(exc).__name__}: {exc}")
+            return config.RESP_LID_CLOSED
+
+    def get_paper_status_from_frame(self, frame) -> str:
+        """
+        단독 preview 모드에서 현재 프레임으로 paper 상태를 판정한다.
+        """
+
+        if frame is None:
+            return config.RESP_PAPER_NG
+
+        if (
+            self.paper_cfg is None
+            or self.paper_background is None
+            or self.paper_history is None
+            or self.paper_last_state is None
+        ):
+            print("[Vision] Paper frame check failed: paper align not ready.")
+            return config.RESP_PAPER_NG
+
+        try:
+            result = process_frame(
+                frame=frame,
+                background=self.paper_background,
+                cfg=self.paper_cfg,
+                history=self.paper_history,
+                last_state=self.paper_last_state,
+            )
+
+            response = self._classify_paper_direction(result)
+
+            print(
+                "[Vision] Paper frame result: "
+                f"stable={result.paper_status}, "
+                f"raw={result.raw_paper_status}, "
+                f"ratios={result.change_ratios}, "
+                f"response={response}"
+            )
+
+            return response
+
+        except Exception as exc:
+            print(f"[Vision] Paper frame check exception: {type(exc).__name__}: {exc}")
+            return config.RESP_PAPER_NG
+
     def release(self) -> None:
         """
         서버 종료 시 카메라 자원 해제.
@@ -386,3 +557,103 @@ class VisionChecker:
 
         self.camera_ready = False
         print("[Vision] Camera released.")
+
+
+def draw_preview_overlay(frame, status_text: str) -> object:
+    """
+    단독 preview 창에 안내 문구를 표시한다.
+    """
+
+    preview = frame.copy()
+
+    lines = [
+        status_text,
+        "Keys: b=save background, r=reload background, p=paper check, l=lid check, q=quit",
+    ]
+
+    y = 30
+    for line in lines:
+        cv2.putText(
+            preview,
+            line,
+            (10, y),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.65,
+            (0, 255, 255),
+            2,
+        )
+        y += 30
+
+    return preview
+
+
+def main() -> None:
+    """
+    vision_checker.py 단독 카메라 preview/background 저장 테스트.
+
+    사용법:
+        python vision_checker.py
+
+    키:
+        b : 현재 프레임을 config.PAPER_BACKGROUND_PATH로 저장
+        r : 저장된 background png 다시 로드
+        p : 현재 프레임으로 paper align 판정
+        l : 현재 프레임으로 lid 판정
+        q : 종료
+    """
+
+    vision_checker = VisionChecker()
+
+    if not vision_checker.camera_ready:
+        print("[Vision] Camera is not ready.")
+        vision_checker.release()
+        return
+
+    window_name = getattr(
+        config,
+        "CAMERA_PREVIEW_WINDOW_NAME",
+        "VisionChecker Preview",
+    )
+
+    print("[Vision] Preview started.")
+    print("[Vision] Keys: b=save background, r=reload background, p=paper check, l=lid check, q=quit")
+
+    last_status = "PREVIEW"
+
+    try:
+        while True:
+            ok, frame = vision_checker._read_latest_frame()
+
+            if not ok or frame is None:
+                print("[Vision] Preview frame read failed.")
+                continue
+
+            preview = draw_preview_overlay(frame, last_status)
+            cv2.imshow(window_name, preview)
+
+            key = cv2.waitKey(1) & 0xFF
+
+            if key == ord("q"):
+                break
+
+            if key == ord("b"):
+                saved = vision_checker.save_paper_background(frame)
+                last_status = "BACKGROUND_SAVED" if saved else "BACKGROUND_SAVE_FAILED"
+
+            elif key == ord("r"):
+                vision_checker.reload_paper_background()
+                last_status = "BACKGROUND_RELOADED"
+
+            elif key == ord("p"):
+                last_status = vision_checker.get_paper_status_from_frame(frame)
+
+            elif key == ord("l"):
+                last_status = vision_checker.get_lid_status_from_frame(frame)
+
+    finally:
+        vision_checker.release()
+        cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    main()

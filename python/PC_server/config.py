@@ -30,10 +30,17 @@ PAPER_CONFIG_PATH = "paper_align_config.json"
 PAPER_BACKGROUND_PATH = "paper_align_config_background.png"
 
 CAMERA_AUTO_EXPOSURE = 0
-CAMERA_EXPOSURE = -5
+CAMERA_EXPOSURE = 0
 CAMERA_GAIN = 0
 CAMERA_WARMUP_FRAMES = 30
 CAMERA_FLUSH_FRAMES = 3
+
+# ============================================================
+# Camera preview / debug
+# ============================================================
+CAMERA_PREVIEW_ENABLED = False
+CAMERA_PREVIEW_WINDOW_NAME = "VisionChecker Preview"
+
 
 # ============================================================
 # 공통 명령 문자열
