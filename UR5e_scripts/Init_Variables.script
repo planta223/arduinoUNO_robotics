@@ -25,13 +25,13 @@ global current_task = 0
 # 1: open
 global door_state = 0
 
-# DC motor state
+# DC motor, Servo motor state
 # 0: idle
 # 1: busy
 global motor_state = 0
 
 # Scanner lid state
-# 0: closed or fail-safe
+# 0: not open
 # 1: open
 global lid_state = 0
 
@@ -69,14 +69,10 @@ global pc_response = ""
 
 # Arduino commands
 global CMD_PING = "PING\n"
-
 global CMD_GRIPPER_OPEN = "G OPEN\n"
 global CMD_GRIPPER_CLOSE = "G CLOSE\n"
-
 global CMD_DC_RUN = "D RUN\n"
-
 global CMD_ESTOP = "ESTOP\n"
-
 global CMD_MOTOR_STATUS = "MOTOR STATUS\n"
 global CMD_DOOR_STATUS = "DOOR STATUS\n"
 
@@ -97,7 +93,6 @@ global RESP_OK_GRIPPER_OPEN = "OK G OPEN"
 global RESP_OK_GRIPPER_CLOSE = "OK G CLOSE"
 
 global RESP_OK_DC_RUN = "OK D RUN"
-
 global RESP_OK_ESTOP = "OK ESTOP"
 
 global RESP_MOTOR_BUSY = "MOTOR STATUS BUSY"
@@ -128,7 +123,6 @@ global RESP_PAPER_SHIFTED_UP = "PAPER_SHIFTED_UP"
 global RESP_PAPER_SHIFTED_DOWN = "PAPER_SHIFTED_DOWN"
 global RESP_PAPER_SHIFTED_LEFT = "PAPER_SHIFTED_LEFT"
 global RESP_PAPER_SHIFTED_RIGHT = "PAPER_SHIFTED_RIGHT"
-
 global RESP_PAPER_NG = "PAPER_NG"
 
 

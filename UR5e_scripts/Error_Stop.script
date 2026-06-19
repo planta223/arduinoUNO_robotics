@@ -33,4 +33,4 @@ else:
   popup("Unknown Task Failed", title="Task Error", warning=True, error=False)
 end
 
-halt
+halt # UR Program 정지
