@@ -1,0 +1,246 @@
+ 프로그램
+   로봇 프로그램
+     Init
+       호출 Init_Variables
+       호출 Socket_Open
+       MoveJ
+         Home
+       기다림: 3.0
+     Main Sequence
+       Task1:OpenPrinter
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Task1_Home
+           MoveL
+             Task1_Access
+           MoveL
+             Open1
+             Open2
+             Open3
+             Open4
+             Open5
+             Open6
+           MoveL
+             Task1_Retreat
+           기다림: 1.0
+           호출 Check_Door_Open
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+           호출 Check_Camera_Open
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+         기다림: 3.0
+       Task2:PickA4FromTray
+         호출 Enter_Next_Task
+         MoveJ
+           Task2_Home
+         MoveL
+           Task2_Access
+         MoveL
+           Pick1
+           Pick2
+           Pick3
+         기다림: 1.0
+         호출 Gripper_Open
+         호출 Wait_Motor_Idle
+         호출 DC_Run
+         호출 Wait_Motor_Idle
+         호출 Gripper_Close
+         호출 Wait_Motor_Idle
+         MoveL
+           Task2_Retreat
+         If fail_flag == 1
+           호출 Error_Stop
+         기다림: 3.0
+       Task3:PlaceA4OnScanner
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Task3_Home
+           MoveL
+             Task3_Access
+           MoveL
+             Place1
+             Place2
+             Place3
+           호출 Gripper_Open
+           호출 Wait_Motor_Idle
+           MoveL
+             Task3_Retreat
+           기다림: 1.0
+           호출 Check_Camera_Align
+           스위치 paper_state
+             케이스 0
+               retry_count = retry_count + 1
+             케이스 1
+               task_done = 1
+         If task_done == 0
+           호출 Error_Stop
+         기다림: 3.0
+       Task4:ClosePrinter
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Task4_Home
+           MoveL
+             Task4_Access
+           MoveL
+             Close1
+             Close2
+             Close3
+             Close4
+             Close5
+             Close6
+           MoveL
+             Task4_Retreat
+           기다림: 1.0
+           호출 Check_Door_Closed
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+         기다림: 3.0
+       Task5:OpenPrinter
+         호출 Enter_Next_Task
+         'DO NOT MODIFY BELOW. below is a copy of Task1.'
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Task1_Home
+           MoveL
+             Task1_Access
+           MoveL
+             Open1
+             Open2
+             Open3
+             Open4
+             Open5
+             Open6
+           MoveL
+             Task1_Retreat
+           기다림: 1.0
+           호출 Check_Door_Open
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+           호출 Check_Camera_Open
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+         기다림: 3.0
+       Task6:PickA4FromScanner
+         호출 Enter_Next_Task
+         MoveJ
+           Task6_Home
+         MoveL
+           Task6_Access
+         MoveL
+           Pick2_1
+           Pick2_2
+           Pick2_3
+         기다림: 1.0
+         호출 Gripper_Open
+         호출 Wait_Motor_Idle
+         MoveL
+           Pick2_4
+           Pick2_5
+           Pick2_6
+         호출 Gripper_Close
+         호출 Wait_Motor_Idle
+         MoveL
+           Task6_Retreat
+         If fail_flag == 1
+           호출 Error_Stop
+         기다림: 3.0
+       Task7:PlaceA4InBasket
+         호출 Enter_Next_Task
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Task7_Home
+           MoveJ
+             Task7_Access
+           MoveJ
+             Place2_1
+             Place2_2
+             Place2_3
+           호출 Gripper_Open
+           호출 Wait_Motor_Idle
+           MoveJ
+             Task7_Retreat
+           기다림: 1.0
+           스위치 paper_state
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If fail_flag == 1
+           호출 Error_Stop
+         기다림: 3.0
+       Task8:ClosePrinter
+         호출 Enter_Next_Task
+         'DO NOT MODIFY BELOW. below is a copy of Task4.'
+         retry_count <= max_retry and task_done == 0 Loop
+           MoveJ
+             Task4_Home
+           MoveL
+             Task4_Access
+           MoveL
+             Close1
+             Close2
+             Close3
+             Close4
+             Close5
+             Close6
+           MoveL
+             Task4_Retreat
+           기다림: 1.0
+           호출 Check_Door_Closed
+           스위치 fail_flag
+             케이스 0
+               task_done = 1
+             케이스 1
+               retry_count = retry_count + 1
+         If task_done == 0
+           호출 Error_Stop
+         기다림: 3.0
+   Socket_Open
+     스크립트: Socket_Open.script
+   Init_Variables
+     스크립트: Init_Variables.script
+   DC_Run
+     스크립트: DC_Run.script
+   Gripper_Close
+     스크립트: Gripper_Close.script
+   Gripper_Open
+     스크립트: Gripper_Open.script
+   Wait_Motor_Idle
+     스크립트: Wait_Motor_Idle.script
+   Check_Door_Closed
+     스크립트: Check_Door_Closed.script
+   Check_Door_Open
+     스크립트: Check_Door_Open.script
+   Check_Camera_Open
+     스크립트: Check_Camera_Open.script
+   Check_Camera_Align
+     스크립트: Check_Camera_Align.script
+   Error_Stop
+     스크립트: Error_Stop.script
+   Enter_Next_Task
+     스크립트: Enter_Next_Task.script
