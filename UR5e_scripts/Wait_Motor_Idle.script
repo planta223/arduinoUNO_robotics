@@ -9,7 +9,7 @@ while wait_done == 0:
 
   if pc_response == RESP_MOTOR_BUSY:
     global motor_state = 1
-    global sleep(0.1)
+    sleep(0.1)
 
   elif pc_response == RESP_MOTOR_IDLE:
     global motor_state = 0
