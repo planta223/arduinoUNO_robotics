@@ -23,23 +23,21 @@ CAMERA_BACKEND = "dshow"   # Windows + Logitech C270 기준
 CAMERA_FRAME_WIDTH = 1280
 CAMERA_FRAME_HEIGHT = 720
 
+CAMERA_AUTO_EXPOSURE = 0
+CAMERA_EXPOSURE = -1
+CAMERA_GAIN = 0
+CAMERA_BRIGHTNESS = 128
+CAMERA_CONTRAST = 128
+CAMERA_AUTO_WB = 0
+CAMERA_WB_TEMPERATURE = 7000
+CAMERA_BACKLIGHT = 0
+CAMERA_WARMUP_FRAMES = 30
+
 ARUCO_DICTIONARY = "DICT_4X4_50"
 ARUCO_MARKER_ID = 0
 
 PAPER_CONFIG_PATH = "paper_align_config.json"
 PAPER_BACKGROUND_PATH = "paper_align_config_background.png"
-
-CAMERA_AUTO_EXPOSURE = 0
-CAMERA_EXPOSURE = 0
-CAMERA_GAIN = 0
-CAMERA_WARMUP_FRAMES = 30
-CAMERA_FLUSH_FRAMES = 3
-
-# ============================================================
-# Camera preview / debug
-# ============================================================
-CAMERA_PREVIEW_ENABLED = False
-CAMERA_PREVIEW_WINDOW_NAME = "VisionChecker Preview"
 
 
 # ============================================================

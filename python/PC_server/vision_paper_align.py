@@ -10,6 +10,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Optional
 
+from camera_settings import apply_camera_settings, maybe_print_camera_settings, warmup_camera
+
 if TYPE_CHECKING:
     import cv2
     import numpy as np
@@ -889,6 +891,10 @@ def run_camera(cfg: AppConfig, args: argparse.Namespace, background_path: Path) 
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, cfg.frame_width)
     if cfg.frame_height is not None:
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, cfg.frame_height)
+
+    apply_camera_settings(cap)
+    warmup_camera(cap)
+    maybe_print_camera_settings(cap)
 
     def next_frame() -> Optional[Any]:
         ok, frame = cap.read()
