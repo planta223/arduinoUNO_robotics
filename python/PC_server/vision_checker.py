@@ -174,6 +174,32 @@ class VisionChecker:
             print(f"[Vision] Lid check exception: {type(exc).__name__}: {exc}")
             return config.RESP_LID_CLOSED
 
+    def classify_paper_response(self, result) -> str:
+        raw_status = getattr(result, "raw_paper_status", None)
+
+        if raw_status == "PAPER_NOT_FOUND":
+            return config.RESP_PAPER_NOT_FOUND
+
+        if raw_status == "PAPER_OK":
+            return config.RESP_PAPER_OK
+
+        if raw_status == "PAPER_NG":
+            change_ratios = getattr(result, "change_ratios", {}) or {}
+
+            if change_ratios.get("OUT_TOP", 0) > self.paper_cfg.max_out_top_change_ratio:
+                return config.RESP_PAPER_SHIFTED_UP
+
+            if change_ratios.get("OUT_LEFT", 0) > self.paper_cfg.max_out_left_change_ratio:
+                return config.RESP_PAPER_SHIFTED_LEFT
+
+            if change_ratios.get("OUT_RIGHT", 0) > self.paper_cfg.max_out_right_change_ratio:
+                return config.RESP_PAPER_SHIFTED_RIGHT
+
+            if change_ratios.get("OUT_BOTTOM", 0) > self.paper_cfg.max_out_bottom_change_ratio:
+                return config.RESP_PAPER_SHIFTED_DOWN
+
+        return config.RESP_PAPER_NG
+
     def check_vision_align(self) -> str:
         """
         ROI/background diff 기반 종이 정렬 판정.
@@ -227,13 +253,7 @@ class VisionChecker:
                 f"ratios={result.change_ratios}"
             )
 
-            if result.raw_paper_status == "PAPER_OK":
-                return config.RESP_PAPER_OK
-
-            if result.raw_paper_status == "PAPER_NOT_FOUND":
-                return config.RESP_PAPER_NOT_FOUND
-
-            return config.RESP_PAPER_NG
+            return self.classify_paper_response(result)
 
         except Exception as exc:
             print(f"[Vision] Paper check exception: {type(exc).__name__}: {exc}")
