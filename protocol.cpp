@@ -6,7 +6,7 @@
 
 static void HandleMotorStatusCommand(void)
 {
-  if (DcMotor_IsRunning() || GripperServo_IsRunning())
+  if (GripperServo_IsRunning())
   {
     Serial.println(RESP_MOTOR_STATUS_BUSY);
   }
@@ -30,7 +30,6 @@ static void HandleDoorStatusCommand(void)
 
 static void EmergencyStop(void)
 {
-  DcMotor_Stop();
   GripperServo_Stop();
 }
 
@@ -44,7 +43,6 @@ static void ExecuteCommand(const String &cmd)
 
   if (cmd.equalsIgnoreCase(CMD_DC_MOTOR_RUN))
   {
-    DcMotor_Run();
     Serial.println(RESP_OK_DC_MOTOR_RUN);
     return;
   }

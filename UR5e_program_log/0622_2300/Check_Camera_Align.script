@@ -1,0 +1,65 @@
+# ============================================================
+# Check_Camera_Align.script
+# 목적:
+# - PC Vision 서버에 V PAPER 명령 전송
+# - 종이 유무 및 정렬 상태 확인
+#
+# 결과:
+# - paper_state = 1 : 종이 있음
+# - paper_state = 0 : 종이 없음
+#
+# - paper_align_state = 0 : PAPER_OK
+# - paper_align_state = 1 : PAPER_SHIFTED_UP
+# - paper_align_state = 2 : PAPER_SHIFTED_DOWN
+# - paper_align_state = 3 : PAPER_SHIFTED_LEFT
+# - paper_align_state = 4 : PAPER_SHIFTED_RIGHT
+# - paper_align_state = 9 : PAPER_NG / PAPER_NOT_FOUND / unknown
+#
+# 주의:
+# - PAPER_SHIFTED_*는 현재 종이가 벗어난 방향이다.
+# - 실제 보정 이동 방향은 반대다.
+# ============================================================
+
+socket_send_string(CMD_VISION_PAPER_ALIGN)
+global pc_response = socket_read_line()
+
+if pc_response == RESP_PAPER_OK:
+  global paper_state = 1
+  global paper_align_state = 0
+  global fail_flag = 0
+
+elif pc_response == RESP_PAPER_NOT_FOUND:
+  global paper_state = 0
+  global paper_align_state = 9
+  global fail_flag = 1
+
+elif pc_response == RESP_PAPER_SHIFTED_UP:
+  global paper_state = 1
+  global paper_align_state = 1
+  global fail_flag = 1
+
+elif pc_response == RESP_PAPER_SHIFTED_DOWN:
+  global paper_state = 1
+  global paper_align_state = 2
+  global fail_flag = 1
+
+elif pc_response == RESP_PAPER_SHIFTED_LEFT:
+  global paper_state = 1
+  global paper_align_state = 3
+  global fail_flag = 1
+
+elif pc_response == RESP_PAPER_SHIFTED_RIGHT:
+  global paper_state = 1
+  global paper_align_state = 4
+  global fail_flag = 1
+
+elif pc_response == RESP_PAPER_NG:
+  global paper_state = 1
+  global paper_align_state = 9
+  global fail_flag = 1
+
+else:
+  global paper_state = 0
+  global paper_align_state = 9
+  global fail_flag = 1
+end

@@ -1,0 +1,2082 @@
+def P0622_1902():
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_safety_mode_transition_hardness(1)
+  step_count_f31d9f0f_e0a2_4aa1_b691_fbcc2d58a25f = 0.0
+  thread Step_Counter_Thread_e86ba509_4567_4f9e_921a_3982727d92bb():
+    while (True):
+      step_count_f31d9f0f_e0a2_4aa1_b691_fbcc2d58a25f = step_count_f31d9f0f_e0a2_4aa1_b691_fbcc2d58a25f + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_e86ba509_4567_4f9e_921a_3982727d92bb()
+  set_tool_communication(True, 1000000, 2, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(24)
+  set_gravity([0.0, 0.0, 9.82])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_target_payload(0.550000, [-0.005000, 0.012000, 0.083000], [0.000568, 0.000568, 0.000568, 0.000000, 0.000000, 0.000000])
+  global u54252u51064u53944_1=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  # begin: URCap Installation Node
+  #   Source: OnRobot, 5.11.0, OnRobot A/S
+  #   Type: OnRobot 설정
+  if (False):
+  end
+  ON_CONN_SHIFT_BOOL = 64
+  ON_CONN_SHIFT_INT = 24
+  ON_CONN_SHIFT_FLOAT = 24
+  ON_CONN_REG_SUM_BOOL = 0
+  ON_CONN_REG_SUM_INT = 1
+  ON_CONN_REG_SUM_FLOAT = 0
+  ON_TOOL_SHIFT_BOOL = 64
+  ON_TOOL_SHIFT_INT = 25
+  ON_TOOL_SHIFT_FLOAT = 24
+  ON_TOOL_SHIFT_BOOL_ARR = [64, 64, 64]
+  ON_TOOL_SHIFT_INT_ARR = [25, 25, 25]
+  ON_TOOL_SHIFT_FLOAT_ARR = [24, 24, 24]
+  ON_TOOL_REG_SUM_BOOL = 0
+  ON_TOOL_REG_SUM_INT = 0
+  ON_TOOL_REG_SUM_FLOAT = 0
+  ON_REGISTERS_SPEEDL_FLOAT = 0
+  ON_REG_USE_TOOL = False
+  ON_DI_SINGLE = 0
+  ON_DI_PRIMARY = 1
+  ON_DI_SECONDARY = 2
+  ON_DI_DUAL = 3
+  on_robot_type = 5
+  on_robot_cycle = 2.0
+  on_conn_ip = "localhost"
+  on_tool_ip = "localhost"
+  on_device_socket_port = 51234
+  on_conn_xmlrpc = rpc_factory("xmlrpc", "http://localhost:41414")
+  on_tool_xmlrpc = rpc_factory("xmlrpc", "http://localhost:41414")
+  on_RPC = rpc_factory("xmlrpc", "http://127.0.0.1:31416")
+  ON_DEBUG_LOG = False
+  on_isMetric = True
+  on_toolConnector = True
+  on_ioqc = False
+  on_dual = False
+  on_computebox = False
+  on_devices = 0
+  on_gripper = [False, False, False]
+  on_ft = False
+  #======    OnRobot Globals    ======#
+  
+  ON_MATH_PI=3.141593
+  ON_ZEROPOSE=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_ZEROFRAME=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_ZERO3D=[0.0,0.0,0.0]
+  ON_ZERO6D=[0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_ZERO8D=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+  ON_FALSE3D=[False,False,False]
+  ON_FALSE6D=[False,False,False,False,False,False]
+  ON_FALSE8D=[False,False,False,False,False,False,False,False]
+  global on_return=0
+  on_speedL=ON_ZERO6D
+  on_speedBase=ON_ZERO6D
+  on_speedVect=ON_ZERO6D
+  on_speedExtra=ON_ZERO6D
+  on_speedCB=ON_ZERO6D
+  on_speedGecko=ON_ZERO6D
+  on_RTDE_error=0
+  on_RTDE_tool_error=0
+  on_dataProcess_thrd=0
+  ON_DEVICE_ID_MISSING=0
+  ON_INIT_WATCHDOG_HZ=5
+  ON_INIT_TIMEOUT=500
+  on_robot_TCP_offset=ON_ZEROFRAME
+  on_tcp_offset_actual=ON_ZEROFRAME
+  on_cog_actual=ON_ZEROFRAME
+  on_mass_actual=0.0
+  on_robot_mount=[0.0,0.0]
+  
+  #======    End of OnRobot Globals    ======#
+  #======    OnRobot Interface Messages    ======#
+  
+  on_devices_primary_log="OnRobot 장치"
+  on_devices_secondary_log="OnRobot 보조 장치"
+  on_program_halted="<br>프로그램이 중지되었습니다."
+  on_device_error_title="OnRobot - 장치 오류"
+  on_install_error="OnRobot 설정이 올바르지 않습니다.<br>설치 탭의 OnRobot 설정 페이지에서 상태를 확인하십시오.<br>프로그램이 중지되었습니다."
+  on_device_missing="연결된 장치가 없습니다.<br>프로그램이 중지되었습니다."
+  ft_device_missing="감지된 OnRobot FT 서버 또는 사이센스가 없습니다. <br>프로그램이 중지되었습니다."
+  cb_device_missing="연결된 OnRobot Compute Box가 없습니다.<br>프로그램이 중지되었습니다."
+  hex_device_missing="연결된 HEX 센서가 없습니다.<br>프로그램이 중지되었습니다."
+  rg2ft_device_missing="연결된 RG2-FT Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  rg_device_missing="연결된 RG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  vg_device_missing="연결된 VG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  gg_device_missing="연결된 Gecko Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  sg_device_missing="연결된 Soft Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  tfg_device_missing="연결된 3FG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  sdr_device_missing="연결된 OnRobot Sander가 없습니다.<br>프로그램이 중지되었습니다."
+  twofg_device_missing="연결된 2FG Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  vgp_device_missing="연결된 VGP Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  mg_device_missing="연결된 Magnetic Gripper가 없습니다.<br>프로그램이 중지되었습니다."
+  on_xmlrpc_start_ip="OnRobot XML-RPC 서버에 연결 중:"
+  on_java_comm_error_textmsg_title="OnRobot - 통신 오류:"
+  on_java_comm_controlsocket_open_error="’javaSocket’ 소켓 열기에 실패했습니다."
+  on_java_comm_error_title="OnRobot - 통신 오류"
+  on_java_comm_socket_open_error="URCap과의 연결 시간을 초과했습니다.<br>설치 탭의 OnRobot 설정 페이지에서 상태를 확인하십시오.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_error_textmsg_title="OnRobot - RTDE 오류:"
+  on_rtde_feed_error="RTDE 피드 오류입니다. OnRobot 장치 수가 일치하지 않습니다.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_tool_error="도구 RTDE 피드 오류입니다. OnRobot 장치 수가 일치하지 않습니다.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_open_error_textmsg="’rtdeFeed’ 소켓 열기에 실패했습니다."
+  on_rtde_feed_error_title="OnRobot - RTDE 오류"
+  on_rtde_feed_count_error="유효하지 않은 RTDE 오프셋 설정이 감지되었습니다. 설정 탭의 OnRobot 설정 페이지에서 RTDE 오프셋을 확인하십시오.<br>프로그램이 중지되었습니다."
+  on_rtde_feed_open_error="장치와의 연결 시간을 초과했습니다.<br>OnRobot 장치가 작동 중인지 점검하고 설치 탭의 OnRobot 설정 페이지에서 상태를 확인하십시오."
+  
+  #======    End of OnRobot Interface Messages    ======#
+  #======    OnRobot Interface    ======#
+  
+  on_portopened_javaSocket=False
+  on_rtde_feed_opened=False
+  on_dataProcess_running=False
+  def on_missing():
+  popup(on_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def ft_missing():
+  popup(ft_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def cb_missing():
+  popup(ft_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def hex_missing():
+  popup(hex_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def rg2ft_missing():
+  popup(rg2ft_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def rg_missing():
+  popup(rg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def vg_missing():
+  popup(vg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def gg_missing():
+  popup(gg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def sg_missing():
+  popup(sg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def tfg_missing():
+  popup(tfg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def sdr_missing():
+  popup(sdr_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def twofg_missing():
+  popup(twofg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def vgp_missing():
+  popup(vgp_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def mg_missing():
+  popup(mg_device_missing,title=on_device_error_title,error=True,blocking=False)
+  halt
+  end 
+  def on_portclose_javaSocket():
+  socket_close("javaSocket")
+  on_portopened_javaSocket=False
+  end 
+  def on_portopen_javaSocket():
+  on_portclose_javaSocket()
+  on_portopened_javaSocket=socket_open("127.0.0.1",44005,"javaSocket")
+  if not on_portopened_javaSocket:
+  textmsg(on_java_comm_error_textmsg_title,on_java_comm_controlsocket_open_error)
+  popup(on_java_comm_socket_open_error,title=on_java_comm_error_title,error=True,blocking=False)
+  halt
+  end 
+  end 
+  on_conn_rtde_feed_name="rtdeFeedConn"
+  on_tool_rtde_feed_name="rtdeFeedTool"
+  def on_rtde_feed_close(rtdeFeedName):
+  socket_close(rtdeFeedName)
+  on_rtde_feed_opened=False
+  end 
+  def on_rtde_feed_open(deviceIP,rtdeFeedName,regStart,regSum,regSpeedl):
+  on_rtde_feed_close(rtdeFeedName)
+  if((regStart[0]+regSum[0])>128)or((regStart[1]+regSum[1])>48)or((regStart[2]+regSum[2])>48):
+  popup(on_rtde_feed_count_error,title=on_rtde_feed_error_title,error=True,blocking=False)
+  textmsg(str_cat("RegStart: ",regStart),str_cat("  -  RegSum: ",regSum))
+  halt
+  end 
+  on_rtde_feed_opened=socket_open(deviceIP,on_device_socket_port,rtdeFeedName)
+  if not on_rtde_feed_opened:
+  on_rtde_feed_opened=socket_open(deviceIP,on_device_socket_port,rtdeFeedName)
+  end 
+  if not on_rtde_feed_opened:
+  textmsg(on_rtde_feed_error_textmsg_title,on_rtde_feed_open_error_textmsg)
+  popup(on_rtde_feed_open_error,title=on_rtde_feed_error_title,error=True,blocking=False)
+  halt
+  end 
+  socket_send_int(regStart[0],rtdeFeedName)
+  socket_send_int(regSum[0],rtdeFeedName)
+  socket_send_int(regStart[1],rtdeFeedName)
+  socket_send_int(regSum[1],rtdeFeedName)
+  socket_send_int(regStart[2],rtdeFeedName)
+  socket_send_int(regSum[2],rtdeFeedName)
+  socket_send_int(regSpeedl,rtdeFeedName)
+  socket_send_int(on_devices,rtdeFeedName)
+  end 
+  def on_dataRead():
+  enter_critical
+  on_RTDE_error=read_input_integer_register(ON_CONN_SHIFT_INT)
+  if(ON_REG_USE_TOOL):
+  on_RTDE_tool_error=read_input_integer_register(ON_TOOL_SHIFT_INT_ARR[0])
+  end
+  exit_critical
+  end 
+  def on_set_rtde_watchdog(updateHz=ON_INIT_WATCHDOG_HZ):
+  local effect="stop"
+  if(updateHz<1):
+  effect="ignore"
+  end 
+  watchdog_conn_reg_str=str_cat("input_int_register_",ON_CONN_SHIFT_INT)
+  rtde_set_watchdog(watchdog_conn_reg_str,updateHz,effect)
+  if(ON_REG_USE_TOOL):
+  watchdog_tool_reg_str=str_cat("input_int_register_",ON_TOOL_SHIFT_INT_ARR[0])
+  rtde_set_watchdog(watchdog_tool_reg_str,updateHz,effect)
+  end 
+  if ON_DEBUG_LOG:
+  local update_str=str_cat(" "+effect+" watchdog set to [Hz]: ",updateHz)
+  textmsg(watchdog_conn_reg_str,update_str)
+  if(ON_REG_USE_TOOL):
+  local update_str=str_cat(" "+effect+" watchdog set to [Hz]: ",updateHz)
+  textmsg(watchdog_tool_reg_str,update_str)
+  end 
+  end 
+  end 
+  def on_speedCB_get():
+  return[on_speedCB[0],on_speedCB[1],on_speedCB[2],on_speedCB[3],on_speedCB[4],on_speedCB[5]]
+  end 
+  def on_speedGecko_get():
+  local speedExtra=ON_ZERO6D
+  if on_speedl_for_gecko:
+  speedExtra=[on_speedGecko[0],on_speedGecko[1],on_speedGecko[2],on_speedGecko[3],on_speedGecko[4],on_speedGecko[5]]
+  end 
+  return speedExtra
+  end 
+  def on_speedGecko_set(speedGecko):
+  on_speedGecko=[speedGecko[0],speedGecko[1],speedGecko[2],speedGecko[3],speedGecko[4],speedGecko[5]]
+  end 
+  thread on_dataProcess_thread():
+  if ON_DEBUG_LOG:
+  textmsg("Starting on_dataRead thread")
+  end 
+  local error=False
+  on_dataProcess_running=True
+  sync()
+  while on_dataProcess_running:
+  sync()
+  on_dataRead()
+  error=on_error((on_RTDE_error<0),on_rtde_feed_error,on_rtde_feed_error_title,error)
+  error=on_error((ON_REG_USE_TOOL and(on_RTDE_tool_error<0)),on_rtde_feed_tool_error,on_rtde_feed_error_title,error)
+  on_dataProcess_running=not error
+  end 
+  if error:
+  halt
+  end 
+  if ON_DEBUG_LOG:
+  textmsg("Stopping on_dataRead thread")
+  end 
+  end 
+  thread on_set_watchdog_thread():
+  sleep(2)
+  on_set_rtde_watchdog(updateHz=ON_INIT_WATCHDOG_HZ)
+  sleep(1/ON_INIT_WATCHDOG_HZ)
+  on_dataProcess_running=False
+  kill on_dataProcess_thrd
+  end 
+  
+  #======    End of OnRobot Interface    ======#
+  #======    OnRobot QC Setup Tool Connector    ======#
+  
+  def tc_setup_tool():
+  if ON_DEBUG_LOG:
+  textmsg("QC Setup Tool Connector start...")
+  end 
+  set_tool_voltage(24)
+  
+  set_tool_communication(True,1000000,2,1,1.5,3.5)
+  
+  if ON_DEBUG_LOG:
+  textmsg("QC Setup Tool Connector end.")
+  end 
+  end 
+  
+  #======    End of OnRobot QC Setup Tool Connector    ======#
+  #======    OnRobot TCP Messages    ======#
+  
+  on_tcp_log_msg_default="OnRobot: 로봇 TCP 오프셋 설정:"
+  on_tcp_log_msg_primary="OnRobot: 로봇 TCP 오프셋 주 설정:"
+  on_tcp_log_msg_secondary="OnRobot: 로봇 TCP 오프셋 보조 설정:"
+  
+  #======    End of OnRobot TCP Messages    ======#
+  #======    OnRobot TCP    ======#
+  
+  on_tcp_offset_actual=ON_ZEROFRAME
+  on_tcp_offset_primary=ON_ZEROFRAME
+  on_tcp_static_primary=ON_ZEROFRAME
+  on_tcp_dynamic_primary=ON_ZEROFRAME
+  on_tcp_vision_primary=ON_ZEROFRAME
+  on_tcp_qc_primary=ON_ZEROFRAME
+  on_tcp_base_primary=ON_ZEROFRAME
+  on_tcp_gripper_static_primary=ON_ZEROFRAME
+  on_tcp_tool_primary=ON_ZEROFRAME
+  on_tcp_gripper_dynamic_primary=ON_ZEROFRAME
+  on_tcp_gripper_primary=ON_ZEROFRAME
+  on_tcp_offset_secondary=ON_ZEROFRAME
+  on_tcp_static_secondary=ON_ZEROFRAME
+  on_tcp_dynamic_secondary=ON_ZEROFRAME
+  on_tcp_vision_secondary=ON_ZEROFRAME
+  on_tcp_qc_secondary=ON_ZEROFRAME
+  on_tcp_base_secondary=ON_ZEROFRAME
+  on_tcp_gripper_static_secondary=ON_ZEROFRAME
+  on_tcp_tool_secondary=ON_ZEROFRAME
+  on_tcp_gripper_dynamic_secondary=ON_ZEROFRAME
+  on_tcp_gripper_secondary=ON_ZEROFRAME
+  def on_tcp_update_primary():
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Primary start..")
+  end 
+  on_tcp_gripper_dynamic_primary=p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  enter_critical
+  on_tcp_dynamic_primary=pose_trans(on_tcp_static_primary,on_tcp_gripper_dynamic_primary)
+  on_tcp_offset_primary=pose_trans(on_tcp_dynamic_primary,on_tcp_tool_primary)
+  exit_critical
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Primary end.")
+  end 
+  end 
+  def on_tcp_init_primary():
+  if ON_DEBUG_LOG:
+  textmsg("TCP Init Primary start..")
+  end 
+  enter_critical
+  on_tcp_base_primary=pose_trans(on_tcp_vision_primary,on_tcp_qc_primary)
+  on_tcp_static_primary=pose_trans(on_tcp_base_primary,on_tcp_gripper_static_primary)
+  exit_critical
+  on_tcp_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("TCP Init Primary end.")
+  end 
+  end 
+  def on_tcp_offset_set(TCP_offset):
+  if ON_DEBUG_LOG:
+  textmsg("TCP Offset set started!")
+  end 
+  on_tcp_offset_send(TCP_offset)
+  if(on_follow_tcp):
+  set_tcp(TCP_offset)
+  end 
+  on_robot_TCP_offset=TCP_offset
+  if ON_DEBUG_LOG:
+  textmsg("TCP Offset set to: ",on_robot_TCP_offset)
+  end 
+  end 
+  def on_tcp_offset_forced_set_actual(isPrimary=True):
+  if(not on_follow_tcp):
+  
+  local tcp_log_msg=on_tcp_log_msg_default
+  
+  textmsg(tcp_log_msg,on_tcp_offset_actual)
+  set_tcp(on_tcp_offset_actual)
+  end 
+  end 
+  def on_tcp_update(isPrimary=True):
+  on_tcp_update_primary()
+  
+  on_tcp_set_actual_to(isPrimary)
+  end 
+  def on_tcp_set_actual_to(isPrimary=True):
+  
+  on_tcp_offset_actual=on_tcp_offset_primary
+  if(on_follow_tcp):
+  textmsg(on_tcp_log_msg_default,on_tcp_offset_actual)
+  end 
+  
+  on_tcp_active_is_primary=isPrimary
+  on_tcp_offset_set(on_tcp_offset_actual)
+  end 
+  def on_tcp_update_tool_primary(tool_offset):
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool Primary start..")
+  end 
+  on_tcp_tool_primary=tool_offset
+  on_tcp_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool Primary end.")
+  end 
+  end 
+  def on_tcp_tool_rpy_get(xyz=[0.0,0.0,0.0],rpy=[0.0,0.0,0.0]):
+  local rotvec=rpy2rotvec(rpy)
+  local tool_offset=p[xyz[0],xyz[1],xyz[2],rotvec[0],rotvec[1],rotvec[2]]
+  return tool_offset
+  end 
+  
+  def on_tcp_update_tool(tool_offset,tool_index=0):
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool start..")
+  end 
+  if(tool_index!=ON_DI_SECONDARY):
+  on_tcp_update_tool_primary(tool_offset)
+  local isPrimary=True
+  
+  end 
+  on_tcp_set_actual_to(isPrimary)
+  if ON_DEBUG_LOG:
+  textmsg("TCP Update Tool end.")
+  end 
+  end 
+  def on_get_tcp_for(tool_index):
+  if tool_index==ON_DI_SECONDARY:
+  local actual_tcp=on_tcp_static_secondary
+  else:
+  local actual_tcp=on_tcp_static_primary
+  end 
+  return actual_tcp
+  end 
+  
+  #======    End of OnRobot TCP    ======#
+  #======    OnRobot Payload Messages    ======#
+  
+  on_mass_log_msg="OnRobot: 로봇 유효 하중 크기 설정:"
+  on_cog_log_msg="OnRobot: 로봇 유효 하중 무게 중심 설정:"
+  
+  #======    End of OnRobot Payload Messages    ======#
+  #======    OnRobot Payload    ======#
+  
+  on_cog_actual=ON_ZEROFRAME
+  on_mass_actual=0.0
+  on_cog_primary=ON_ZEROFRAME
+  on_cog_L1L2_primary=ON_ZEROFRAME
+  on_mass_primary=0.0
+  on_mass_L1L2_primary=0.0
+  on_cog_vision_primary=ON_ZEROFRAME
+  on_cog_qc_primary=ON_ZEROFRAME
+  on_cog_base_primary=ON_ZEROFRAME
+  on_cog_gripper_primary=ON_ZEROFRAME
+  on_cog_tool_primary=ON_ZEROFRAME
+  on_mass_vision_primary=0.0
+  on_mass_qc_primary=0.0
+  on_mass_base_primary=0.0
+  on_mass_gripper_primary=0.0
+  on_mass_tool_primary=0.0
+  on_cog_secondary=ON_ZEROFRAME
+  on_mass_secondary=0.0
+  on_cog_gripper_secondary=ON_ZEROFRAME
+  on_mass_gripper_secondary=0.0
+  on_cog_tool_secondary=ON_ZEROFRAME
+  on_mass_tool_secondary=0.0
+  ON_LB2KG001=0.45359237/100
+  def on_payload_update_primary():
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Primary start..")
+  end 
+  enter_critical
+  on_mass_primary=on_mass_L1L2_primary+on_mass_tool_primary
+  local massL1L2L3Ratio=on_mass_tool_primary/on_mass_primary
+  local toolAbsCOG=pose_trans(on_tcp_dynamic_primary,on_cog_tool_primary)
+  toolAbsCOG=p[toolAbsCOG[0],toolAbsCOG[1],toolAbsCOG[2],0.0,0.0,0.0]
+  on_cog_primary=interpolate_pose(on_cog_L1L2_primary,toolAbsCOG,massL1L2L3Ratio)
+  on_cog_primary=p[on_cog_primary[0],on_cog_primary[1],on_cog_primary[2],0.0,0.0,0.0]
+  exit_critical
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Primary end.")
+  end 
+  end 
+  def on_payload_init_primary():
+  if ON_DEBUG_LOG:
+  textmsg("Payload Init Primary start..")
+  end 
+  enter_critical
+  on_mass_base_primary=on_mass_vision_primary+on_mass_qc_primary
+  local massL0L1Ratio=on_mass_qc_primary/on_mass_base_primary
+  on_mass_L1L2_primary=on_mass_base_primary+on_mass_gripper_primary
+  local massL1L2Ratio=on_mass_gripper_primary/on_mass_L1L2_primary
+  local qcAbsCOG=pose_trans(on_tcp_vision_primary,on_cog_qc_primary)
+  qcAbsCOG=p[qcAbsCOG[0],qcAbsCOG[1],qcAbsCOG[2],0.0,0.0,0.0]
+  on_cog_base_primary=interpolate_pose(on_cog_vision_primary,qcAbsCOG,massL0L1Ratio)
+  on_cog_base_primary=p[on_cog_base_primary[0],on_cog_base_primary[1],on_cog_base_primary[2],0.0,0.0,0.0]
+  local gripperAbsCOG=pose_trans(on_tcp_base_primary,on_cog_gripper_primary)
+  gripperAbsCOG=p[gripperAbsCOG[0],gripperAbsCOG[1],gripperAbsCOG[2],0.0,0.0,0.0]
+  on_cog_L1L2_primary=interpolate_pose(on_cog_base_primary,gripperAbsCOG,massL1L2Ratio)
+  on_cog_L1L2_primary=p[on_cog_L1L2_primary[0],on_cog_L1L2_primary[1],on_cog_L1L2_primary[2],0.0,0.0,0.0]
+  exit_critical
+  on_payload_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("Payload Init Primary end.")
+  end 
+  end 
+  def on_payload_update():
+  on_payload_update_primary()
+  
+  on_mass_actual =on_mass_primary
+  on_cog_actual=on_cog_primary
+  
+  on_payload_set_actual()
+  end 
+  def on_payload_set_actual():
+  
+  on_mass_actual =on_mass_primary
+  on_cog_actual=on_cog_primary
+  
+  local CoG=[on_cog_actual[0],on_cog_actual[1],on_cog_actual[2]]
+  on_payload_set(on_mass_actual,CoG)
+  end 
+  def on_payload_update_tool_primary(tool_mass=0,tool_cog=[0.0,0.0,0.0]):
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool Primary start..")
+  end 
+  on_cog_tool_primary=p[tool_cog[0],tool_cog[1],tool_cog[2],0.0,0.0,0.0]
+  on_mass_tool_primary=tool_mass
+  on_payload_update_primary()
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool Primary end.")
+  end 
+  end 
+  def on_payload_set(mass,CoG):
+  if ON_DEBUG_LOG:
+  textmsg("Payload set started!")
+  end 
+  local center_of_gravity=[CoG[0],CoG[1],CoG[2]]
+  on_payload_send(center_of_gravity,mass)
+  if(on_isMetric):
+  local roundedMass=floor(mass*100+0.5)/100
+  else:
+  local roundedMass=floor(mass/ON_LB2KG001+0.5)*ON_LB2KG001
+  end 
+  set_payload(roundedMass,center_of_gravity)
+  on_mass_actual=roundedMass
+  on_cog_actual=p[CoG[0],CoG[1],CoG[2],0.0,0.0,0.0]
+  if ON_DEBUG_LOG:
+  textmsg("Payload mass, CoG set to: ",str_cat(str_cat(mass,", "),CoG))
+  end 
+  end 
+  
+  def on_payload_update_secondary():
+  end 
+  def on_payload_init_secondary():
+  end 
+  
+  def on_payload_update_tool(tool_mass,tool_cog=[0.0,0.0,0.0],tool_index=0):
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool start..")
+  end 
+  if(tool_index!=ON_DI_SECONDARY):
+  on_cog_tool_primary=p[tool_cog[0],tool_cog[1],tool_cog[2],0.0,0.0,0.0]
+  on_mass_tool_primary=tool_mass
+  else:
+  on_cog_tool_secondary=p[tool_cog[0],tool_cog[1],tool_cog[2],0.0,0.0,0.0]
+  on_mass_tool_secondary=tool_mass
+  end 
+  on_payload_update()
+  if ON_DEBUG_LOG:
+  textmsg("Payload Update Tool end.")
+  end 
+  end 
+  def on_payload_get_cog2tcp_tool(tool_index=0):
+  if(tool_index!=ON_DI_SECONDARY):
+  local cog_tool=[on_tcp_tool_primary[0],on_tcp_tool_primary[1],on_tcp_tool_primary[2]]
+  else:
+  local cog_tool=[on_tcp_tool_secondary[0],on_tcp_tool_secondary[1],on_tcp_tool_secondary[2]]
+  end 
+  return cog_tool
+  end 
+  
+  #======    End of OnRobot Payload    ======#
+  #======    OnRobot QC TCP    ======#
+  
+  onrobotmini=0
+  
+  def on_tcp_offset_send(TCP_offset):
+  on_robot_TCP_offset=TCP_offset
+  end 
+  def on_payload_send(CoG,mass):
+  on_robot_payload_cog=CoG
+  on_robot_payload_mass=mass
+  end 
+  
+  
+  #======    End of OnRobot QC TCP    ======#
+  #======    OnRobot  Speedl    ======#
+  
+  on_speedl_thread_handler=0
+  on_speedl_is_enabled=False
+  on_speedl_is_running=False
+  on_speedl_acc=0.0
+  ft_speedl_hg_caranteen_reached=False
+  ft_speedl_hg_caranteen_safemode=False
+  on_speedl_for_ftcontrol=False
+  on_speedl_for_move=False
+  on_speedl_for_handguide=False
+  on_speedl_for_insertpart=False
+  on_speedl_for_depthcompensation=False
+  on_speedl_for_center=False
+  on_speedl_for_gecko=False
+  on_speedl_acc=10000.0 
+  on_speedl_acc_to_zero=3.0 
+  ON_SPEEDL_FTCONTROL=1
+  ON_SPEEDL_HANDGUIDE=2
+  ON_SPEEDL_TRAJECTORY=3
+  ON_SPEEDL_MOVE=ON_SPEEDL_TRAJECTORY
+  ON_SPEEDL_INSERTPART=4
+  ON_SPEEDL_DEPTHCOMP=5
+  ON_SPEEDL_CENTER=6
+  ON_SPEEDL_GECKO=7
+  def on_wait_ms(time_ms):
+  local sync_time=ceil(norm(time_ms/2.0))
+  while(sync_time>0):
+  sync_time=sync_time-1
+  sync()
+  end
+  end 
+  def on_error(status_flag,message,title,stop_var=False):
+  if(status_flag):
+  popup(message,title=title,error=True,blocking=False)
+  stop_var=True
+  end 
+  return stop_var
+  end 
+  def on_warning(status_flag,message,title,isPopupNeeded=False,is_shown=False):
+  if(status_flag):
+  if(not is_shown):
+  if(isPopupNeeded):
+  popup(message,title=title,warning=True,blocking=False)
+  else:
+  textmsg(title+": ",message)
+  end 
+  is_shown=True
+  end 
+  else:
+  is_shown=False
+  end 
+  return is_shown
+  end 
+  def on_speedl_add_extra(speedBase,speedExtra):
+  speedSum=ON_ZERO6D
+  speedBaseP=p[speedBase[0],speedBase[1],speedBase[2],speedBase[3],speedBase[4],speedBase[5]]
+  speedExtraP=p[speedExtra[0],speedExtra[1],speedExtra[2],speedExtra[3],speedExtra[4],speedExtra[5]]
+  speedSumP=pose_add(speedExtraP,speedBaseP)
+  speedSum=[speedSumP[0],speedSumP[1],speedSumP[2],speedSumP[3],speedSumP[4],speedSumP[5]]
+  return speedSum
+  end 
+  
+  thread on_speedl_thread():
+  if ON_DEBUG_LOG:
+  textmsg("Speedl thread started..")
+  end 
+  enter_critical
+  on_speedl_is_running=True
+  on_speedl_is_enabled=True
+  exit_critical
+  on_speedL=ON_ZERO6D
+  on_speedL_last=ON_ZERO6D
+  
+  while on_speedl_is_running:
+  on_speedBase=on_speedCB_get()
+  on_speedL=on_speedBase
+  
+  
+  if on_speedl_is_enabled:
+  if(on_speedL==ON_ZERO6D):
+  on_speedL=[on_speedL_last[0]/100,on_speedL_last[1]/100,on_speedL_last[2]/100,on_speedL_last[3]/100,on_speedL_last[4]/100,on_speedL_last[5]/100]
+  end
+  speedl(on_speedL,a=on_speedl_acc,t=0.001)
+  else:
+  speedl(ON_ZERO6D,a=on_speedl_acc_to_zero,t=0.001)
+  end 
+  on_speedL_last=on_speedL
+  end 
+  
+  on_speedL=ON_ZERO6D
+  if ON_DEBUG_LOG:
+  textmsg("Speedl thread ended.")
+  end 
+  end 
+  def on_speedl_integer_get():
+  local speedl_integer=binary_list_to_integer([on_speedl_for_ftcontrol,on_speedl_for_handguide,on_speedl_for_move,on_speedl_for_insertpart,on_speedl_for_depthcompensation,on_speedl_for_center,on_speedl_for_gecko])
+  return speedl_integer
+  end 
+  def on_speedl_start_for(speedl_id):
+  if(speedl_id==ON_SPEEDL_FTCONTROL):
+  on_speedl_for_ftcontrol=True
+  elif(speedl_id==ON_SPEEDL_HANDGUIDE):
+  on_speedl_for_handguide=True
+  elif(speedl_id==ON_SPEEDL_TRAJECTORY):
+  on_speedl_for_move=True
+  elif(speedl_id==ON_SPEEDL_INSERTPART):
+  on_speedl_for_insertpart=True
+  elif(speedl_id==ON_SPEEDL_DEPTHCOMP):
+  on_speedl_for_depthcompensation=True
+  elif(speedl_id==ON_SPEEDL_CENTER):
+  on_speedl_for_center=True
+  elif(speedl_id==ON_SPEEDL_GECKO):
+  on_speedl_for_gecko=True
+  else:
+  textmsg("Unknown Start speedl ID received: ",speedl_id)
+  end 
+  local speedl_integer=on_speedl_integer_get()
+  if not(speedl_integer==0):
+  if not on_speedl_is_running:
+  on_speedl_thread_handler=run on_speedl_thread()
+  end 
+  end 
+  return on_speedl_is_running
+  end 
+  def on_speedl_stop_for(speedl_id,brake=10,brakeRot=10):
+  if(speedl_id==ON_SPEEDL_FTCONTROL):
+  on_speedl_for_ftcontrol=False
+  elif(speedl_id==ON_SPEEDL_HANDGUIDE):
+  on_speedl_for_handguide=False
+  elif(speedl_id==ON_SPEEDL_TRAJECTORY):
+  on_speedl_for_move=False
+  elif(speedl_id==ON_SPEEDL_INSERTPART):
+  on_speedl_for_insertpart=False
+  elif(speedl_id==ON_SPEEDL_DEPTHCOMP):
+  on_speedl_for_depthcompensation=False
+  elif(speedl_id==ON_SPEEDL_CENTER):
+  on_speedl_for_center=False
+  elif(speedl_id==ON_SPEEDL_GECKO):
+  on_speedl_for_gecko=False
+  on_speedGecko_set(ON_ZERO6D)
+  else:
+  textmsg("Unknown Stop speedl ID received: ",speedl_id)
+  end 
+  local speedl_integer=on_speedl_integer_get()
+  if(speedl_integer==0):
+  if(on_speedl_is_running):
+  kill on_speedl_thread_handler
+  enter_critical
+  on_speedl_is_running=False
+  exit_critical
+  
+  end 
+  if ON_DEBUG_LOG:
+  textmsg("Speedl thread stopped")
+  end 
+  stopl(brake,brakeRot)
+  end 
+  return on_speedl_is_running
+  end 
+  def on_speedl_pause():
+  on_speedl_is_enabled=False
+  return on_speedl_integer_get()
+  end 
+  def on_speedl_resume():
+  on_speedl_is_enabled=True
+  return on_speedl_integer_get()
+  end 
+  
+  #======    End of OnRobot  Speedl    ======#
+  textmsg(on_devices_primary_log, ": Quick Changer + QC Tool 면 + [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]")
+  on_install_tcp = False
+  on_follow_tcp = False
+  on_tcp_active_is_primary = True
+  on_tcp_vision_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_cog_vision_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_mass_vision_primary = 0.0
+  on_tcp_qc_primary = p[0.0, 0.0, 0.0136, 0.0, 0.0, 0.0]
+  on_cog_qc_primary = p[0.0, 0.0, 0.004, 0.0, 0.0, 0.0]
+  on_mass_qc_primary = 0.06
+  on_tcp_gripper_static_primary = p[0.0, 0.0, 0.017, 0.0, 0.0, 0.0]
+  on_cog_gripper_primary = p[0.0, 0.0, 0.002, 0.0, 0.0, 0.0]
+  on_mass_gripper_primary = 0.14
+  on_tcp_tool_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_cog_tool_primary = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  on_mass_tool_primary = 0.0
+  #======    OnRobot Run    ======#
+  
+  on_portopen_javaSocket()
+  sync()
+  textmsg(on_xmlrpc_start_ip,on_conn_ip)
+  if(ON_REG_USE_TOOL):
+  on_regStart_conn=[ON_CONN_SHIFT_BOOL,ON_CONN_SHIFT_INT,ON_CONN_SHIFT_FLOAT]
+  on_regSum_conn=[ON_CONN_REG_SUM_BOOL,ON_CONN_REG_SUM_INT,ON_CONN_REG_SUM_FLOAT]
+  on_rtde_feed_open(on_conn_ip,on_conn_rtde_feed_name,on_regStart_conn,on_regSum_conn,ON_REGISTERS_SPEEDL_FLOAT)
+  sync()
+  textmsg(on_xmlrpc_start_ip,on_tool_ip)
+  on_regStart_tool=[ON_TOOL_SHIFT_BOOL,ON_TOOL_SHIFT_INT,ON_TOOL_SHIFT_FLOAT]
+  on_regSum_tool=[ON_TOOL_REG_SUM_BOOL,ON_TOOL_REG_SUM_INT,ON_TOOL_REG_SUM_FLOAT]
+  on_rtde_feed_open(on_tool_ip,on_tool_rtde_feed_name,on_regStart_tool,on_regSum_tool,0)
+  sync()
+  else:
+  on_regStart_conn=[ON_CONN_SHIFT_BOOL,ON_CONN_SHIFT_INT,ON_CONN_SHIFT_FLOAT]
+  on_regSum_conn=[ON_CONN_REG_SUM_BOOL,ON_CONN_REG_SUM_INT,ON_CONN_REG_SUM_FLOAT]
+  on_rtde_feed_open(on_conn_ip,on_conn_rtde_feed_name,on_regStart_conn,on_regSum_conn,ON_REGISTERS_SPEEDL_FLOAT)
+  sync()
+  end
+  on_set_rtde_watchdog(updateHz=0.2)
+  sync()
+  on_dataProcess_thrd=run on_dataProcess_thread()
+  sync()
+  on_tcp_init_primary()
+  on_payload_init_primary()
+  
+  on_tcp_set_actual_to(on_tcp_active_is_primary)
+  if(on_follow_tcp):
+  on_payload_set_actual()
+  end 
+  on_watchdog_thrd=run on_set_watchdog_thread()
+  sync()
+  
+  #======    End of OnRobot Run    ======#
+  #======    OnRobot QC Start    ======#
+  
+  if(on_toolConnector):
+  tc_setup_tool()
+  end 
+  sync()
+  
+  #======    End of OnRobot QC Start    ======#
+  # end: URCap Installation Node
+  global Home_p=p[.290306869056, -.472672875612, .405345978375, -2.260429868117, -2.146996154470, .078329342433]
+  global Home_q=[-4.395426932965414, -1.4384695452502747, 1.6391575972186487, 4.512154265041016, -1.6198628584491175, 1.9428694248199463]
+  global Task1_Home_p=p[.290313940748, -.472699764202, .405336913637, -2.260394012839, -2.147026318895, .078269967423]
+  global Task1_Home_q=[-4.395435754452841, -1.4383999866298218, 1.6390956083880823, 4.512167616481445, -1.619831387196676, 1.9428311586380005]
+  global u50920u51060u54252u51064u53944_17_p=p[.358107621363, -.497436931417, .239958878766, -2.260459858294, -2.146918884920, .078343809510]
+  global u50920u51060u54252u51064u53944_17_q=[-4.300103727971212, -1.1582220059684296, 1.7269981543170374, 4.149478121394775, -1.620796028767721, 2.0405378341674805]
+  global Task1_Access_p=p[.358145325245, -.643310238930, .239914435923, -2.260344417190, -2.146919850609, .078308800530]
+  global Task1_Access_q=[-4.37984806696047, -0.8963247698596497, 1.3005135695086878, 4.309675379390381, -1.6204240957843226, 1.9594218730926514]
+  global Open1_p=p[.358112472765, -.643248744909, .312941355585, -2.275566046713, -2.160706749523, .043266798574]
+  global Open1_q=[-4.383661810551779, -0.9576333922198792, 1.2090609709369105, 4.453499956721924, -1.5911887327777308, 1.9548466205596924]
+  global Open2_p=p[.358115781576, -.653357679820, .348763862230, -2.239903738394, -2.128540037798, -.028191966711]
+  global Open2_q=[-4.3907451073275965, -0.9403460782817383, 1.0715373198138636, 4.636530562038086, -1.569817845021383, 1.9459601640701294]
+  global Open3_p=p[.358130818490, -.671046538716, .394190654887, -2.206542008940, -2.098237286546, -.091382623347]
+  global Open3_q=[-4.400286022816793, -0.8855664891055604, 0.850903336201803, 4.859893354564466, -1.5517728964435022, 1.9332878589630127]
+  global Open4_p=p[.358139028872, -.695842481492, .432417210732, -2.206595215436, -2.098300541776, -.091244178460]
+  global Open4_q=[-4.409742538128988, -0.7907412213138123, 0.5885575453387659, 5.027436244278707, -1.5530980269061487, 1.9226410388946533]
+  global Open5_p=p[.358137952850, -.703870964265, .432339074875, 2.175182264433, 2.061068806862, -.239727178787]
+  global Open5_q=[-4.40100330511202, -0.8773287695697327, 0.8202713171588343, 4.578958674068115, -1.6490915457354944, 1.9305641651153564]
+  global Open6_p=p[.358152444440, -.732149236353, .460496608766, 2.175102987127, 2.061059722619, -.239771576024]
+  global Open6_q=[-4.411755506192343, -0.7706793707660218, 0.5621750990497034, 4.729353942885556, -1.64689809480776, 1.918786644935608]
+  global Open7_p=p[.360468819122, -.765799196536, .480398412014, 2.107251905974, 1.994063382547, -.350326094567]
+  global Open7_q=[-4.417126838360922, -0.627780632381775, 0.28010398546327764, 4.756205881922998, -1.678551975880758, 1.9048402309417725]
+  global Task1_Retreat_p=p[.320912862263, -.525366182935, .464120443512, -2.234769068626, -2.205537153000, -.100379184077]
+  global Task1_Retreat_q=[-4.3925727049456995, -1.3065501612475892, 1.3206318060504358, 4.727620246797361, -1.507186237965719, 1.9049209356307983]
+  global Task2_Home_p=p[.036959561292, -.426094442340, .431249461775, 1.933806062976, 1.809901889040, -.684533703032]
+  global Task2_Home_q=[-4.963756028805868, -1.8277503452696742, 2.1429508368121546, 3.7552787500568847, -1.4948881308185022, 1.417500376701355]
+  global u50920u51060u54252u51064u53944_23_p=p[-.006334587758, -.696325775840, .465635796238, 2.241504263546, -.357436444377, -.159986436035]
+  global u50920u51060u54252u51064u53944_23_q=[-4.902375880871908, -1.1692268711379548, 1.426427189503805, 3.5835534769245605, -1.6599858442889612, 3.232961654663086]
+  global u50920u51060u54252u51064u53944_24_p=p[-.006322122357, -.696307187920, .414387291071, 2.241456117533, -.357478735255, -.160034722489]
+  global u50920u51060u54252u51064u53944_24_q=[-4.902435843144552, -1.131209061746933, 1.5084331671344202, 3.463514490718506, -1.6607769171344202, 3.233210563659668]
+  global u50920u51060u54252u51064u53944_25_p=p[-.006303433284, -.645418539805, .414388714004, 2.241433358017, -.357450276923, -.159981976648]
+  global u50920u51060u54252u51064u53944_25_q=[-4.919748131428854, -1.2439897519401093, 1.6710909048663538, 3.4125730234333496, -1.6478665510760706, 3.22219181060791]
+  global u50920u51060u54252u51064u53944_28_p=p[-.006917632419, -.627810715687, .451853516102, 2.241374082090, -.357496325192, -.159922530274]
+  global u50920u51060u54252u51064u53944_28_q=[-4.9275692144977015, -1.3172592681697388, 1.6656902472125452, 3.4907571512409667, -1.6413362661944788, 3.217104196548462]
+  global u50920u51060u54252u51064u53944_26_p=p[-.022834488171, -.449605893532, .451838135411, 2.241399903948, -.357548226973, -.159906176782]
+  global u50920u51060u54252u51064u53944_26_q=[-5.076597277318136, -1.7541305027403773, 2.1205504576312464, 3.4704534250446777, -1.5271013418780726, 3.121933937072754]
+  global Task2_Access_p=p[-.089034878619, -.397686554728, .230223292769, 1.568135540945, .053840816135, .066942083608]
+  global Task2_Access_q=[-5.466979924832479, -0.9950109881213685, 2.4284899870501917, 1.704685850734375, -0.7463505903827112, 3.1534457206726074]
+  global u50920u51060u54252u51064u53944_27_p=p[-.080059527075, -.498270139475, .230218828827, 1.568165465739, .053801451743, .066950517640]
+  global u50920u51060u54252u51064u53944_27_q=[-5.2631617228137415, -0.9202748698047181, 2.153360191975729, 1.9049638944813232, -0.9498503843890589, 3.15437650680542]
+  global u50920u51060u54252u51064u53944_12_p=p[-.080054153794, -.498260427457, .235694669895, 1.568143466361, .053832364636, .066916281498]
+  global u50920u51060u54252u51064u53944_12_q=[-5.26318592229952, -0.934838132267334, 2.154529396687643, 1.9182681280323486, -0.949810806904928, 3.154459238052368]
+  global Task2_Retreat_p=p[-.055477988025, -.376727345605, .380942600956, 1.568117917045, .053917183390, .066905626751]
+  global Task2_Retreat_q=[-5.427768472825186, -1.55454799280081, 2.4486027399646204, 2.240628405208252, -0.7846000830279749, 3.1583516597747803]
+  global Task3_Home_p=p[.316751413211, -.376735553589, .380910325291, 1.568196943120, .053995819965, .066842075110]
+  global Task3_Home_q=[-4.202398363743917, -1.2693518859199067, 2.088914219533102, 2.3234080511280517, -2.0094054380999964, 3.1553173065185547]
+  global Task3_Access_p=p[.316801131362, -.576799269834, .363883258618, 1.568182055202, .053959293020, .066984018522]
+  global Task3_Access_q=[-4.3761730829821985, -0.9521537584117432, 1.6234996954547327, 2.4707748132893066, -1.8345688025103968, 3.1560275554656982]
+  global Place1_p=p[.258694828796, -.535854798780, .276646616490, 1.568187029248, .053940656985, .066969279029]
+  global Place1_q=[-4.460272852574484, -0.9102312487414856, 1.8679583708392542, 2.183593674296997, -1.7517998854266565, 3.154451608657837]
+  global Place2_p=p[.258713958882, -.535836683797, .330851421072, 1.948052817966, .042794854743, .080606589716]
+  global Place2_q=[-4.46435517469515, -1.1469037693789979, 1.9209187666522425, 2.751297636623047, -1.7275999228106897, 3.2494773864746094]
+  global Place3_p=p[.258706012505, -.577685536438, .357608307791, 2.069612309243, .038604914468, .084858069350]
+  global Place3_q=[-4.485942308102743, -1.1555785697749634, 1.7908919493304651, 3.010384722346924, -1.6942723433123987, 3.2668025493621826]
+  global u50920u51060u54252u51064u53944_6_p=p[.254047338685, -.525754031972, .357576838193, 2.124074532956, .039607379079, .081664658990]
+  global u50920u51060u54252u51064u53944_6_q=[-4.47214645544161, -1.268007443552353, 1.9331901709186, 3.0362531381794433, -1.702179257069723, 3.2808001041412354]
+  global u50920u51060u54252u51064u53944_7_p=p[.265506457696, -.653621502888, .357598409731, 2.124043801689, .039662862594, .081705209423]
+  global u50920u51060u54252u51064u53944_7_q=[-4.503511134778158, -1.0246035617640992, 1.558507267628805, 3.1653243738361816, -1.6744292418109339, 3.263990879058838]
+  global u50920u51060u54252u51064u53944_8_p=p[.265302064086, -.651491534107, .340681423360, 2.124014378489, .039679859340, .081729315001]
+  global u50920u51060u54252u51064u53944_8_q=[-4.503124777470724, -1.007738546734192, 1.5811122099505823, 3.1258465486713867, -1.6750066916095179, 3.264173746109009]
+  global u50920u51060u54252u51064u53944_13_p=p[.273529800602, -.743632321356, .340721755810, 2.123963350988, .039660833773, .081713773331]
+  global u50920u51060u54252u51064u53944_13_q=[-4.5188435951816, -0.8202186983874817, 1.251930061970846, 3.266531153316162, -1.6605332533465784, 3.2557499408721924]
+  global u50920u51060u54252u51064u53944_21_p=p[.356126282995, -.746074388852, .340697527271, 2.123971841753, .039704276965, .081763265174]
+  global u50920u51060u54252u51064u53944_21_q=[-4.407896105443136, -0.7337924999049683, 1.0918453375445765, 3.3490826326557617, -1.7539246718036097, 3.3152222633361816]
+  global u50920u51060u54252u51064u53944_29_p=p[.356129660680, -.746059065767, .359504261451, 2.123970970316, .039730504916, .081700727415]
+  global u50920u51060u54252u51064u53944_29_q=[-4.407866303120748, -0.7506063145450135, 1.0720050970660608, 3.3857356744953613, -1.7537391821490687, 3.3151488304138184]
+  global Task3_Retreat_p=p[.258691921108, -.366203744018, .439923400057, 2.123694148041, .036738655572, .086672687241]
+  global Task3_Retreat_q=[-4.349353734646932, -1.6922713718810023, 2.1553567091571253, 3.250429316157959, -1.802352253590719, 3.351924419403076]
+  global u50920u51060u54252u51064u53944_1_p=p[.263645063917, -.419543848818, .450751679803, 2.109514534837, .056656357975, .067136436200]
+  global u50920u51060u54252u51064u53944_1_q=[-4.382935468350546, -1.5850721798338832, 2.0319092909442347, 3.2499067026325683, -1.7819936911212366, 3.3080248832702637]
+  global u50920u51060u54252u51064u53944_5_p=p[.325163143760, -.694866126730, .364546839230, 2.123682355017, .036802727270, .086818881493]
+  global u50920u51060u54252u51064u53944_5_q=[-4.429338041936056, -0.8977480095675965, 1.3222187201129358, 3.279754801387451, -1.7340009848224085, 3.3076491355895996]
+  global out_top_home_1_p=p[.203101805624, -.761982903073, .335486398334, 2.002772570841, -.210819810833, -.115828578559]
+  global out_top_home_1_q=[-4.586594525967733, -0.786219136123993, 1.2444866339312952, 3.148509665126465, -1.8610037008868616, 3.305521249771118]
+  global out_top_touch_1_p=p[.203110929116, -.761964169110, .318614460174, 2.002682715057, -.210788965534, -.115875786699]
+  global out_top_touch_1_q=[-4.586577479039327, -0.7670597595027466, 1.257115666066305, 3.1166269022175292, -1.8612640539752405, 3.305455446243286]
+  global out_top_left_1_p=p[.273332508633, -.761996775952, .318659973510, 2.002621582167, -.210919069937, -.115851293203]
+  global out_top_left_1_q=[-4.4889201561557215, -0.7141308945468445, 1.1545565764056605, 3.182342692012451, -1.9479320685016077, 3.3526418209075928]
+  global out_top_z_up_1_p=p[.273300605715, -.762005892121, .331729554689, 2.002720909609, -.210939392358, -.115875742741]
+  global out_top_z_up_1_q=[-4.488960568104879, -0.728217677479126, 1.1445449034320276, 3.206543131465576, -1.9477418104754847, 3.352653980255127]
+  global out_top_home_2_p=p[.350147436985, -.722858787511, .353835013042, 2.123608974805, .036799918658, .086697598507]
+  global out_top_home_2_q=[-4.406490031872885, -0.803408221607544, 1.1839397589312952, 3.325913115138672, -1.7530458609210413, 3.319918632507324]
+  global out_top_touch_2_p=p[.350161501890, -.722849349740, .335208540668, 2.123606946818, .036802629569, .086796542408]
+  global out_top_touch_2_q=[-4.406488958989279, -0.7850288313678284, 1.2019942442523401, 3.2894722658344726, -1.7532203833209437, 3.319984197616577]
+  global down_1_p=p[.350104529496, -.652861751689, .337786863854, 2.123795110369, .036801286350, .086758807366]
+  global down_1_q=[-4.374147597943441, -0.9230947655490418, 1.4422896544085901, 3.191136522884033, -1.781353775654928, 3.3378026485443115]
+  global right_1_p=p[.254420338428, -.652638036931, .336903571699, 2.123752093004, .037047469043, .086723018823]
+  global right_1_q=[-4.521497074757711, -1.0094099801829834, 1.5958555380450647, 3.111114187831543, -1.6570099035846155, 3.2582337856292725]
+  global u50920u51060u54252u51064u53944_34_p=p[.254454689306, -.652624458591, .348540458480, 2.123865071599, .037134752847, .086744408981]
+  global u50920u51060u54252u51064u53944_34_q=[-4.521444861088888, -1.0243585270694275, 1.585529629384176, 3.136502428645752, -1.6568229834186, 3.2582366466522217]
+  global u50920u51060u54252u51064u53944_35_p=p[.267387437875, -.698174980415, .352437172632, 2.123724496834, .037069033537, .086635377986]
+  global u50920u51060u54252u51064u53944_35_q=[-4.515136901532308, -0.9309730690768738, 1.4152839819537562, 3.213562174434326, -1.66168719926943, 3.2615365982055664]
+  global u50920u51060u54252u51064u53944_36_p=p[.267317554020, -.698171026389, .339176854303, 2.123716247983, .036933099719, .086642070541]
+  global u50920u51060u54252u51064u53944_36_q=[-4.515238467847006, -0.9159044188312073, 1.4275348822223108, 3.186230345363281, -1.6618359724627894, 3.2615814208984375]
+  global up_1_p=p[.267383731252, -.747516181565, .339192952115, 2.123719631313, .037027475205, .086681828442]
+  global up_1_q=[-4.528875295315878, -0.8154695791057129, 1.2478612104998987, 3.2647549349018554, -1.649538818989889, 3.2542543411254883]
+  global left_1_p=p[.417038576557, -.747555428030, .339152740417, 2.123772578398, .036941937012, .086631128278]
+  global left_1_q=[-4.332426611577169, -0.6511061948588868, 0.9393628279315394, 3.4275027948566894, -1.814678970967428, 3.3605263233184814]
+  global z_up_2_p=p[.417041810929, -.747568858801, .359498471793, 2.123744563713, .036884549433, .086589359763]
+  global z_up_2_q=[-4.332402888928549, -0.667021707897522, 0.9155953566180628, 3.4671503740498046, -1.8144953886615198, 3.360482931137085]
+  global out_down_home_p=p[.353061082633, -.649128354071, .353348772738, 2.123720238177, .036707319334, .086671740435]
+  global out_down_home_q=[-4.36790901819338, -0.944684163933136, 1.4343121687518519, 3.221412344569824, -1.786529843007223, 3.3412606716156006]
+  global out_down_touch_p=p[.353029804775, -.649115319367, .339829236152, 2.123718181799, .036678004098, .086707335607]
+  global out_down_touch_q=[-4.367955390607015, -0.929198221569397, 1.446881119404928, 3.193347139949463, -1.7866671721087855, 3.3412697315216064]
+  global up2_p=p[.347297518567, -.780894976058, .340744171550, 2.123661129917, .036827051541, .086839450953]
+  global up2_q=[-4.432802502308981, -0.6616532963565369, 0.9568546454059046, 3.4086357790180664, -1.7299583593951624, 3.305560827255249]
+  global left2_p=p[.400466264017, -.780911064006, .340739564527, 2.123653095261, .036819097388, .086811346021]
+  global left2_q=[-4.367494527493612, -0.5902916353992005, 0.8195722738849085, 3.481623812312744, -1.7846534887896937, 3.3410446643829346]
+  global z_up2_p=p[.400454256517, -.780931322560, .348393778759, 2.123720521424, .036859544653, .086836125615]
+  global z_up2_q=[-4.3675153891192835, -0.5957549971393128, 0.8100302855121058, 3.4966818529316406, -1.784492317830221, 3.340996742248535]
+  global out_left_home_p=p[.358429386981, -.710028214077, .350152883686, 2.123861675194, .036865208372, .086777835734]
+  global out_left_home_q=[-4.389804188405172, -0.8175822061351319, 1.2193802038775843, 3.306727095241211, -1.767179314290182, 3.329092264175415]
+  global out_left_touch_p=p[.358444528218, -.710016935752, .338141780471, 2.123831499231, .036872439776, .086795605746]
+  global out_left_touch_q=[-4.389787618313925, -0.8054591578296204, 1.2308653036700647, 3.283092184657715, -1.767341438923971, 3.3291127681732178]
+  global right3_p=p[.221511360341, -.710020180245, .340704519579, 2.123703622812, .036874578561, .086824663260]
+  global right3_q=[-4.587758485470907, -0.9281620544246216, 1.444977108632223, 3.1782333093830566, -1.600088898335592, 3.2234296798706055]
+  global up3_p=p[.218374706688, -.764918040179, .339145730088, 2.123733990991, .037032752659, .087084138182]
+  global up3_q=[-4.6018880049334925, -0.8143404883197327, 1.2462809721576136, 3.262856646175049, -1.5871198813067835, 3.2159388065338135]
+  global left3_p=p[.383556786276, -.776618013485, .339385361601, 2.123773990507, .036763988246, .086798862579]
+  global left3_q=[-4.38613480726351, -0.625172571544983, 0.8903153578387659, 3.4436656671711425, -1.7692130247699183, 3.330936908721924]
+  global z_up3_p=p[.383556949851, -.776624214365, .352279877000, 2.123787090913, .036766863479, .086755739078]
+  global z_up3_q=[-4.386121575032369, -0.6350364846042176, 0.8751204649554651, 3.468733950252197, -1.7690866629229944, 3.3308799266815186]
+  global out_right_home_p=p[.332756672357, -.668075890144, .351636003526, 2.123780320009, .036758415799, .086761078625]
+  global out_right_home_q=[-4.406748358403341, -0.9286102813533326, 1.412161652241842, 3.223055525416992, -1.753596607838766, 3.3199753761291504]
+  global out_right_touch_p=p[.332744548392, -.668071627848, .339134433620, 2.123714070429, .036744761704, .086779542724]
+  global out_right_touch_q=[-4.406769100819723, -0.9143858712962647, 1.4236539045916956, 3.1972696024128417, -1.7537553946124476, 3.319967746734619]
+  global up4_p=p[.332783829738, -.746829588671, .338350259070, 2.123708163115, .036867940039, .086866622585]
+  global up4_q=[-4.439169470463888, -0.7553896468928833, 1.1390164534198206, 3.319695158595703, -1.7252171675311487, 3.302248001098633]
+  global left4_p=p[.419341705356, -.748177185812, .339771535769, 2.123800891081, .036970967029, .086903220573]
+  global left4_q=[-4.329966847096578, -0.6467892688563843, 0.9294593969928187, 3.433425112361572, -1.8164952437030237, 3.361978769302368]
+  global z_up4_p=p[.419349827243, -.748182359715, .351876466646, 2.123845445732, .036988960920, .086892364498]
+  global z_up4_q=[-4.329949442540304, -0.6563938421062012, 0.9155862967120569, 3.456939383144043, -1.8163469473468226, 3.3619396686553955]
+  global clr_scanner_1_p=p[.309351712415, -.764140257469, .348523050990, 2.123590467852, .036502071169, .086865568096]
+  global clr_scanner_1_q=[-4.47624379793276, -0.7499104303172608, 1.101541821156637, 3.348557158107422, -1.6937177816974085, 3.2825653553009033]
+  global clr_scanner_2_p=p[.309354646129, -.764127333080, .335553683752, 2.123518754114, .036528847579, .086820773032]
+  global clr_scanner_2_q=[-4.476240817700521, -0.7377181214145203, 1.11438495317568, 3.323457880611084, -1.6939175764666956, 3.2825448513031006]
+  global clr_scanner_3_p=p[.309341820637, -.666018067806, .335450826276, 2.123653367416, .036529209981, .086837199196]
+  global clr_scanner_3_q=[-4.4405123631106775, -0.9362095159343262, 1.4733274618731897, 3.166064901942871, -1.725471321736471, 3.3018639087677]
+  global clr_scanner_4_p=p[.305938381195, -.521343120817, .341669529118, 2.123620057934, .036450837857, .086811014439]
+  global clr_scanner_4_q=[-4.370477024708883, -1.198078380232193, 1.8816784063922327, 3.0270272928425292, -1.7859357039081019, 3.3400869369506836]
+  global clr_scanner_5_p=p[.310317923354, -.457040058763, .432696224040, 2.123610171960, .036452461883, .086787821794]
+  global clr_scanner_5_q=[-4.314296905194418, -1.4306545865586777, 1.910788361226217, 3.2382828432270507, -1.8318823019610804, 3.371615409851074]
+  global Task4_Home_p=p[.256825796817, -.439473898667, .610894733900, 2.307929595212, .008554537177, .001754004333]
+  global Task4_Home_q=[-4.406328145657675, -1.6512662372984828, 1.5988190809832972, 3.9565035539814453, -1.7876046339618128, 3.351997137069702]
+  global Task4_Access_p=p[.148635966245, -.727715017544, .605165523126, 1.288434034291, -1.250675355217, 1.159134433065]
+  global Task4_Access_q=[-4.69096011320223, -0.9959815305522461, 1.0059612433062952, 3.217428370113037, -1.58325702348818, 4.700408935546875]
+  global Close1_p=p[.148688222154, -.809890851268, .547114509158, 1.424880475732, -1.384982821539, 1.061648765942]
+  global Close1_q=[-4.693318549786703, -0.7935378116420289, 0.7594235579120081, 3.448437376613281, -1.578536335621969, 4.703503131866455]
+  global Close2_p=p[.148640230447, -.796036501141, .521649803888, 1.424804044673, -1.384985985715, 1.061551836359]
+  global Close2_q=[-4.693076078091757, -0.836172418003418, 0.8987463156329554, 3.351738138789795, -1.5795858542071741, 4.703693866729736]
+  global Close3_p=p[.148649338699, -.796054803729, .521570972723, 1.608306955737, -1.565754773365, .906318731834]
+  global Close3_q=[-4.693243686352865, -0.8809712094119568, 0.8895967642413538, 3.664189501399658, -1.5755775610553187, 4.707465171813965]
+  global Close4_p=p[.148686885881, -.774486576912, .496375410465, 1.608264097313, -1.565695872337, .906470391851]
+  global Close4_q=[-4.692719046269552, -0.9376176756671448, 1.048478905354635, 3.5618602472492675, -1.5766633192645472, 4.708083629608154]
+  global Close5_p=p[.213156081937, -.749245118626, .470417222627, 1.608220513398, -1.565674118999, .906509926504]
+  global Close5_q=[-4.596687976513998, -0.9488658469966431, 1.1335533300982874, 3.4910523134418945, -1.6599629561053675, 4.757083415985107]
+  global Close6_p=p[.213168155371, -.729712675172, .455466461756, 1.544640143714, -1.502851625144, .963759914276]
+  global Close6_q=[-4.592611138020651, -0.9703378838351746, 1.2399404684649866, 3.315382643336914, -1.6696885267840784, 4.749760150909424]
+  global u50920u51060u54252u51064u53944_2_p=p[.213168033708, -.700446582495, .569635498306, 1.544608222291, -1.502901606997, .963714631996]
+  global u50920u51060u54252u51064u53944_2_q=[-4.586953822766439, -1.0867775839618226, 1.1269682089435022, 3.5450636583515625, -1.673347298298971, 4.751852035522461]
+  global u50920u51060u54252u51064u53944_3_p=p[.213139084985, -.700437973460, .569664321389, .768739888300, -.739808353906, 1.419826410695]
+  global u50920u51060u54252u51064u53944_3_q=[-4.588266793881552, -0.7696779531291504, 0.8360527197467249, 2.472651644343994, -1.6683877150165003, 4.626949310302734]
+  global u50920u51060u54252u51064u53944_4_p=p[.213128927908, -.710201068133, .438632883727, .768691279464, -.739766616506, 1.419774795595]
+  global u50920u51060u54252u51064u53944_4_q=[-4.590014402066366, -0.6661303800395508, 0.9877308050738733, 2.2173401552387695, -1.6681535879718226, 4.626596450805664]
+  global u50920u51060u54252u51064u53944_14_p=p[.213136548771, -.710215739999, .418871662012, .979122310215, -.946351011499, 1.333542441953]
+  global u50920u51060u54252u51064u53944_14_q=[-4.587890569363729, -0.7485808891109009, 1.164201561604635, 2.398101254100464, -1.6844576040851038, 4.6566243171691895]
+  global u50920u51060u54252u51064u53944_15_p=p[.213141594677, -.710216532372, .394519877292, 1.109486102755, -1.074527489733, 1.267414552973]
+  global u50920u51060u54252u51064u53944_15_q=[-4.5871902147876185, -0.7823767823031922, 1.260918442402975, 2.5083071428486328, -1.6898720900165003, 4.677801609039307]
+  global u50920u51060u54252u51064u53944_16_p=p[.213145584046, -.710207087007, .363101929763, 1.185757289022, -1.149573135644, 1.223937455702]
+  global u50920u51060u54252u51064u53944_16_q=[-4.587026540433065, -0.7793193024447937, 1.320735279713766, 2.547856493587158, -1.691202465687887, 4.690698146820068]
+  global Task4_Retreat_p=p[.203303665951, -.382609098932, .703619276174, .953169128907, -1.096591794430, 1.282705964303]
+  global Task4_Retreat_q=[-4.462414924298422, -1.6595264873900355, 1.6628454367267054, 2.889763517970703, -1.9014313856707972, 4.6894450187683105]
+  global Task6_Home_p=p[.258689811149, -.366228277422, .439886231443, 2.123780779711, .036707973300, .086681779144]
+  global Task6_Home_q=[-4.349386755620138, -1.6922007999815882, 2.1553691069232386, 3.250429316157959, -1.802314583455221, 3.351954936981201]
+  global Task6_Access_p=p[.313845534249, -.631219407315, .410677386291, 2.125004543520, .036418757060, .086893539738]
+  global Task6_Access_q=[-4.41814107099642, -1.0799137514880677, 1.493561093007223, 3.293008967036865, -1.7434266249286097, 3.314352035522461]
+  global Pick2_1_p=p[.313897216224, -.687472671986, .339098374521, 2.125074178154, .036460182897, .086904255482]
+  global Pick2_1_q=[-4.442577068005697, -0.8962183159640809, 1.3916953245746058, 3.208934469813965, -1.723180119191305, 3.3010804653167725]
+  global Pick2_2_p=p[.297062291223, -.576690340000, .339021936503, 2.125181672260, .036484578704, .086922359609]
+  global Pick2_2_q=[-4.418724481259481, -1.1105080407908936, 1.7541139761554163, 3.0631748872944335, -1.7445200125323694, 3.31404709815979]
+  global u50920u51060u54252u51064u53944_9_p=p[.297067791020, -.576686368911, .353497024158, 2.125269545323, .036512097095, .086933705391]
+  global u50920u51060u54252u51064u53944_9_q=[-4.418718520795004, -1.1308998626521607, 1.7407029310809534, 3.09706894933667, -1.744265381489889, 3.314086675643921]
+  global Pick2_3_p=p[.309974593943, -.404430845037, .313224385020, 1.566644890709, .061020987644, .068602471777]
+  global Pick2_3_q=[-4.250706259404318, -1.0996349316886445, 2.0875752607928675, 2.1528896528431396, -1.956064526234762, 3.1502363681793213]
+  global u50920u51060u54252u51064u53944_30_p=p[.304477239309, -.342984569262, .313207136309, 1.566689293182, .060991032842, .068585689270]
+  global u50920u51060u54252u51064u53944_30_q=[-4.18739635149111, -1.170759604578354, 2.221062485371725, 2.0906643110462646, -2.0196779409991663, 3.1497974395751953]
+  global u50920u51060u54252u51064u53944_31_p=p[.304503330329, -.342949125421, .162635165852, 1.566649067038, .061062433821, .068666150557]
+  global u50920u51060u54252u51064u53944_31_q=[-4.186566177998678, -0.7487602394870301, 2.1929691473590296, 1.6954504686542968, -2.020867649708883, 3.146843671798706]
+  global u50920u51060u54252u51064u53944_32_p=p[.314960668876, -.460116968841, .158017247024, 1.566676604022, .061125081623, .068593816159]
+  global u50920u51060u54252u51064u53944_32_q=[-4.29480475584139, -0.680749313240387, 1.9264872709857386, 1.8943726259418945, -1.912325684224264, 3.148498296737671]
+  global u50920u51060u54252u51064u53944_33_p=p[.316411706078, -.476469297908, .181081288532, 1.566639123646, .061024084800, .068612660865]
+  global u50920u51060u54252u51064u53944_33_q=[-4.306189481412069, -0.7224788826755066, 1.8988402525531214, 1.9638330179401855, -1.900867764149801, 3.149061441421509]
+  global Task6_Retreat_p=p[.309999287964, -.343472831906, .344222149616, 1.566782588021, .061179870757, .068558763216]
+  global Task6_Retreat_q=[-4.175104681645529, -1.2398778063109894, 2.1926448980914515, 2.188659115428589, -2.0315683523761194, 3.1503844261169434]
+  global Task7_Home_p=p[.310005523914, -.343483314283, .344209682388, 1.566794008851, .061195634850, .068543157622]
+  global Task7_Home_q=[-4.175104681645529, -1.2398330134204407, 2.192622486745016, 2.188650293941162, -2.0315683523761194, 3.1503708362579346]
+  global Pick2_4_p=p[.310006627970, -.393332885096, .344221459616, 1.222889959969, 1.184495438339, 1.193846586855]
+  global Pick2_4_q=[-4.5256046692477625, -1.1373148721507569, 2.0213564077960413, 2.2239810663410644, -0.22000295320619756, 3.17999529838562]
+  global u50920u51060u54252u51064u53944_18_p=p[.382216151651, -.393345024052, .344199202882, 1.222932455828, 1.184460905896, 1.193840818585]
+  global u50920u51060u54252u51064u53944_18_q=[-4.3681737820254725, -1.072740302687027, 1.9087041060077112, 2.2857281404682617, -0.37716466585268194, 3.166642904281616]
+  global u50920u51060u54252u51064u53944_22_p=p[.382215958369, -.393345557310, .344195764459, 1.581202865901, 1.548991102533, .903433595464]
+  global u50920u51060u54252u51064u53944_22_q=[-4.343880120907919, -1.372276024227478, 2.0445292631732386, 3.4170591074177246, -0.6322992483722132, 2.2906816005706787]
+  global u50920u51060u54252u51064u53944_19_p=p[.454460853107, -.393370166314, .199469473108, 1.581185343786, 1.548959414174, .903400114433]
+  global u50920u51060u54252u51064u53944_19_q=[-4.21131402650942, -0.9703635734370728, 1.9847305456744593, 2.9476229387470703, -0.718818489705221, 2.4543206691741943]
+  global u50920u51060u54252u51064u53944_10_p=p[.563375643960, -.393348026037, .166569480968, 1.651328571719, 1.620773039708, .832321870919]
+  global u50920u51060u54252u51064u53944_10_q=[-4.041457478200094, -0.8010116380504151, 1.7197898069964808, 3.0405847269245605, -0.8972953001605433, 2.543564558029175]
+  global u50920u51060u54252u51064u53944_11_p=p[.563369091278, -.393371496715, .166519587402, 1.809298018582, 1.782807080393, .650693044453]
+  global u50920u51060u54252u51064u53944_11_q=[-4.02102500597109, -0.8667564553073426, 1.718154255543844, 3.328448935145996, -1.059345547352926, 2.4270193576812744]
+  global u50920u51060u54252u51064u53944_20_p=p[.549465066170, -.393372706429, .236974472911, 1.809236779567, 1.782839824830, .650671790025]
+  global u50920u51060u54252u51064u53944_20_q=[-4.038614336644308, -1.0065238636783143, 1.727492634450094, 3.4674641328999023, -1.0496347586261194, 2.4093682765960693]
+  global Task7_Retreat_p=p[.206096349168, -.224681197914, .522613459931, .521350485380, .809087233004, -.902446131478]
+  global Task7_Retreat_q=[-4.518425766621725, -1.7975331745543421, 2.306519333516256, 1.9643425184437255, -1.3258116880999964, 1.8528664112091064]
+  def Socket_Open():
+    $ 356 "Socket_Open" "noBreak"
+    $ 357 "스크립트: Socket_Open.script"
+    global socket_state = socket_open("192.168.0.10", 5000)
+    
+    if socket_state:
+      socket_send_string(CMD_PING)
+      global pc_response = socket_read_line()
+    
+      if pc_response == RESP_OK_PING:
+        global fail_flag = 0
+        textmsg("Socket open OK")
+      else:
+        global fail_flag = 1
+        textmsg("PING failed: ", pc_response)
+      end
+    
+    else:
+      global fail_flag = 1
+      textmsg("Socket open FAILED")
+      halt
+    end
+  end
+  def Init_Variables():
+    $ 358 "Init_Variables" "noBreak"
+    $ 359 "스크립트: Init_Variables.script"
+    # ============================================================
+    # Init_Variables.script
+    # UR5e - PC Server - Arduino / PC Vision 공통 변수 초기화
+    # ============================================================
+    
+    
+    # ============================================================
+    # Retry / fail control
+    # ============================================================
+    
+    global retry_count = 0
+    global max_retry = 2
+    
+    global fail_flag = 0
+    global task_done = 0
+    global current_task = 0
+    
+    global nopaper = 1
+    global align_retry_count = 0
+    
+    # ============================================================
+    # State variables
+    # ============================================================
+    
+    # Door sensor state
+    # 0: closed
+    # 1: open
+    global door_state = 0
+    
+    # DC motor, Servo motor state
+    # 0: idle
+    # 1: busy
+    global motor_state = 0
+    
+    # Scanner lid state
+    # 0: not open
+    # 1: open
+    global lid_state = 0
+    
+    # Paper presence state
+    # 0: paper not found
+    # 1: paper present
+    global paper_state = 0
+    
+    # Paper alignment state
+    # 0: OK
+    # 1: shifted up
+    # 2: shifted down
+    # 3: shifted left
+    # 4: shifted right
+    # 9: NG / unknown / not found
+    #
+    # 주의:
+    # PAPER_SHIFTED_*는 현재 종이가 벗어난 방향을 의미한다.
+    # 실제 보정 이동 방향은 반대다.
+    global paper_align_state = 9
+    
+    
+    # ============================================================
+    # Socket / response buffer
+    # ============================================================
+    
+    global socket_state = False
+    global pc_response = ""
+    
+    
+    # ============================================================
+    # Command strings
+    # URScript -> PC Server -> Arduino / PC Vision
+    # ============================================================
+    
+    # Arduino commands
+    global CMD_PING = "PING\n"
+    global CMD_GRIPPER_OPEN = "G OPEN\n"
+    global CMD_GRIPPER_CLOSE = "G CLOSE\n"
+    global CMD_DC_RUN = "D RUN\n"
+    global CMD_ESTOP = "ESTOP\n"
+    global CMD_MOTOR_STATUS = "MOTOR STATUS\n"
+    global CMD_DOOR_STATUS = "DOOR STATUS\n"
+    
+    
+    # PC Vision commands
+    global CMD_VISION_LID_STATUS = "V LID\n"
+    global CMD_VISION_PAPER_ALIGN = "V PAPER\n"
+    
+    
+    # ============================================================
+    # Expected Arduino response strings
+    # Arduino / PC Server -> URScript
+    # ============================================================
+    
+    global RESP_OK_PING = "OK PING"
+    
+    global RESP_OK_GRIPPER_OPEN = "OK G OPEN"
+    global RESP_OK_GRIPPER_CLOSE = "OK G CLOSE"
+    
+    global RESP_OK_DC_RUN = "OK D RUN"
+    global RESP_OK_ESTOP = "OK ESTOP"
+    
+    global RESP_MOTOR_BUSY = "MOTOR STATUS BUSY"
+    global RESP_MOTOR_IDLE = "MOTOR STATUS IDLE"
+    
+    global RESP_DOOR_OPEN = "DOOR STATUS OPEN"
+    global RESP_DOOR_CLOSED = "DOOR STATUS CLOSED"
+    
+    
+    # ============================================================
+    # Expected PC Vision response strings: Lid
+    # PC Server -> URScript
+    # ============================================================
+    
+    global RESP_LID_OPEN = "LID_OPEN"
+    global RESP_LID_CLOSED = "LID_CLOSED"
+    
+    
+    # ============================================================
+    # Expected PC Vision response strings: Paper alignment
+    # PC Server -> URScript
+    # ============================================================
+    
+    global RESP_PAPER_OK = "PAPER_OK"
+    global RESP_PAPER_NOT_FOUND = "PAPER_NOT_FOUND"
+    
+    global RESP_PAPER_SHIFTED_UP = "PAPER_SHIFTED_UP"
+    global RESP_PAPER_SHIFTED_DOWN = "PAPER_SHIFTED_DOWN"
+    global RESP_PAPER_SHIFTED_LEFT = "PAPER_SHIFTED_LEFT"
+    global RESP_PAPER_SHIFTED_RIGHT = "PAPER_SHIFTED_RIGHT"
+    global RESP_PAPER_NG = "PAPER_NG"
+    
+    
+    # ============================================================
+    # Optional common error response strings
+    # 현재는 unknown command 정도만 공통 확인용으로 둔다.
+    # Vision 내부 실패는 별도 ERR 없이 LID_CLOSED 또는 PAPER_NG로 처리한다.
+    # ============================================================
+    
+    global RESP_ERR_UNKNOWN_CMD = "ERR UNKNOWN_CMD"
+    global RESP_ERR_ARDUINO_TIMEOUT = "ERR ARDUINO_TIMEOUT"
+    global RESP_ERR_ARDUINO_SERIAL = "ERR ARDUINO_SERIAL"
+  end
+  def Gripper_Close():
+    $ 360 "Gripper_Close" "noBreak"
+    $ 361 "스크립트: Gripper_Close.script"
+    socket_send_string(CMD_GRIPPER_CLOSE)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_OK_GRIPPER_CLOSE:
+      global motor_state = 1
+      global fail_flag = 0
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Gripper_Open():
+    $ 362 "Gripper_Open" "noBreak"
+    $ 363 "스크립트: Gripper_Open.script"
+    socket_send_string(CMD_GRIPPER_OPEN)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_OK_GRIPPER_OPEN:
+      global motor_state = 1
+      global fail_flag = 0
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Wait_Motor_Idle():
+    $ 364 "Wait_Motor_Idle" "noBreak"
+    $ 365 "스크립트: Wait_Motor_Idle.script_bak"
+    # MOTOR STATUS를 반복 조회하여 IDLE이 될 때까지 대기
+    # break문 사용 불가하므로 wait_done 임시 변수 사용
+    
+    wait_done = 0
+    
+    while wait_done == 0:
+      socket_send_string(CMD_MOTOR_STATUS)
+      global pc_response = socket_read_line()
+    
+      if pc_response == RESP_MOTOR_BUSY:
+        global motor_state = 1
+        sleep(0.1)
+    
+      elif pc_response == RESP_MOTOR_IDLE:
+        global motor_state = 0
+        global fail_flag = 0
+        global wait_done = 1
+    
+      else:
+        global fail_flag = 1
+        global wait_done = 1
+      end
+    end
+  end
+  def Check_Door_Closed():
+    $ 366 "Check_Door_Closed" "noBreak"
+    $ 367 "스크립트: Check_Door_Closed.script"
+    socket_send_string(CMD_DOOR_STATUS)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_DOOR_CLOSED:
+      global door_state = 0
+      global fail_flag = 0
+    
+    elif pc_response == RESP_DOOR_OPEN:
+      global door_state = 1
+      global fail_flag = 1
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Check_Door_Open():
+    $ 368 "Check_Door_Open" "noBreak"
+    $ 369 "스크립트: Check_Door_Open.script"
+    socket_send_string(CMD_DOOR_STATUS)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_DOOR_OPEN:
+      global door_state = 1
+      global fail_flag = 0
+    
+    elif pc_response == RESP_DOOR_CLOSED:
+      global door_state = 0
+      global fail_flag = 1
+    
+    else:
+      global fail_flag = 1
+    end
+  end
+  def Check_Camera_Open():
+    $ 370 "Check_Camera_Open" "noBreak"
+    $ 371 "스크립트: Check_Camera_Open.script"
+    # ============================================================
+    # Check_Camera_Open.script
+    # 목적:
+    # - PC Vision 서버에 V LID 명령 전송
+    # - ArUco 기반 스캐너 뚜껑 open/close 상태 확인
+    #
+    # 결과:
+    # - lid_state = 1 : LID_OPEN
+    # - lid_state = 0 : LID_CLOSED 또는 fail-safe
+    # - fail_flag = 0 : lid open 확인
+    # - fail_flag = 1 : lid open 아님
+    # ============================================================
+    
+    socket_send_string(CMD_VISION_LID_STATUS)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_LID_OPEN:
+      global lid_state = 1
+      global fail_flag = 0
+    
+    elif pc_response == RESP_LID_CLOSED:
+      global lid_state = 0
+      global fail_flag = 1
+    
+    else:
+      global lid_state = 0
+      global fail_flag = 1
+    end
+  end
+  def Check_Camera_Align():
+    $ 372 "Check_Camera_Align" "noBreak"
+    $ 373 "스크립트: Check_Camera_Align.script"
+    # ============================================================
+    # Check_Camera_Align.script
+    # 목적:
+    # - PC Vision 서버에 V PAPER 명령 전송
+    # - 종이 유무 및 정렬 상태 확인
+    #
+    # 결과:
+    # - paper_state = 1 : 종이 있음
+    # - paper_state = 0 : 종이 없음
+    #
+    # - paper_align_state = 0 : PAPER_OK
+    # - paper_align_state = 1 : PAPER_SHIFTED_UP
+    # - paper_align_state = 2 : PAPER_SHIFTED_DOWN
+    # - paper_align_state = 3 : PAPER_SHIFTED_LEFT
+    # - paper_align_state = 4 : PAPER_SHIFTED_RIGHT
+    # - paper_align_state = 9 : PAPER_NG / PAPER_NOT_FOUND / unknown
+    #
+    # 주의:
+    # - PAPER_SHIFTED_*는 현재 종이가 벗어난 방향이다.
+    # - 실제 보정 이동 방향은 반대다.
+    # ============================================================
+    
+    socket_send_string(CMD_VISION_PAPER_ALIGN)
+    global pc_response = socket_read_line()
+    
+    if pc_response == RESP_PAPER_OK:
+      global paper_state = 1
+      global paper_align_state = 0
+      global fail_flag = 0
+    
+    elif pc_response == RESP_PAPER_NOT_FOUND:
+      global paper_state = 0
+      global paper_align_state = 9
+      global fail_flag = 1
+    
+    elif pc_response == RESP_PAPER_SHIFTED_UP:
+      global paper_state = 1
+      global paper_align_state = 1
+      global fail_flag = 1
+    
+    elif pc_response == RESP_PAPER_SHIFTED_DOWN:
+      global paper_state = 1
+      global paper_align_state = 2
+      global fail_flag = 1
+    
+    elif pc_response == RESP_PAPER_SHIFTED_LEFT:
+      global paper_state = 1
+      global paper_align_state = 3
+      global fail_flag = 1
+    
+    elif pc_response == RESP_PAPER_SHIFTED_RIGHT:
+      global paper_state = 1
+      global paper_align_state = 4
+      global fail_flag = 1
+    
+    elif pc_response == RESP_PAPER_NG:
+      global paper_state = 1
+      global paper_align_state = 9
+      global fail_flag = 1
+    
+    else:
+      global paper_state = 0
+      global paper_align_state = 9
+      global fail_flag = 1
+    end
+  end
+  def Error_Stop():
+    $ 374 "Error_Stop" "noBreak"
+    $ 375 "스크립트: Error_Stop.script"
+    # Arduino/PC 측 정지 요청을 먼저 수행
+    socket_send_string(CMD_ESTOP)
+    global pc_response = socket_read_line()
+    
+    textmsg("ESTOP response: ", pc_response)
+    
+    # 현재 task 번호에 따라 오류 메시지 출력
+    if current_task == 1:
+      popup("Task 1 Failed: Open Printer", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 2:
+      popup("Task 2 Failed: Pick A4 From Paper Box", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 3:
+      popup("Task 3 Failed: Place A4 To Printer Head", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 4:
+      popup("Task 4 Failed: Close Printer", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 5:
+      popup("Task 5 Failed: Open Printer Again", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 6:
+      popup("Task 6 Failed: Pick A4 From Printer Head", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 7:
+      popup("Task 7 Failed: Place A4 To Paper Box", title="Task Error", warning=True, error=False)
+    
+    elif current_task == 8:
+      popup("Task 8 Failed: Close Printer Again", title="Task Error", warning=True, error=False)
+    
+    else:
+      popup("Unknown Task Failed", title="Task Error", warning=True, error=False)
+    end
+    
+    halt # UR Program 정지
+  end
+  def Enter_Next_Task():
+    $ 376 "Enter_Next_Task" "noBreak"
+    $ 377 "스크립트: Enter_Next_Task.script"
+    global current_task = current_task + 1
+    global retry_count = 0
+    global task_done = 0
+    global fail_flag = 0
+  end
+  while (True):
+    $ 1 "로봇 프로그램"
+    $ 2 "Init"
+    $ 3 "호출 Init_Variables"
+    Init_Variables()
+    $ 4 "global repeat = 0"
+    global repeat = 0
+    $ 5 "호출 Socket_Open"
+    Socket_Open()
+    $ 6 "MoveJ"
+    $ 7 "Home" "breakAfter"
+    movej(get_inverse_kin(Home_p, qnear=Home_q), a=1.3962634015954636, v=1.0471975511965976)
+    $ 8 "기다림: 1.0"
+    sleep(1.0)
+    $ 9 "루프"
+    while (True):
+      $ 10 "Main Sequence"
+      $ 11 "Task1:OpenPrinter"
+      $ 12 "호출 Enter_Next_Task"
+      Enter_Next_Task()
+      $ 13 "retry_count <= max_retry and task_done == 0 Loop"
+      while (retry_count <= max_retry and task_done == 0):
+        $ 14 "MoveJ"
+        $ 15 "Task1_Home" "breakAfter"
+        movej(get_inverse_kin(Task1_Home_p, qnear=Task1_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+        $ 16 "MoveL"
+        $ 17 "웨이포인트_17" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_17_p, a=1.2, v=0.25)
+        $ 18 "Task1_Access" "breakAfter"
+        movel(Task1_Access_p, a=1.2, v=0.25)
+        $ 19 "MoveL"
+        $ 20 "Open1" "breakAfter"
+        movel(Open1_p, a=1.2, v=0.25)
+        $ 21 "Open2" "breakAfter"
+        movel(Open2_p, a=1.2, v=0.25)
+        $ 22 "Open3" "breakAfter"
+        movel(Open3_p, a=1.2, v=0.25)
+        $ 23 "Open4" "breakAfter"
+        movel(Open4_p, a=1.2, v=0.25)
+        $ 24 "Open5" "breakAfter"
+        movel(Open5_p, a=1.2, v=0.25)
+        $ 25 "Open6" "breakAfter"
+        movel(Open6_p, a=1.2, v=0.25)
+        $ 26 "Open7" "breakAfter"
+        movel(Open7_p, a=1.2, v=0.25)
+        $ 27 "MoveL"
+        $ 28 "Task1_Retreat" "breakAfter"
+        movel(Task1_Retreat_p, a=1.2, v=0.25)
+        $ 29 "기다림: 1.0"
+        sleep(1.0)
+        $ 36 "호출 Check_Camera_Open"
+        Check_Camera_Open()
+        $ 37 "스위치 fail_flag"
+        switch_1 = fail_flag
+        $ 38 "케이스 0"
+        if (0 == switch_1):
+          $ 39 "task_done = 1"
+          task_done = 1
+        elif (1 == switch_1):
+          $ 40 "케이스 1"
+          $ 41 "retry_count = retry_count + 1"
+          retry_count = retry_count + 1
+        end
+      end
+      $ 42 "If task_done == 0"
+      if (task_done == 0):
+        $ 43 "호출 Error_Stop"
+        Error_Stop()
+      end
+      $ 44 "기다림: 1.0"
+      sleep(1.0)
+      $ 45 "Task2,3,3+:PickAndPlace"
+      $ 46 "호출 Enter_Next_Task"
+      Enter_Next_Task()
+      $ 47 "nopaper == 1 Loop"
+      while (nopaper == 1):
+        $ 48 "retry_count <= max_retry and task_done == 0 Loop"
+        while (retry_count <= max_retry and task_done == 0):
+          $ 49 "Task2:PickA4FromTray"
+          $ 50 "MoveJ"
+          $ 51 "Task2_Home" "breakAfter"
+          movej(get_inverse_kin(Task2_Home_p, qnear=Task2_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+          $ 52 "호출 Gripper_Open"
+          Gripper_Open()
+          $ 53 "호출 Wait_Motor_Idle"
+          Wait_Motor_Idle()
+          $ 54 "폴더"
+          $ 55 "MoveJ"
+          $ 56 "웨이포인트_23" "breakAfter"
+          movej(get_inverse_kin(u50920u51060u54252u51064u53944_23_p, qnear=u50920u51060u54252u51064u53944_23_q), a=1.3962634015954636, v=1.0471975511965976)
+          $ 57 "MoveL"
+          $ 58 "웨이포인트_24" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_24_p, a=1.2, v=0.25)
+          $ 59 "웨이포인트_25" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_25_p, a=1.2, v=0.25)
+          $ 60 "웨이포인트_28" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_28_p, a=1.2, v=0.25)
+          $ 61 "MoveL"
+          $ 62 "웨이포인트_26" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_26_p, a=1.2, v=0.25)
+          $ 63 "Task2_Access" "breakAfter"
+          movel(Task2_Access_p, a=1.2, v=0.25)
+          $ 64 "웨이포인트_27" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_27_p, a=1.2, v=0.25)
+          $ 65 "웨이포인트_12" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_12_p, a=1.2, v=0.25)
+          $ 66 "기다림: 1.0"
+          sleep(1.0)
+          $ 67 "호출 Gripper_Close"
+          Gripper_Close()
+          $ 68 "호출 Wait_Motor_Idle"
+          Wait_Motor_Idle()
+          $ 69 "MoveL"
+          $ 70 "Task2_Retreat" "breakAfter"
+          movel(Task2_Retreat_p, a=1.2, v=0.25)
+          $ 71 "If fail_flag == 1"
+          if (fail_flag == 1):
+            $ 72 "호출 Error_Stop"
+            Error_Stop()
+          end
+          $ 73 "기다림: 3.0"
+          sleep(3.0)
+          $ 74 "Task3:PlaceA4OnScanner"
+          $ 75 "호출 Enter_Next_Task"
+          Enter_Next_Task()
+          $ 76 "MoveJ"
+          $ 77 "Task3_Home" "breakAfter"
+          movej(get_inverse_kin(Task3_Home_p, qnear=Task3_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+          $ 78 "MoveL"
+          $ 79 "Task3_Access" "breakAfter"
+          movel(Task3_Access_p, a=1.2, v=0.25)
+          $ 80 "MoveL"
+          $ 81 "Place1" "breakAfter"
+          movel(Place1_p, a=1.2, v=0.25)
+          $ 82 "Place2" "breakAfter"
+          movel(Place2_p, a=1.2, v=0.25)
+          $ 83 "Place3" "breakAfter"
+          movel(Place3_p, a=1.2, v=0.25)
+          $ 84 "호출 Gripper_Open"
+          Gripper_Open()
+          $ 85 "호출 Wait_Motor_Idle"
+          Wait_Motor_Idle()
+          $ 86 "MoveL"
+          $ 87 "웨이포인트_6" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_6_p, a=1.2, v=0.25)
+          $ 88 "웨이포인트_7" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_7_p, a=1.2, v=0.25)
+          $ 89 "웨이포인트_8" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_8_p, a=1.2, v=0.25)
+          $ 90 "웨이포인트_13" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_13_p, a=1.2, v=0.25)
+          $ 91 "웨이포인트_21" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_21_p, a=1.2, v=0.25)
+          $ 92 "웨이포인트_29" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_29_p, a=1.2, v=0.25)
+          $ 93 "MoveL"
+          $ 94 "Task3_Retreat" "breakAfter"
+          movel(Task3_Retreat_p, a=1.2, v=0.25)
+          $ 95 "기다림: 1.0"
+          sleep(1.0)
+          $ 96 "호출 Check_Camera_Align"
+          Check_Camera_Align()
+          $ 97 "스위치 paper_state"
+          switch_1 = paper_state
+          $ 98 "케이스 0"
+          if (0 == switch_1):
+            $ 99 "retry_count = retry_count + 1"
+            retry_count = retry_count + 1
+          elif (1 == switch_1):
+            $ 100 "케이스 1"
+            $ 101 "task_done = 1"
+            task_done = 1
+          end
+          $ 102 "기다림: 1.0"
+          sleep(1.0)
+        end
+        $ 103 "If task_done == 0"
+        if (task_done == 0):
+          $ 104 "호출 Error_Stop"
+          Error_Stop()
+        end
+        $ 105 "Task3+:PaperAlign"
+        $ 106 "기다림: 1.0"
+        sleep(1.0)
+        $ 107 "호출 Check_Camera_Align"
+        Check_Camera_Align()
+        $ 108 "paper_align_state != 0 and paper_align_state != 9 and align_retry_count <= max_retry Loop"
+        while (paper_align_state != 0 and paper_align_state != 9 and align_retry_count <= max_retry):
+          $ 109 "align_retry_count = align_retry_count + 1"
+          align_retry_count = align_retry_count + 1
+          $ 110 "MoveL"
+          $ 111 "웨이포인트_1" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_1_p, a=1.2, v=0.25)
+          $ 112 "웨이포인트_5" "breakAfter"
+          movel(u50920u51060u54252u51064u53944_5_p, a=1.2, v=0.25)
+          $ 113 "스위치 paper_align_state"
+          switch_1 = paper_align_state
+          $ 114 "케이스 1"
+          if (1 == switch_1):
+            $ 145 "MoveL"
+            $ 146 "out_top_home_1" "breakAfter"
+            movel(out_top_home_1_p, a=1.2, v=0.25)
+            $ 147 "out_top_touch_1" "breakAfter"
+            movel(out_top_touch_1_p, a=1.2, v=0.25)
+            $ 148 "out_top_left_1" "breakAfter"
+            movel(out_top_left_1_p, a=1.2, v=0.25)
+            $ 149 "out_top_z_up_1" "breakAfter"
+            movel(out_top_z_up_1_p, a=1.2, v=0.25)
+            $ 150 "out_top_home_2" "breakAfter"
+            movel(out_top_home_2_p, a=1.2, v=0.25)
+            $ 151 "out_top_touch_2" "breakAfter"
+            movel(out_top_touch_2_p, a=1.2, v=0.25)
+            $ 152 "down_1" "breakAfter"
+            movel(down_1_p, a=1.2, v=0.25)
+            $ 153 "right_1" "breakAfter"
+            movel(right_1_p, a=1.2, v=0.25)
+            $ 154 "웨이포인트_34" "breakAfter"
+            movel(u50920u51060u54252u51064u53944_34_p, a=1.2, v=0.25)
+            $ 155 "웨이포인트_35" "breakAfter"
+            movel(u50920u51060u54252u51064u53944_35_p, a=1.2, v=0.25)
+            $ 156 "웨이포인트_36" "breakAfter"
+            movel(u50920u51060u54252u51064u53944_36_p, a=1.2, v=0.25)
+            $ 157 "up_1" "breakAfter"
+            movel(up_1_p, a=1.2, v=0.25)
+            $ 158 "left_1" "breakAfter"
+            movel(left_1_p, a=1.2, v=0.25)
+            $ 159 "z_up_2" "breakAfter"
+            movel(z_up_2_p, a=1.2, v=0.25)
+          elif (2 == switch_1):
+            $ 160 "케이스 2"
+            $ 161 "MoveL"
+            $ 162 "out_down_home" "breakAfter"
+            movel(out_down_home_p, t=2.0)
+            $ 163 "out_down_touch" "breakAfter"
+            movel(out_down_touch_p, a=1.2, v=0.25)
+            $ 164 "up2" "breakAfter"
+            movel(up2_p, a=1.2, v=0.25)
+            $ 165 "left2" "breakAfter"
+            movel(left2_p, a=1.2, v=0.25)
+            $ 166 "z_up2" "breakAfter"
+            movel(z_up2_p, a=1.2, v=0.25)
+          elif (3 == switch_1):
+            $ 167 "케이스 3"
+            $ 168 "MoveL"
+            $ 169 "out_left_home" "breakAfter"
+            movel(out_left_home_p, a=1.2, v=0.25)
+            $ 170 "out_left_touch" "breakAfter"
+            movel(out_left_touch_p, a=1.2, v=0.25)
+            $ 171 "right3" "breakAfter"
+            movel(right3_p, a=1.2, v=0.25)
+            $ 172 "up3" "breakAfter"
+            movel(up3_p, a=1.2, v=0.25)
+            $ 173 "left3" "breakAfter"
+            movel(left3_p, a=1.2, v=0.25)
+            $ 174 "z_up3" "breakAfter"
+            movel(z_up3_p, a=1.2, v=0.25)
+          elif (4 == switch_1):
+            $ 175 "케이스 4"
+            $ 176 "MoveL"
+            $ 177 "out_right_home" "breakAfter"
+            movel(out_right_home_p, a=1.2, v=0.25)
+            $ 178 "out_right_touch" "breakAfter"
+            movel(out_right_touch_p, a=1.2, v=0.25)
+            $ 179 "up4" "breakAfter"
+            movel(up4_p, a=1.2, v=0.25)
+            $ 180 "left4" "breakAfter"
+            movel(left4_p, a=1.2, v=0.25)
+            $ 181 "z_up4" "breakAfter"
+            movel(z_up4_p, a=1.2, v=0.25)
+          end
+          $ 182 "MoveL"
+          $ 183 "Task3_Retreat" "breakAfter"
+          movel(Task3_Retreat_p, a=1.2, v=0.25)
+          $ 184 "기다림: 1.0"
+          sleep(1.0)
+          $ 185 "호출 Check_Camera_Align"
+          Check_Camera_Align()
+        end
+        $ 186 "If paper_align_state != 0"
+        if (paper_align_state != 0):
+          $ 187 "3회 Loop:"
+          u47336u54532_11 = 0
+          while (u47336u54532_11 < 3):
+            $ 188 "MoveL"
+            $ 189 "clr_scanner_1" "breakAfter"
+            movel(clr_scanner_1_p, a=1.2, v=0.25)
+            $ 190 "clr_scanner_2" "breakAfter"
+            movel(clr_scanner_2_p, a=1.2, v=0.25)
+            $ 191 "clr_scanner_3" "breakAfter"
+            movel(clr_scanner_3_p, a=1.2, v=0.25)
+            $ 192 "clr_scanner_4" "breakAfter"
+            movel(clr_scanner_4_p, a=1.2, v=0.25)
+            $ 193 "clr_scanner_5" "breakAfter"
+            movel(clr_scanner_5_p, a=1.2, v=0.25)
+            u47336u54532_11 = u47336u54532_11 + 1
+          end
+          $ 194 "global nopaper = 1"
+          global nopaper = 1
+          $ 195 "global task_done = 0"
+          global task_done = 0
+        else:
+          $ 196 "Else" "noBreak"
+          $ 197 "global nopaper = 0"
+          global nopaper = 0
+        end
+        $ 198 "If paper_align_state == 0"
+        if (paper_align_state == 0):
+          $ 199 "nopaper = 0"
+          nopaper = 0
+        end
+      end
+      $ 200 "Task4:ClosePrinter"
+      $ 201 "호출 Enter_Next_Task"
+      Enter_Next_Task()
+      $ 202 "retry_count <= max_retry and task_done == 0 Loop"
+      while (retry_count <= max_retry and task_done == 0):
+        $ 203 "MoveJ"
+        $ 204 "Task4_Home" "breakAfter"
+        movej(get_inverse_kin(Task4_Home_p, qnear=Task4_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+        $ 205 "MoveL"
+        $ 206 "Task4_Access" "breakAfter"
+        movel(Task4_Access_p, a=1.2, v=0.25)
+        $ 207 "MoveL"
+        $ 208 "Close1" "breakAfter"
+        movel(Close1_p, a=1.2, v=0.25)
+        $ 209 "Close2" "breakAfter"
+        movel(Close2_p, a=1.2, v=0.25)
+        $ 210 "Close3" "breakAfter"
+        movel(Close3_p, a=1.2, v=0.25)
+        $ 211 "Close4" "breakAfter"
+        movel(Close4_p, a=1.2, v=0.25)
+        $ 212 "Close5" "breakAfter"
+        movel(Close5_p, a=1.2, v=0.25)
+        $ 213 "Close6" "breakAfter"
+        movel(Close6_p, a=1.2, v=0.25)
+        $ 214 "웨이포인트_2" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_2_p, a=1.2, v=0.25)
+        $ 215 "웨이포인트_3" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_3_p, a=1.2, v=0.25)
+        $ 216 "웨이포인트_4" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_4_p, a=1.2, v=0.25)
+        $ 217 "웨이포인트_14" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_14_p, a=1.2, v=0.25)
+        $ 218 "웨이포인트_15" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_15_p, a=1.2, v=0.25)
+        $ 219 "웨이포인트_16" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_16_p, a=1.2, v=0.25)
+        $ 220 "MoveL"
+        $ 221 "Task4_Retreat" "breakAfter"
+        movel(Task4_Retreat_p, a=1.2, v=0.25)
+        $ 222 "기다림: 1.0"
+        sleep(1.0)
+        $ 223 "호출 Check_Door_Closed"
+        Check_Door_Closed()
+        $ 224 "스위치 fail_flag"
+        switch_1 = fail_flag
+        $ 225 "케이스 0"
+        if (0 == switch_1):
+          $ 226 "task_done = 1"
+          task_done = 1
+        elif (1 == switch_1):
+          $ 227 "케이스 1"
+          $ 228 "retry_count = retry_count + 1"
+          retry_count = retry_count + 1
+        end
+      end
+      $ 229 "If task_done == 0"
+      if (task_done == 0):
+        $ 230 "호출 Error_Stop"
+        Error_Stop()
+      end
+      $ 231 "기다림: 1.0"
+      sleep(1.0)
+      $ 232 "Task1:OpenPrinter"
+      $ 233 "호출 Enter_Next_Task"
+      Enter_Next_Task()
+      $ 234 "retry_count <= max_retry and task_done == 0 Loop"
+      while (retry_count <= max_retry and task_done == 0):
+        $ 235 "MoveJ"
+        $ 236 "Task1_Home" "breakAfter"
+        movej(get_inverse_kin(Task1_Home_p, qnear=Task1_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+        $ 237 "MoveL"
+        $ 238 "웨이포인트_17" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_17_p, a=1.2, v=0.25)
+        $ 239 "Task1_Access" "breakAfter"
+        movel(Task1_Access_p, a=1.2, v=0.25)
+        $ 240 "MoveL"
+        $ 241 "Open1" "breakAfter"
+        movel(Open1_p, a=1.2, v=0.25)
+        $ 242 "Open2" "breakAfter"
+        movel(Open2_p, a=1.2, v=0.25)
+        $ 243 "Open3" "breakAfter"
+        movel(Open3_p, a=1.2, v=0.25)
+        $ 244 "Open4" "breakAfter"
+        movel(Open4_p, a=1.2, v=0.25)
+        $ 245 "Open5" "breakAfter"
+        movel(Open5_p, a=1.2, v=0.25)
+        $ 246 "Open6" "breakAfter"
+        movel(Open6_p, a=1.2, v=0.25)
+        $ 247 "Open7" "breakAfter"
+        movel(Open7_p, a=1.2, v=0.25)
+        $ 248 "MoveL"
+        $ 249 "Task1_Retreat" "breakAfter"
+        movel(Task1_Retreat_p, a=1.2, v=0.25)
+        $ 250 "기다림: 1.0"
+        sleep(1.0)
+        $ 251 "호출 Check_Door_Open"
+        Check_Door_Open()
+        $ 252 "스위치 fail_flag"
+        switch_1 = fail_flag
+        $ 253 "케이스 0"
+        if (0 == switch_1):
+          $ 254 "task_done = 1"
+          task_done = 1
+        elif (1 == switch_1):
+          $ 255 "케이스 1"
+          $ 256 "retry_count = retry_count + 1"
+          retry_count = retry_count + 1
+        end
+        $ 257 "호출 Check_Camera_Open"
+        Check_Camera_Open()
+        $ 258 "스위치 fail_flag"
+        switch_1 = fail_flag
+        $ 259 "케이스 0"
+        if (0 == switch_1):
+          $ 260 "task_done = 1"
+          task_done = 1
+        elif (1 == switch_1):
+          $ 261 "케이스 1"
+          $ 262 "retry_count = retry_count + 1"
+          retry_count = retry_count + 1
+        end
+      end
+      $ 263 "If task_done == 0"
+      if (task_done == 0):
+        $ 264 "호출 Error_Stop"
+        Error_Stop()
+      end
+      $ 265 "기다림: 1.0"
+      sleep(1.0)
+      $ 266 "Task6,7:PickAndPlace"
+      $ 267 "호출 Enter_Next_Task"
+      Enter_Next_Task()
+      $ 268 "retry_count <= max_retry and task_done == 0 Loop"
+      while (retry_count <= max_retry and task_done == 0):
+        $ 269 "Task6:PickA4FromScanner"
+        $ 270 "호출 Enter_Next_Task"
+        Enter_Next_Task()
+        $ 271 "MoveJ"
+        $ 272 "Task6_Home" "breakAfter"
+        movej(get_inverse_kin(Task6_Home_p, qnear=Task6_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+        $ 273 "MoveL"
+        $ 274 "Task6_Access" "breakAfter"
+        movel(Task6_Access_p, a=1.2, v=0.25)
+        $ 275 "MoveL"
+        $ 276 "Pick2_1" "breakAfter"
+        movel(Pick2_1_p, a=1.2, v=0.25)
+        $ 277 "Pick2_2" "breakAfter"
+        movel(Pick2_2_p, a=1.2, v=0.25)
+        $ 278 "웨이포인트_9" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_9_p, a=1.2, v=0.25)
+        $ 279 "Pick2_3" "breakAfter"
+        movel(Pick2_3_p, a=1.2, v=0.25)
+        $ 280 "웨이포인트_30" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_30_p, a=1.2, v=0.25)
+        $ 281 "웨이포인트_31" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_31_p, a=1.2, v=0.25)
+        $ 282 "웨이포인트_32" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_32_p, a=1.2, v=0.25)
+        $ 283 "웨이포인트_33" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_33_p, a=1.2, v=0.25)
+        $ 284 "기다림: 1.0"
+        sleep(1.0)
+        $ 285 "호출 Gripper_Close"
+        Gripper_Close()
+        $ 286 "호출 Wait_Motor_Idle"
+        Wait_Motor_Idle()
+        $ 287 "MoveL"
+        $ 288 "Task6_Retreat" "breakAfter"
+        movel(Task6_Retreat_p, a=1.2, v=0.25)
+        $ 289 "If fail_flag == 1"
+        if (fail_flag == 1):
+          $ 290 "호출 Error_Stop"
+          Error_Stop()
+        end
+        $ 291 "기다림: 1.0"
+        sleep(1.0)
+        $ 292 "Task7:PlaceA4InBasket"
+        $ 293 "MoveJ"
+        $ 294 "Task7_Home" "breakAfter"
+        movej(get_inverse_kin(Task7_Home_p, qnear=Task7_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+        $ 295 "MoveL"
+        $ 296 "Pick2_4" "breakAfter"
+        movel(Pick2_4_p, a=1.2, v=0.25)
+        $ 297 "MoveL"
+        $ 298 "웨이포인트_18" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_18_p, a=1.2, v=0.25)
+        $ 299 "웨이포인트_22" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_22_p, a=1.2, v=0.25)
+        $ 300 "웨이포인트_19" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_19_p, a=1.2, v=0.25)
+        $ 301 "웨이포인트_10" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_10_p, a=1.2, v=0.25)
+        $ 302 "웨이포인트_11" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_11_p, a=1.2, v=0.25)
+        $ 303 "호출 Gripper_Open"
+        Gripper_Open()
+        $ 304 "호출 Wait_Motor_Idle"
+        Wait_Motor_Idle()
+        $ 305 "MoveL"
+        $ 306 "웨이포인트_20" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_20_p, a=1.2, v=0.25)
+        $ 307 "Task7_Retreat" "breakAfter"
+        movel(Task7_Retreat_p, a=1.2, v=0.25)
+        $ 308 "기다림: 1.0"
+        sleep(1.0)
+        $ 309 "호출 Check_Camera_Align"
+        Check_Camera_Align()
+        $ 310 "스위치 paper_state"
+        switch_1 = paper_state
+        $ 311 "케이스 0"
+        if (0 == switch_1):
+          $ 312 "task_done = 1"
+          task_done = 1
+        elif (1 == switch_1):
+          $ 313 "케이스 1"
+          $ 314 "retry_count = retry_count + 1"
+          retry_count = retry_count + 1
+        end
+        $ 315 "기다림: 1.0"
+        sleep(1.0)
+      end
+      $ 316 "If task_done == 0"
+      if (task_done == 0):
+        $ 317 "호출 Error_Stop"
+        Error_Stop()
+      end
+      $ 318 "Task4:ClosePrinter"
+      $ 319 "호출 Enter_Next_Task"
+      Enter_Next_Task()
+      $ 320 "retry_count <= max_retry and task_done == 0 Loop"
+      while (retry_count <= max_retry and task_done == 0):
+        $ 321 "MoveJ"
+        $ 322 "Task4_Home" "breakAfter"
+        movej(get_inverse_kin(Task4_Home_p, qnear=Task4_Home_q), a=1.3962634015954636, v=1.0471975511965976)
+        $ 323 "MoveL"
+        $ 324 "Task4_Access" "breakAfter"
+        movel(Task4_Access_p, a=1.2, v=0.25)
+        $ 325 "MoveL"
+        $ 326 "Close1" "breakAfter"
+        movel(Close1_p, a=1.2, v=0.25)
+        $ 327 "Close2" "breakAfter"
+        movel(Close2_p, a=1.2, v=0.25)
+        $ 328 "Close3" "breakAfter"
+        movel(Close3_p, a=1.2, v=0.25)
+        $ 329 "Close4" "breakAfter"
+        movel(Close4_p, a=1.2, v=0.25)
+        $ 330 "Close5" "breakAfter"
+        movel(Close5_p, a=1.2, v=0.25)
+        $ 331 "Close6" "breakAfter"
+        movel(Close6_p, a=1.2, v=0.25)
+        $ 332 "웨이포인트_2" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_2_p, a=1.2, v=0.25)
+        $ 333 "웨이포인트_3" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_3_p, a=1.2, v=0.25)
+        $ 334 "웨이포인트_4" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_4_p, a=1.2, v=0.25)
+        $ 335 "웨이포인트_14" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_14_p, a=1.2, v=0.25)
+        $ 336 "웨이포인트_15" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_15_p, a=1.2, v=0.25)
+        $ 337 "웨이포인트_16" "breakAfter"
+        movel(u50920u51060u54252u51064u53944_16_p, a=1.2, v=0.25)
+        $ 338 "MoveL"
+        $ 339 "Task4_Retreat" "breakAfter"
+        movel(Task4_Retreat_p, a=1.2, v=0.25)
+        $ 340 "기다림: 1.0"
+        sleep(1.0)
+        $ 341 "호출 Check_Door_Closed"
+        Check_Door_Closed()
+        $ 342 "스위치 fail_flag"
+        switch_1 = fail_flag
+        $ 343 "케이스 0"
+        if (0 == switch_1):
+          $ 344 "task_done = 1"
+          task_done = 1
+        elif (1 == switch_1):
+          $ 345 "케이스 1"
+          $ 346 "retry_count = retry_count + 1"
+          retry_count = retry_count + 1
+        end
+      end
+      $ 347 "If task_done == 0"
+      if (task_done == 0):
+        $ 348 "호출 Error_Stop"
+        Error_Stop()
+      end
+      $ 349 "기다림: 1.0"
+      sleep(1.0)
+      $ 350 "Re_Init"
+      $ 351 "호출 Init_Variables"
+      Init_Variables()
+      $ 352 "global repeat = repeat + 1"
+      global repeat = repeat + 1
+      $ 353 "MoveJ"
+      $ 354 "Home" "breakAfter"
+      movej(get_inverse_kin(Home_p, qnear=Home_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 355 "기다림: 1.0"
+      sleep(1.0)
+    end
+  end
+end

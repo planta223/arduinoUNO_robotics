@@ -1,0 +1,346 @@
+ 프로그램
+   로봇 프로그램
+     Init
+       호출 Init_Variables
+       global repeat = 0
+       호출 Socket_Open
+       MoveJ
+         Home
+       기다림: 1.0
+     루프
+       Main Sequence
+         Task1:OpenPrinter
+           호출 Enter_Next_Task
+           retry_count <= max_retry and task_done == 0 Loop
+             MoveJ
+               Task1_Home
+             MoveL
+               웨이포인트_17
+               Task1_Access
+             MoveL
+               Open1
+               Open2
+               Open3
+               Open4
+               Open5
+               Open6
+               Open7
+             MoveL
+               Task1_Retreat
+             기다림: 1.0
+             '호출 Check_Door_Open'
+             '스위치 fail_flag'
+             호출 Check_Camera_Open
+             스위치 fail_flag
+               케이스 0
+                 task_done = 1
+               케이스 1
+                 retry_count = retry_count + 1
+           If task_done == 0
+             호출 Error_Stop
+           기다림: 1.0
+         Task2,3,3+:PickAndPlace
+           호출 Enter_Next_Task
+           nopaper == 1 Loop
+             retry_count <= max_retry and task_done == 0 Loop
+               Task2:PickA4FromTray
+                 MoveJ
+                   Task2_Home
+                 호출 Gripper_Open
+                 호출 Wait_Motor_Idle
+                 폴더
+                   MoveJ
+                     웨이포인트_23
+                   MoveL
+                     웨이포인트_24
+                     웨이포인트_25
+                     웨이포인트_28
+                 MoveL
+                   웨이포인트_26
+                   Task2_Access
+                   웨이포인트_27
+                   웨이포인트_12
+                 기다림: 1.0
+                 호출 Gripper_Close
+                 호출 Wait_Motor_Idle
+                 MoveL
+                   Task2_Retreat
+                 If fail_flag == 1
+                   호출 Error_Stop
+                 기다림: 3.0
+               Task3:PlaceA4OnScanner
+                 호출 Enter_Next_Task
+                 MoveJ
+                   Task3_Home
+                 MoveL
+                   Task3_Access
+                 MoveL
+                   Place1
+                   Place2
+                   Place3
+                 호출 Gripper_Open
+                 호출 Wait_Motor_Idle
+                 MoveL
+                   웨이포인트_6
+                   웨이포인트_7
+                   웨이포인트_8
+                   웨이포인트_13
+                   웨이포인트_21
+                   웨이포인트_29
+                 MoveL
+                   Task3_Retreat
+                 기다림: 1.0
+                 호출 Check_Camera_Align
+                 스위치 paper_state
+                   케이스 0
+                     retry_count = retry_count + 1
+                   케이스 1
+                     task_done = 1
+                 기다림: 1.0
+             If task_done == 0
+               호출 Error_Stop
+             Task3+:PaperAlign
+               기다림: 1.0
+               호출 Check_Camera_Align
+               paper_align_state != 0 and paper_align_state != 9 and align_retry_count <= max_retry Loop
+                 align_retry_count = align_retry_count + 1
+                 MoveL
+                   웨이포인트_1
+                   웨이포인트_5
+                 스위치 paper_align_state
+                   케이스 1
+                     'MoveL'
+                     'MoveL'
+                     MoveL
+                       out_top_home_1
+                       out_top_touch_1
+                       out_top_left_1
+                       out_top_z_up_1
+                       out_top_home_2
+                       out_top_touch_2
+                       down_1
+                       right_1
+                       웨이포인트_34
+                       웨이포인트_35
+                       웨이포인트_36
+                       up_1
+                       left_1
+                       z_up_2
+                   케이스 2
+                     MoveL
+                       out_down_home
+                       out_down_touch
+                       up2
+                       left2
+                       z_up2
+                   케이스 3
+                     MoveL
+                       out_left_home
+                       out_left_touch
+                       right3
+                       up3
+                       left3
+                       z_up3
+                   케이스 4
+                     MoveL
+                       out_right_home
+                       out_right_touch
+                       up4
+                       left4
+                       z_up4
+                 MoveL
+                   Task3_Retreat
+                 기다림: 1.0
+                 호출 Check_Camera_Align
+               If paper_align_state != 0
+                 3회 Loop:
+                   MoveL
+                     clr_scanner_1
+                     clr_scanner_2
+                     clr_scanner_3
+                     clr_scanner_4
+                     clr_scanner_5
+                 global nopaper = 1
+                 global task_done = 0
+               Else
+                 global nopaper = 0
+               If paper_align_state == 0
+                 nopaper = 0
+         Task4:ClosePrinter
+           호출 Enter_Next_Task
+           retry_count <= max_retry and task_done == 0 Loop
+             MoveJ
+               Task4_Home
+             MoveL
+               Task4_Access
+             MoveL
+               Close1
+               Close2
+               Close3
+               Close4
+               Close5
+               Close6
+               웨이포인트_2
+               웨이포인트_3
+               웨이포인트_4
+               웨이포인트_14
+               웨이포인트_15
+               웨이포인트_16
+             MoveL
+               Task4_Retreat
+             기다림: 1.0
+             호출 Check_Door_Closed
+             스위치 fail_flag
+               케이스 0
+                 task_done = 1
+               케이스 1
+                 retry_count = retry_count + 1
+           If task_done == 0
+             호출 Error_Stop
+           기다림: 1.0
+         Task1:OpenPrinter
+           호출 Enter_Next_Task
+           retry_count <= max_retry and task_done == 0 Loop
+             MoveJ
+               Task1_Home
+             MoveL
+               웨이포인트_17
+               Task1_Access
+             MoveL
+               Open1
+               Open2
+               Open3
+               Open4
+               Open5
+               Open6
+               Open7
+             MoveL
+               Task1_Retreat
+             기다림: 1.0
+             호출 Check_Door_Open
+             스위치 fail_flag
+               케이스 0
+                 task_done = 1
+               케이스 1
+                 retry_count = retry_count + 1
+             호출 Check_Camera_Open
+             스위치 fail_flag
+               케이스 0
+                 task_done = 1
+               케이스 1
+                 retry_count = retry_count + 1
+           If task_done == 0
+             호출 Error_Stop
+           기다림: 1.0
+         Task6,7:PickAndPlace
+           호출 Enter_Next_Task
+           retry_count <= max_retry and task_done == 0 Loop
+             Task6:PickA4FromScanner
+               호출 Enter_Next_Task
+               MoveJ
+                 Task6_Home
+               MoveL
+                 Task6_Access
+               MoveL
+                 Pick2_1
+                 Pick2_2
+                 웨이포인트_9
+                 Pick2_3
+                 웨이포인트_30
+                 웨이포인트_31
+                 웨이포인트_32
+                 웨이포인트_33
+               기다림: 1.0
+               호출 Gripper_Close
+               호출 Wait_Motor_Idle
+               MoveL
+                 Task6_Retreat
+               If fail_flag == 1
+                 호출 Error_Stop
+               기다림: 1.0
+             Task7:PlaceA4InBasket
+               MoveJ
+                 Task7_Home
+               MoveL
+                 Pick2_4
+               MoveL
+                 웨이포인트_18
+                 웨이포인트_22
+                 웨이포인트_19
+                 웨이포인트_10
+                 웨이포인트_11
+               호출 Gripper_Open
+               호출 Wait_Motor_Idle
+               MoveL
+                 웨이포인트_20
+                 Task7_Retreat
+               기다림: 1.0
+               호출 Check_Camera_Align
+               스위치 paper_state
+                 케이스 0
+                   task_done = 1
+                 케이스 1
+                   retry_count = retry_count + 1
+               기다림: 1.0
+           If task_done == 0
+             호출 Error_Stop
+         Task4:ClosePrinter
+           호출 Enter_Next_Task
+           retry_count <= max_retry and task_done == 0 Loop
+             MoveJ
+               Task4_Home
+             MoveL
+               Task4_Access
+             MoveL
+               Close1
+               Close2
+               Close3
+               Close4
+               Close5
+               Close6
+               웨이포인트_2
+               웨이포인트_3
+               웨이포인트_4
+               웨이포인트_14
+               웨이포인트_15
+               웨이포인트_16
+             MoveL
+               Task4_Retreat
+             기다림: 1.0
+             호출 Check_Door_Closed
+             스위치 fail_flag
+               케이스 0
+                 task_done = 1
+               케이스 1
+                 retry_count = retry_count + 1
+           If task_done == 0
+             호출 Error_Stop
+           기다림: 1.0
+       Re_Init
+         호출 Init_Variables
+         global repeat = repeat + 1
+         MoveJ
+           Home
+         기다림: 1.0
+   Socket_Open
+     스크립트: Socket_Open.script
+   Init_Variables
+     스크립트: Init_Variables.script
+   Gripper_Close
+     스크립트: Gripper_Close.script
+   Gripper_Open
+     스크립트: Gripper_Open.script
+   Wait_Motor_Idle
+     스크립트: Wait_Motor_Idle.script_bak
+   Check_Door_Closed
+     스크립트: Check_Door_Closed.script
+   Check_Door_Open
+     스크립트: Check_Door_Open.script
+   Check_Camera_Open
+     스크립트: Check_Camera_Open.script
+   Check_Camera_Align
+     스크립트: Check_Camera_Align.script
+   Error_Stop
+     스크립트: Error_Stop.script
+   Enter_Next_Task
+     스크립트: Enter_Next_Task.script

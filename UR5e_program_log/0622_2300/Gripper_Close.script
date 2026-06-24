@@ -1,0 +1,10 @@
+socket_send_string(CMD_GRIPPER_CLOSE)
+global pc_response = socket_read_line()
+
+if pc_response == RESP_OK_GRIPPER_CLOSE:
+  global motor_state = 1
+  global fail_flag = 0
+  
+else:
+  global fail_flag = 1
+end

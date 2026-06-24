@@ -1,0 +1,138 @@
+# ============================================================
+# Init_Variables.script
+# UR5e - PC Server - Arduino / PC Vision 공통 변수 초기화
+# ============================================================
+
+
+# ============================================================
+# Retry / fail control
+# ============================================================
+
+global retry_count = 0
+global max_retry = 2
+
+global fail_flag = 0
+global task_done = 0
+global current_task = 0
+
+global nopaper = 1
+
+# ============================================================
+# State variables
+# ============================================================
+
+# Door sensor state
+# 0: closed
+# 1: open
+global door_state = 0
+
+# DC motor, Servo motor state
+# 0: idle
+# 1: busy
+global motor_state = 0
+
+# Scanner lid state
+# 0: not open
+# 1: open
+global lid_state = 0
+
+# Paper presence state
+# 0: paper not found
+# 1: paper present
+global paper_state = 0
+
+# Paper alignment state
+# 0: OK
+# 1: shifted up
+# 2: shifted down
+# 3: shifted left
+# 4: shifted right
+# 9: NG / unknown / not found
+#
+# 주의:
+# PAPER_SHIFTED_*는 현재 종이가 벗어난 방향을 의미한다.
+# 실제 보정 이동 방향은 반대다.
+global paper_align_state = 9
+
+
+# ============================================================
+# Socket / response buffer
+# ============================================================
+
+global socket_state = False
+global pc_response = ""
+
+
+# ============================================================
+# Command strings
+# URScript -> PC Server -> Arduino / PC Vision
+# ============================================================
+
+# Arduino commands
+global CMD_PING = "PING\n"
+global CMD_GRIPPER_OPEN = "G OPEN\n"
+global CMD_GRIPPER_CLOSE = "G CLOSE\n"
+global CMD_DC_RUN = "D RUN\n"
+global CMD_ESTOP = "ESTOP\n"
+global CMD_MOTOR_STATUS = "MOTOR STATUS\n"
+global CMD_DOOR_STATUS = "DOOR STATUS\n"
+
+
+# PC Vision commands
+global CMD_VISION_LID_STATUS = "V LID\n"
+global CMD_VISION_PAPER_ALIGN = "V PAPER\n"
+
+
+# ============================================================
+# Expected Arduino response strings
+# Arduino / PC Server -> URScript
+# ============================================================
+
+global RESP_OK_PING = "OK PING"
+
+global RESP_OK_GRIPPER_OPEN = "OK G OPEN"
+global RESP_OK_GRIPPER_CLOSE = "OK G CLOSE"
+
+global RESP_OK_DC_RUN = "OK D RUN"
+global RESP_OK_ESTOP = "OK ESTOP"
+
+global RESP_MOTOR_BUSY = "MOTOR STATUS BUSY"
+global RESP_MOTOR_IDLE = "MOTOR STATUS IDLE"
+
+global RESP_DOOR_OPEN = "DOOR STATUS OPEN"
+global RESP_DOOR_CLOSED = "DOOR STATUS CLOSED"
+
+
+# ============================================================
+# Expected PC Vision response strings: Lid
+# PC Server -> URScript
+# ============================================================
+
+global RESP_LID_OPEN = "LID_OPEN"
+global RESP_LID_CLOSED = "LID_CLOSED"
+
+
+# ============================================================
+# Expected PC Vision response strings: Paper alignment
+# PC Server -> URScript
+# ============================================================
+
+global RESP_PAPER_OK = "PAPER_OK"
+global RESP_PAPER_NOT_FOUND = "PAPER_NOT_FOUND"
+
+global RESP_PAPER_SHIFTED_UP = "PAPER_SHIFTED_UP"
+global RESP_PAPER_SHIFTED_DOWN = "PAPER_SHIFTED_DOWN"
+global RESP_PAPER_SHIFTED_LEFT = "PAPER_SHIFTED_LEFT"
+global RESP_PAPER_SHIFTED_RIGHT = "PAPER_SHIFTED_RIGHT"
+global RESP_PAPER_NG = "PAPER_NG"
+
+
+# ============================================================
+# Optional common error response strings
+# 현재는 unknown command 정도만 공통 확인용으로 둔다.
+# Vision 내부 실패는 별도 ERR 없이 LID_CLOSED 또는 PAPER_NG로 처리한다.
+# ============================================================
+
+global RESP_ERR_UNKNOWN_CMD = "ERR UNKNOWN_CMD"
+global RESP_ERR_ARDUINO_TIMEOUT = "ERR ARDUINO_TIMEOUT"
+global RESP_ERR_ARDUINO_SERIAL = "ERR ARDUINO_SERIAL"

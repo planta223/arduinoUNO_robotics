@@ -417,17 +417,7 @@ def process_frame(
             raw_status = "BACKGROUND_SIZE_MISMATCH"
         else:
             out_mask = bright_mask if cfg.out_difference_mode == "bright_only" else absolute_mask
-
-            # PRESENCE는 종이의 존재 여부를 판단하는 ROI이므로 bright_only 방식으로 고정한다.
-            # ALIGN_IN은 기존 absolute 방식 유지, OUT_*은 out_difference_mode 설정을 따른다.
-            ratios = {
-                name: ratio_in_polygon(
-                    bright_mask if name == "PRESENCE" else absolute_mask,
-                    polygon,
-                )
-                for name, polygon in polygons.items()
-                if name in {"PRESENCE", "ALIGN_IN"}
-            }
+            ratios = {name: ratio_in_polygon(absolute_mask, polygon) for name, polygon in polygons.items() if name in {"PRESENCE", "ALIGN_IN"}}
             ratios.update({name: ratio_in_polygon(out_mask, polygon) for name, polygon in polygons.items() if name.startswith("OUT_")})
 
             presence = ratios["PRESENCE"]

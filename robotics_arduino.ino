@@ -12,14 +12,12 @@ void StopAll(void);
 void setup()
 {
   DoorSensor_Init();
-  DcMotor_Init();
   GripperServo_Init(); 
   Protocol_Init();
 }
 
 void loop()
 {
-  DcMotor_Update();
   GripperServo_Update();
   DoorSensor_Update();
   Protocol_Update();
