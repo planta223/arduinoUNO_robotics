@@ -1,189 +1,202 @@
-# arduinoUNO_robotics
+Status: Completed on 2026-06-23
 
-Arduino UNO, PC Python 서버, PC Vision, UR5e를 연동한 로봇공학 실습 프로젝트입니다.
+# robotics_arduino
 
-본 프로젝트는 UR5e 협동로봇을 이용하여 프린터 부품 또는 종이를 자동으로 이송·파지·배치하는 실습 시스템을 구현하는 것을 목표로 합니다. Arduino UNO는 도어 센서, DC 모터, 서보 그리퍼를 제어하는 하위 제어부로 사용하고, Windows PC는 Python 기반 TCP Socket 서버와 Vision 처리부를 담당합니다. UR5e는 PolyScope/URScript에서 PC 서버로 명령을 전송하고, PC 서버는 명령 종류에 따라 Arduino 또는 Vision 모듈로 분기하여 결과를 UR5e로 반환합니다.
+UR5e, Arduino UNO, Windows PC Python 서버, OpenCV 비전을 연결해 종이 위치와 스캐너 상태를 확인하고 그리퍼 동작을 연동하는 프로젝트입니다.
 
----
+이 README는 현재 저장소의 코드 상태를 기준으로 정리했습니다.  
+특히 `dc motor` 관련 파일과 명령 문자열은 일부 남아 있지만, 최종 운용 기준에서는 사용하지 않습니다.
 
-## 전체 시스템 구조
+## 현재 구성 요약
+
+- Arduino UNO는 문 센서와 서보 그리퍼를 담당합니다.
+- Windows PC Python 서버는 UR5e TCP 요청을 받아 Arduino Serial 또는 Vision 로직으로 분기합니다.
+- Vision은 Logitech C270 카메라 기준으로 동작하며, 두 가지 판정을 제공합니다.
+- `V LID`: ArUco 마커 기반 뚜껑 open/close 판정
+- `V PAPER`: 배경 차분 + ROI 기반 종이 존재/정렬 판정
+- DC motor 경로는 레거시 호환용 흔적만 남아 있고, 현재 펌웨어에서는 실제 구동되지 않습니다.
+
+## 시스템 구조
 
 ```text
 UR5e PolyScope / URScript
-        ↓ TCP Socket
+        |
+        | TCP Socket
+        v
 Windows PC Python Server
-        ├── USB Serial → Arduino UNO → Door Sensor / DC Motor / Servo Gripper
-        └── OpenCV Vision → Logitech C270 Camera
+        |                         |
+        | USB Serial              | OpenCV
+        v                         v
+Arduino UNO                 Logitech C270 Camera
+  - Door Sensor
+  - Servo Gripper
 ```
 
-### 역할 분담
-
-| 구분               | 역할                                                    |
-| ---------------- | ----------------------------------------------------- |
-| UR5e             | 로봇 동작, 웨이포인트 이동, 그리퍼/모터/비전 명령 호출                      |
-| PC Python Server | UR5e TCP 명령 수신, Arduino Serial 중계, Vision 명령 처리       |
-| Arduino UNO      | 도어 센서 입력, DC 모터 PWM 제어, 서보 그리퍼 각도 제어                  |
-| PC Vision        | ArUco 기반 뚜껑 상태 판정, ROI/background diff 기반 종이 위치·정렬 판정 |
-| Logitech C270    | 비전 입력 카메라                                             |
-
----
-
-## 폴더 구조
+## 저장소 구조
 
 ```text
-arduinoUNO_robotics/
-├── .git/
-├── .gitignore
-├── README.md
-│
-├── python/
-│   ├── PC_to_arduino.py
-│   │   └── Arduino 단독 동작 테스트용 Serial 프로그램
-│   │
-│   └── PC_server/
-│       ├── main_server.py
-│       │   └── UR5e-Arduino-Vision 중계 TCP 서버
-│       ├── config.py
-│       │   └── 서버, Arduino, Camera, Vision 명령/응답 설정
-│       ├── vision_checker.py
-│       │   └── Vision 통합 wrapper
-│       ├── vision_lid.py
-│       │   └── ArUco marker 기반 스캐너 뚜껑 open/close 판정
-│       └── vision_paper_align.py
-│           └── ROI/background diff 기반 종이 위치·정렬 판정
-│
-├── UR5e_scripts/
-│   └── URScript 스크립트 보관
-│
-├── URprogram_log/
-│   └── 날짜별 UR5e 프로그램 기록 보관
-│
-├── robotics_arduino.ino
-├── config.h
-├── protocol.h
-├── protocol.cpp
-├── door_sensor.h
-├── door_sensor.cpp
-├── dc_motor.h
-├── dc_motor.cpp
-├── gripper_servo.h
-└── gripper_servo.cpp
+robotics_arduino/
+├─ README.md
+├─ robotics_arduino.ino
+├─ config.h
+├─ protocol.h
+├─ protocol.cpp
+├─ door_sensor.h
+├─ door_sensor.cpp
+├─ gripper_servo.h
+├─ gripper_servo.cpp
+├─ dc_motor.h
+├─ dc_motor.cpp
+├─ UR5e_scripts/
+│  ├─ Init_Variables.script
+│  ├─ Socket_Open.script
+│  ├─ Check_Camera_Open.script
+│  ├─ Check_Camera_Align.script
+│  ├─ Check_Door_Open.script
+│  ├─ Check_Door_Closed.script
+│  ├─ Gripper_Open.script
+│  ├─ Gripper_Close.script
+│  ├─ DC_Run.script
+│  ├─ Error_Stop.script
+│  └─ Enter_Next_Task.script
+├─ UR5e_program_log/
+│  └─ UR 프로그램 백업/로그
+└─ python/
+   ├─ pc_to_arduino.py
+   └─ PC_server/
+      ├─ main_server.py
+      ├─ config.py
+      ├─ camera_settings.py
+      ├─ vision_checker.py
+      ├─ vision_lid.py
+      ├─ vision_paper_align.py
+      ├─ paper_align_config.json
+      ├─ paper_align_config_background.png
+      ├─ run_main_server.bat
+      └─ run_paper_align.bat
 ```
 
----
+## 역할별 설명
 
-## Hardware Configuration
+### 1. Arduino 펌웨어
 
-### 사용 하드웨어
+주요 파일:
 
-| 구분        | 부품                                              |
-| --------- | ----------------------------------------------- |
-| 하위 제어부    | Arduino UNO                                     |
-| 상위 제어부    | Windows PC                                      |
-| 카메라       | Logitech C270                                   |
-| 그리퍼 모터    | 방수 코어리스 서보 모터 180도 35 kg RC Arduino 호환, HAM4813 |
-| 보관함/급지 모터 | OEM 기어박스 장착 모터, NP01D-288                       |
-| 모터 드라이버   | L298 2A 모터 드라이버 모듈                              |
-| 개폐 센서     | ADIT BL0304 NC/NO 마그네틱 도어 센서                    |
-| 로봇        | UR5e 협동로봇                                       |
+- `robotics_arduino.ino`
+- `config.h`
+- `protocol.cpp`
+- `door_sensor.*`
+- `gripper_servo.*`
 
-### 기본 결선
+현재 실제 동작:
 
-```text
-Door NO      -- Arduino D2
-Door COM     -- GND
+- 문 센서 상태 읽기
+- 상태 LED 갱신
+- 서보 그리퍼 open/close 명령 처리
+- Serial 명령 수신 및 응답
 
-DC Motor ENA -- Arduino D5
-DC Motor IN1 -- Arduino D7
-DC Motor IN2 -- Arduino D8
+현재 코드상 비활성/레거시:
 
-Servo Red    -- External 12V
-Servo Brown  -- GND
-Servo Orange -- Arduino D10
+- `dc_motor.cpp` / `dc_motor.h`
+- `D RUN` 명령
 
-Arduino GND  -- External Power GND 공통 접지
-```
+주의할 점:
 
-주의사항:
+- `setup()`에서 `DcMotor_Init()`을 호출하지 않습니다.
+- `loop()`에서 `DcMotor_Update()`를 호출하지 않습니다.
+- `protocol.cpp`에서 `D RUN` 수신 시 실제 모터 함수를 호출하지 않고 `OK D RUN`만 반환합니다.
 
-* 서보 전원은 Arduino 5V에서 직접 공급하지 않는다.
-* 서보 외부 전원 GND와 Arduino GND는 반드시 공통 접지로 연결한다.
-* DC 모터 방향이 반대일 경우 `DC_MOTOR_POLARITY`를 수정한다.
-* 실제 장착 후 UR5e TCP, Payload, Center of Gravity 설정이 필요하다.
+즉, 현재 저장소 기준으로 DC motor는 "명령/파일 흔적은 있으나 실제 운용은 하지 않는 상태"입니다.
 
----
+### 2. PC Python 서버
 
-## Network Configuration
+주요 파일:
 
-```text
-PC Ethernet 1 : 192.168.0.10
-UR5e Ethernet : 192.168.0.20
-PC Server     : 0.0.0.0:5000
-```
+- `python/PC_server/main_server.py`
+- `python/PC_server/config.py`
 
-UR5e는 TCP Client로 동작하고, PC Python 서버는 TCP Server로 동작합니다.
+역할:
 
----
+- UR5e의 TCP 클라이언트 요청 수신
+- Arduino Serial 명령 릴레이
+- Vision 명령 직접 처리
+- 응답 문자열을 UR5e로 반환
 
-## Arduino Software
+명령 분기 방식:
 
-Arduino는 다음 기능을 담당합니다.
+- Arduino 계열: `PING`, `G OPEN`, `G CLOSE`, `D RUN`, `ESTOP`, `MOTOR STATUS`, `DOOR STATUS`
+- Vision 계열: `V LID`, `V PAPER`
 
-* `config.h` 기반 핀 매핑 및 파라미터 관리
-* 마그네틱 도어 센서 입력 감지
-* DC 모터 PWM 제어
-* 서보 그리퍼 open/close 각도 제어
-* Serial 기반 명령 처리
-* 비상정지 명령 처리
+### 3. Vision
 
-### 주요 Arduino 파라미터
+주요 파일:
 
-```cpp
-PIN_DOOR_SENSOR_NO = 2
-PIN_DC_MOTOR_ENA   = 5
-PIN_DC_MOTOR_IN1   = 7
-PIN_DC_MOTOR_IN2   = 8
-PIN_GRIPPER_SERVO  = 10
+- `python/PC_server/vision_checker.py`
+- `python/PC_server/vision_lid.py`
+- `python/PC_server/vision_paper_align.py`
+- `python/PC_server/paper_align_config.json`
+- `python/PC_server/paper_align_config_background.png`
 
-DC_MOTOR_RUN_PWM      = 120
-DC_MOTOR_RUN_TIME_MS  = 1500
+역할:
 
-GRIPPER_OPEN_ANGLE    = 60
-GRIPPER_CLOSE_ANGLE   = 125
-GRIPPER_MOVE_TIME_MS  = 1000
+- `V LID`: ArUco 마커가 보이면 `LID_OPEN`, 아니면 `LID_CLOSED`
+- `V PAPER`: 저장된 배경 이미지와 현재 프레임을 비교해 종이 존재 및 정렬 상태 판정
 
-SERIAL_BAUDRATE       = 9600
-```
+Fail-safe 동작:
 
-위 값들은 현재 임시 튜닝값입니다. 실물 그리퍼, 급지함, 프린터 위치가 확정된 뒤 최종 조정해야 합니다.
+- Vision 초기화 실패 또는 카메라 읽기 실패 시 `V LID`는 `LID_CLOSED`
+- Vision 초기화 실패, 배경 없음, ROI 미설정, 카메라 오류 시 `V PAPER`는 `PAPER_NG`
 
----
+### 4. UR5e 스크립트
 
-## PC Python Server
+`UR5e_scripts/`에는 PolyScope에서 사용하거나 참고할 수 있는 URScript 조각이 들어 있습니다.
 
-PC 서버는 UR5e에서 받은 명령을 다음 두 경로로 분기합니다.
+대표 파일:
 
-```text
-1. Arduino 명령
-   UR5e → PC Server → Arduino Serial → Motor/Sensor/Gripper
+- `Init_Variables.script`: 공용 변수/명령/응답 문자열 정의
+- `Socket_Open.script`: PC 서버 연결 및 `PING` 확인
+- `Check_Camera_Open.script`: `V LID` 요청
+- `Check_Camera_Align.script`: `V PAPER` 요청
+- `Gripper_Open.script`, `Gripper_Close.script`: 그리퍼 제어
+- `Check_Door_Open.script`, `Check_Door_Closed.script`: 센서 상태 확인
 
-2. Vision 명령
-   UR5e → PC Server → OpenCV Vision → Camera 판정 결과 반환
-```
+`UR5e_program_log/`는 실행 로그 및 내보낸 프로그램 백업 성격의 폴더입니다.
 
-### 서버 실행 파일
+## 하드웨어 기준
 
-```text
-python/PC_server/main_server.py
-```
+### 현재 사용 기준
 
-### 서버 설정 파일
+| 구분 | 상태 | 비고 |
+| --- | --- | --- |
+| Arduino UNO | 사용 | 하위 제어 |
+| UR5e | 사용 | 상위 동작 제어 |
+| Logitech C270 | 사용 | Vision 입력 |
+| Door Sensor | 사용 | `DOOR STATUS` |
+| Servo Gripper | 사용 | `G OPEN`, `G CLOSE` |
+| DC Motor | 미사용 | 코드 흔적만 남아 있음 |
+| Motor Driver(L298 등) | 미사용 | 최종 운용 기준 제외 |
 
-```text
-python/PC_server/config.py
-```
+### 핀 매핑
 
-주요 설정:
+현재 코드 기준 핀:
+
+| 기능 | 핀 |
+| --- | --- |
+| 상태 LED | `D13` |
+| Door Sensor NO | `D2` |
+| Servo Signal | `D10` |
+
+레거시 DC motor 핀:
+
+| 기능 | 핀 |
+| --- | --- |
+| DC Motor ENA | `D5` |
+| DC Motor IN1 | `D7` |
+| DC Motor IN2 | `D8` |
+
+## 네트워크/포트 기본값
+
+`python/PC_server/config.py` 기준:
 
 ```python
 HOST = "0.0.0.0"
@@ -198,258 +211,177 @@ CAMERA_FRAME_WIDTH = 1280
 CAMERA_FRAME_HEIGHT = 720
 ```
 
----
+`UR5e_scripts/Socket_Open.script` 예시는 PC 서버를 `192.168.0.10:5000`으로 바라보도록 되어 있습니다.
 
-## Command Protocol
+## 실행 준비
 
-### Arduino 명령
+### Arduino
 
-| UR5e/PC 명령     | 기능                          | Arduino 응답                                |
-| -------------- | --------------------------- | ----------------------------------------- |
-| `PING`         | Arduino 연결 확인               | `OK PING`                                 |
-| `G OPEN`       | 그리퍼 열기                      | `OK G OPEN`                               |
-| `G CLOSE`      | 그리퍼 닫기                      | `OK G CLOSE`                              |
-| `D RUN`        | DC 모터 일정 시간 구동              | `OK D RUN`                                |
-| `ESTOP`        | DC 모터 정지, 그리퍼 running 상태 해제 | `OK ESTOP`                                |
-| `MOTOR STATUS` | DC 모터 또는 그리퍼 동작 상태 확인       | `MOTOR STATUS BUSY` / `MOTOR STATUS IDLE` |
-| `DOOR STATUS`  | 도어 센서 상태 확인                 | `DOOR STATUS OPEN` / `DOOR STATUS CLOSED` |
+1. `robotics_arduino.ino`를 Arduino IDE에서 엽니다.
+2. 대상 보드를 Arduino UNO로 설정합니다.
+3. 업로드 후 Serial baudrate는 `9600`을 사용합니다.
 
-### Vision 명령
+Arduino 쪽 외부 라이브러리는 기본 `Servo` 라이브러리만 사용합니다.
 
-| UR5e 명령   | 기능                                 | PC 응답                                                                                                                                  |
-| --------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `V LID`   | ArUco marker 기반 스캐너 뚜껑 상태 판정       | `LID_OPEN` / `LID_CLOSED`                                                                                                              |
-| `V PAPER` | ROI/background diff 기반 종이 위치·정렬 판정 | `PAPER_OK` / `PAPER_NOT_FOUND` / `PAPER_SHIFTED_UP` / `PAPER_SHIFTED_DOWN` / `PAPER_SHIFTED_LEFT` / `PAPER_SHIFTED_RIGHT` / `PAPER_NG` |
+### Python
 
-Vision 내부 오류 발생 시 fail-safe 기준으로 응답합니다.
-
-```text
-V LID 실패  → LID_CLOSED
-V PAPER 실패 → PAPER_NG
-```
-
----
-
-## Vision Software
-
-### 1. Lid Check
-
-```text
-vision_lid.py
-```
-
-ArUco marker 검출 여부로 스캐너 또는 덮개 상태를 판정합니다.
-
-```text
-Marker detected     → LID_OPEN
-Marker not detected → LID_CLOSED
-```
-
-### 2. Paper Alignment Check
-
-```text
-vision_paper_align.py
-```
-
-저장된 배경 이미지와 현재 프레임을 비교하여 종이 존재 여부와 위치 이탈 방향을 판정합니다.
-
-사용 ROI:
-
-```text
-PRESENCE   : 종이 존재 여부 판단 영역
-ALIGN_IN   : 정상 정렬 내부 영역
-OUT_TOP    : 위쪽 이탈 판단 영역
-OUT_LEFT   : 왼쪽 이탈 판단 영역
-OUT_RIGHT  : 오른쪽 이탈 판단 영역
-OUT_BOTTOM : 아래쪽 이탈 판단 영역
-```
-
-판정 결과:
-
-```text
-PAPER_OK
-PAPER_NOT_FOUND
-PAPER_SHIFTED_UP
-PAPER_SHIFTED_DOWN
-PAPER_SHIFTED_LEFT
-PAPER_SHIFTED_RIGHT
-PAPER_NG
-```
-
-### Vision 단독 테스트
+Windows PC에서 Python 환경을 준비한 뒤 아래 패키지를 설치합니다.
 
 ```bash
-cd python/PC_server
-python vision_checker.py
+python -m pip install pyserial numpy opencv-contrib-python
 ```
 
-단독 preview 모드 키 입력:
+설명:
 
-```text
-b : 현재 프레임을 background 이미지로 저장
-r : background 이미지 다시 로드
-p : 현재 프레임으로 paper align 판정
-l : 현재 프레임으로 lid 판정
-q : 종료
-```
+- `pyserial`: Arduino 통신
+- `numpy`: Vision 처리
+- `opencv-contrib-python`: OpenCV + ArUco 모듈
 
----
+## 실행 순서
 
-## Test Programs
+### 1. PC 서버 설정 확인
 
-### Arduino 단독 테스트
+`python/PC_server/config.py`에서 아래 항목을 실제 환경에 맞춥니다.
 
-```bash
-cd python
-python PC_to_arduino.py
-```
+- `ARDUINO_PORT`
+- `CAMERA_INDEX`
+- 필요 시 카메라 세부 설정값
 
-기능:
-
-* Serial port 목록 출력
-* Arduino 연결
-* Ping 테스트
-* Gripper open/close 테스트
-* DC motor run 테스트
-* Door sensor 상태 확인
-* Motor status 확인
-* ESTOP 명령 전송
-* Raw command 입력
-
-### PC Server 실행
+### 2. PC 서버 실행
 
 ```bash
 cd python/PC_server
 python main_server.py
 ```
 
-실행 전 확인 사항:
+또는:
 
-```text
-1. Arduino가 PC에 USB로 연결되어 있는지 확인
-2. config.py의 ARDUINO_PORT가 실제 COM 포트와 일치하는지 확인
-3. Logitech C270 카메라가 연결되어 있는지 확인
-4. CAMERA_INDEX가 실제 카메라 번호와 일치하는지 확인
-5. UR5e와 PC Ethernet IP가 같은 대역인지 확인
-6. Windows 방화벽에서 TCP 5000 포트가 차단되지 않는지 확인
+```bash
+python/PC_server/run_main_server.bat
 ```
 
----
+### 3. UR5e에서 소켓 연결
 
-## UR5e Program Flow
+`UR5e_scripts/Init_Variables.script`와 `Socket_Open.script`를 기준으로 PC 서버에 접속합니다.
 
-현재 목표 flow는 다음과 같습니다.
+일반 흐름:
 
-```text
-1. 초기 위치 이동
-2. 급지함 또는 프린터 기준 위치 접근
-3. 비전 검사 수행
-   - V LID
-   - V PAPER
-4. 종이 또는 부품 위치 판정
-5. UR5e 접근 자세 이동
-6. 그리퍼 닫기: G CLOSE
-7. Motor status 확인
-8. 파지 후 상승
-9. 목표 위치 이동
-10. 그리퍼 열기: G OPEN
-11. Motor status 확인
-12. 다음 작업 반복 또는 종료
+1. 소켓 오픈
+2. `PING` 송신
+3. `OK PING` 확인
+4. 이후 그리퍼/센서/비전 명령 사용
+
+## 단독 테스트 도구
+
+### Arduino Serial 테스트
+
+```bash
+cd python
+python pc_to_arduino.py
 ```
 
-실제 PolyScope 프로그램에서는 각 작업 단계 후 fail check를 수행하고, 실패 시 직전 복구 가능한 단계로 복귀하도록 구성합니다.
+기능:
 
----
+- 사용 가능한 시리얼 포트 출력
+- `PING` 테스트
+- 그리퍼 open/close
+- 문 센서 상태 확인
+- `MOTOR STATUS` 확인
+- `ESTOP`
+- Raw command 입력
 
-## Current Status
+`DC motor` 메뉴는 남아 있지만, 현재 펌웨어에서는 실제 구동 테스트가 되지 않습니다.
 
-현재 구현 완료 또는 진행 중인 항목은 다음과 같습니다.
+### Paper Align 캘리브레이션/디버그
 
-### 완료
+```bash
+cd python/PC_server
+python vision_paper_align.py
+```
 
-* Arduino UNO 기반 하위 제어 코드 작성
-* DC 모터 제어 모듈 작성
-* 서보 그리퍼 제어 모듈 작성
-* 도어 센서 입력 모듈 작성
-* Serial command protocol 작성
-* PC-to-Arduino 단독 테스트 프로그램 작성
-* UR5e-Arduino 중계용 PC TCP 서버 작성
-* Logitech C270 기반 Vision wrapper 작성
-* ArUco 기반 lid open/close 판정 코드 작성
-* ROI/background diff 기반 paper align 판정 코드 작성
-* UR5e-더미 서버-실제 서버 연동 구조 검토
-* VirtualBox URSim 기반 PolyScope flow 작성 진행
+또는:
 
-### 진행 중
+```bash
+python/PC_server/run_paper_align.bat
+```
 
-* 실물 UR5e 기준 웨이포인트 지정
-* URScript/PolyScope 전체 task flow 정리
-* Vision ROI 및 background calibration
-* 그리퍼 open/close 각도 튜닝
-* DC motor PWM 및 동작 시간 튜닝
-* 급지함 구조 설계 및 조립
-* 카메라 고정장치 설계 및 조립
-* 그리퍼 최종본 조립
-* 프린터/급지함 Plane 설정
-* TCP, Payload, Center of Gravity 설정
+주요 키:
 
----
+- `b`: 현재 프레임을 빈 배경 이미지로 저장
+- `1` ~ `6`: ROI 설정 시작
+- `z`: 마지막 ROI 제거
+- `r`: ROI 전체 초기화
+- `s`: 설정 저장
+- `e`: 설정 다시 읽기
+- `x` 또는 `Esc`: ROI 선택 취소
+- `q`: 종료
 
-## Remaining Work
+ROI 종류:
 
-### Hardware
+- `PRESENCE`
+- `ALIGN_IN`
+- `OUT_TOP`
+- `OUT_LEFT`
+- `OUT_RIGHT`
+- `OUT_BOTTOM`
 
-* 하드웨어 최종 결선
-* 단자대, 16AWG 배선, 주름관, 주름관 고정장치 적용
-* 피복 제거, 압착, 페룰 단자 처리
-* 필요 시 납땜 처리
-* 그리퍼 최종본 조립
-* 카메라 고정장치 설계 및 조립
-* 급지함 설계 및 조립
-* 프린터 주변 fixture 정리
+### Lid 판정 단독 테스트
 
-### Parameter Tuning
+```bash
+cd python/PC_server
+python vision_lid.py --camera-index 1 --backend dshow --aruco-dictionary DICT_4X4_50 --marker-id 0
+```
 
-* `GRIPPER_OPEN_ANGLE`
-* `GRIPPER_CLOSE_ANGLE`
-* `GRIPPER_MOVE_TIME_MS`
-* `DC_MOTOR_RUN_PWM`
-* `DC_MOTOR_RUN_TIME_MS`
-* 도어 센서 open/close 판정 방향
-* Vision threshold
-* Paper ROI 좌표
-* Paper background 이미지
-* UR5e waypoint 접근 높이
-* UR5e approach/retract 거리
+## 명령 프로토콜
 
-### UR5e Setup
+### Arduino 계열 명령
 
-* 실물 UR5e 웨이포인트 지정
-* TCP 설정
-* Payload 설정
-* Center of Gravity 설정
-* 급지함 Plane 설정
-* 프린터 Plane 설정
-* 속도/가속도 제한 설정
-* 충돌 또는 과부하 상황 대응 확인
+| 명령 | 현재 동작 | 응답 |
+| --- | --- | --- |
+| `PING` | 연결 확인 | `OK PING` |
+| `G OPEN` | 서보 그리퍼 열기 | `OK G OPEN` |
+| `G CLOSE` | 서보 그리퍼 닫기 | `OK G CLOSE` |
+| `D RUN` | 레거시 호환용 응답만 반환, 실제 모터 구동 없음 | `OK D RUN` |
+| `ESTOP` | 서보 running 상태 해제 | `OK ESTOP` |
+| `MOTOR STATUS` | 그리퍼 running window 기준 busy/idle 반환 | `MOTOR STATUS BUSY` / `MOTOR STATUS IDLE` |
+| `DOOR STATUS` | 문 센서 상태 반환 | `DOOR STATUS OPEN` / `DOOR STATUS CLOSED` |
 
-### Software
+### Vision 계열 명령
 
-* URScript socket 통신 함수 정리
-* 각 task별 fail check 구조 확정
-* `V PAPER` 결과별 복구 동작 작성
-* `V LID` 결과별 대기 또는 재시도 구조 작성
-* Arduino timeout 발생 시 UR5e 안전정지 처리
-* PC 서버 예외 발생 시 fail-safe 응답 확인
-* 전체 반복 작업 flow 검증
+| 명령 | 설명 | 응답 |
+| --- | --- | --- |
+| `V LID` | ArUco 마커 기반 뚜껑 상태 판정 | `LID_OPEN` / `LID_CLOSED` |
+| `V PAPER` | 배경 차분 + ROI 기반 종이 정렬 판정 | `PAPER_OK` / `PAPER_NOT_FOUND` / `PAPER_SHIFTED_UP` / `PAPER_SHIFTED_DOWN` / `PAPER_SHIFTED_LEFT` / `PAPER_SHIFTED_RIGHT` / `PAPER_NG` |
 
----
+## Paper Align 설정 파일
 
-## Notes
+현재 저장소에는 다음 두 파일이 포함되어 있습니다.
 
-* Arduino 명령 문자열은 `config.h`, `PC_to_arduino.py`, `config.py`, `main_server.py`에서 동일하게 유지해야 합니다.
-* UR5e에서 문자열 전송 시 개행 문자 처리에 주의해야 합니다.
-* Arduino는 한 줄 명령을 `\n` 기준으로 읽습니다.
-* PC 서버는 URScript에서 `\n`, `\r` 문자열이 잘못 포함되는 경우를 방어하도록 처리되어 있습니다.
-* Vision 판정은 조명, 카메라 위치, 배경 이미지, ROI 설정에 민감하므로 실물 고정 후 다시 calibration해야 합니다.
-* 그리퍼 장착 후에는 UR5e의 TCP/Payload/무게중심 설정을 하지 않으면 궤적 오차와 보호정지 가능성이 커질 수 있습니다.
+- `python/PC_server/paper_align_config.json`
+- `python/PC_server/paper_align_config_background.png`
+
+의미:
+
+- `paper_align_config.json`: ROI와 threshold 설정
+- `paper_align_config_background.png`: 종이가 없는 기준 배경 이미지
+
+이 둘 중 하나라도 준비되지 않으면 `V PAPER`는 정상 판정을 못 하고 `PAPER_NG`로 떨어질 수 있습니다.
+
+## 구현상 주의사항
+
+- `MOTOR STATUS`는 이름과 달리 현재 DC motor 상태가 아니라 사실상 그리퍼 동작 중 여부를 반환합니다.
+- `ESTOP`은 서보 전원을 끄는 하드웨어 정지가 아니라, 코드상 running 상태를 해제하는 수준입니다.
+- `D RUN`은 현재 프로토콜 호환성 유지를 위한 자리표시자에 가깝습니다.
+- `vision_checker.py`는 `V PAPER` 호출 시 디버그 창을 띄웁니다.
+- `vision_lid.py`는 ArUco를 사용하므로 `opencv-contrib-python`이 필요합니다.
+- 카메라 위치, 조명, 배경 이미지, ROI, threshold에 따라 `V PAPER` 결과 민감도가 크게 달라집니다.
+
+## 현재 README 기준 결론
+
+이 저장소의 현재 실사용 경로는 아래와 같습니다.
+
+1. UR5e가 PC Python 서버에 TCP로 명령을 보냅니다.
+2. PC 서버가 명령을 Arduino 또는 Vision으로 분기합니다.
+3. Arduino는 문 센서와 서보 그리퍼를 담당합니다.
+4. Vision은 뚜껑 상태와 종이 정렬 상태를 판정합니다.
+5. DC motor는 코드 흔적은 있으나 현재 최종 구성에서는 사용하지 않습니다.
